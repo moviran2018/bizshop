@@ -1,0 +1,13 @@
+[
+  {"id":1,"category":"starters","name":"ساشيمي خاص","desc":"تشكيلة سمك طازج مع صوص الصويا","price":"٤٥٠,٠٠٠ تومان","badge":"شائع","image":"https://picsum.photos/seed/sashimi/400/300"},
+  {"id":2,"category":"starters","name":"إدامامي","desc":"فول الصويا المطبوخ على البخار مع ملح البحر","price":"١٥٠,٠٠٠ تومان","image":"https://picsum.photos/seed/edamame/400/300"},
+  {"id":3,"category":"sushi","name":"رول كاليفورنيا","desc":"سرطان، أفوكادو، خيار مع أرز السوشي","price":"٣٨٠,٠٠٠ تومان","image":"https://picsum.photos/seed/caliroll/400/300"},
+  {"id":4,"category":"sushi","name":"ماكي كومبو","desc":"ثلاثة أنواع من ماكي نوبو الخاص","price":"٤٨٠,٠٠٠ تومان","image":"https://picsum.photos/seed/maki/400/300"},
+  {"id":5,"category":"hot","name":"تمبورا الجمبري","desc":"جمبري مقرمش مع صوص حار","price":"٤٢٠,٠٠٠ تومان","image":"https://picsum.photos/seed/tempura/400/300"},
+  {"id":6,"category":"hot","name":"سلمون مشوي","desc":"سلمون مشوي مع صوص خاص","price":"٥٢٠,٠٠٠ تومان","image":"https://picsum.photos/seed/salmon/400/300"},
+  {"id":7,"category":"hot","name":"ستيك واغيو","desc":"واغيو فاخر مع زبدة الترافل","price":"١,٢٠٠,٠٠٠ تومان","badge":"خاص","image":"https://picsum.photos/seed/wagyu/400/300"},
+  {"id":8,"category":"dessert","name":"موتشي مثلجات","desc":"آيس كريم فانيليا بطبقة أرز يابانية","price":"١٨٠,٠٠٠ تومان","image":"https://picsum.photos/seed/mochi/400/300"},
+  {"id":9,"category":"dessert","name":"تشيزكيك ياباني","desc":"تشيزكيك كريمي مع مسحوق الماتشا","price":"٢٢٠,٠٠٠ تومان","image":"https://picsum.photos/seed/cheesecake/400/300"},
+  {"id":10,"category":"drink","name":"ساكي نوبو","desc":"ساكي فاخر مع نكهة أزهار الربيع","price":"٣٢٠,٠٠٠ تومان","badge":"موصى به","image":"https://picsum.photos/seed/sake/400/300"},
+  {"id":11,"category":"drink","name":"شاي أخضر","desc":"شاي ياباني أخضر مع عطر الربيع","price":"١٢٠,٠٠٠ تومان","image":"https://picsum.photos/seed/greentea/400/300"}
+]

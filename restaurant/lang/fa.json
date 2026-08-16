@@ -1,0 +1,145 @@
+{
+  "site.name": "نوبو تهران",
+  "site.desc": "تجربه‌ای بی‌نظیر از طعم‌های اصیل ژاپنی در فضایی مدرن و دلنشین",
+  "nav.home": "خانه",
+  "nav.menu": "منو",
+  "nav.reservation": "رزرو",
+  "nav.gallery": "گالری",
+  "nav.contact": "تماس",
+  "nav.language": "تغییر زبان",
+
+  "hero.title": "نوبو",
+  "hero.subtitle": "تهران",
+  "hero.desc": "سفری به قلب طعم‌های ژاپنی با مدرن‌ترین رویکرد آشپزی",
+  "hero.book": "رزرو میز",
+  "hero.menu": "مشاهده منو",
+  "hero.scroll": "اسکرول کنید",
+
+  "about.title": "درباره ما",
+  "about.desc1": "رستوران نوبو با الهام از غذاهای اصیل ژاپنی و با استفاده از تازه‌ترین مواد اولیه، تجربه‌ای منحصربه‌فرد از طعم و هنر را به شما ارائه می‌دهد.",
+  "about.desc2": "شرباز سرآشپز ما با بهره‌گیری از تکنیک‌های مدرن آشپزی و احترام به سنت‌های ژاپنی، هر بشقاب را به یک اثر هنری تبدیل می‌کند.",
+  "about.signature": "— شرباز سرآشپز نوبو",
+
+  "menu.title": "منوی ما",
+  "menu.desc": "گزیده‌ای از محبوب‌ترین dishes ما",
+  "menu.viewAll": "مشاهده منوی کامل",
+
+  "gallery.title": "گالری تصاویر",
+  "gallery.desc": "فضای رستوران و dishes ما در یک نگاه",
+
+  "testimonial.title": "نظرات مهمانان",
+  "testimonial.desc": "آنچه مهمانان ما درباره تجربه خود می‌گویند",
+  "testimonial.text": "\"یک تجربه فراموش‌نشدنی. ترکیب طعم‌ها، دکوراسیون و خدمات بی‌نظیر بود. حتماً دوباره برمی‌گردم.\"",
+  "testimonial.author": "سارا محمدی",
+  "testimonial.role": "مهمان ویژه",
+
+  "contact.title": "اطلاعات تماس",
+  "contact.address": "تهران، خیابان الهیه، بلوار فرحزادی",
+  "contact.phone": "۰۲۱-۱۲۳۴۵۶۷۸",
+  "contact.email": "info@nobutehran.ir",
+  "contact.hours": "همه‌روزه ۱۲:۰۰ تا ۲۳:۰۰",
+
+  "info.hours": "ساعت کاری",
+  "info.phone": "تلفن",
+  "info.address": "آدرس",
+  "info.reserve": "رزرو میز",
+
+  "reservation.title": "رزرو میز",
+  "reservation.desc": "فرم زیر را پر کنید تا میز شما در کوتاه‌ترین زمان رزرو شود",
+  "reservation.name": "نام و نام خانوادگی",
+  "reservation.phone": "شماره تماس",
+  "reservation.email": "ایمیل",
+  "reservation.date": "تاریخ",
+  "reservation.time": "ساعت",
+  "reservation.guests": "تعداد مهمان",
+  "reservation.guest1": "۱ نفر",
+  "reservation.guest2": "۲ نفر",
+  "reservation.guest3": "۳ نفر",
+  "reservation.guest4": "۴ نفر",
+  "reservation.guest5": "۵ نفر",
+  "reservation.guest6": "۶ نفر",
+  "reservation.guestM": "بیشتر از ۶ نفر",
+  "reservation.requests": "درخواست ویژه",
+  "reservation.requestsPlace": "آلرژی، مناسبت خاص، ...",
+  "reservation.submit": "ثبت رزرو",
+  "reservation.success": "رزرو شما با موفقیت ثبت شد",
+  "reservation.successDesc": "کد پیگیری خود را یادداشت کنید",
+  "reservation.tracking": "کد پیگیری",
+  "reservation.new": "رزرو جدید",
+  "reservation.menuTitle": "بازدید از منو",
+  "reservation.menuDesc": "قبل از رزرو، منوی ما را ببینید",
+
+  "menuPage.title": "منوی نوبو",
+  "menuPage.desc": "منوی کامل با جزئیات دقیق هر dish",
+
+  "footer.rights": "© تمامی حقوق برای نوبو تهران محفوظ است.",
+
+  "chat.welcome": "سلام! 👋 به نوبو تهران خوش آمدید. چطور می‌توانم کمک کنم؟",
+  "chat.placeholder": "سوال خود را بپرسید...",
+  "chat.menu": "منوی امروز",
+  "chat.reserve": "رزرو میز",
+  "chat.contact": "اطلاعات تماس",
+
+  "menu.cat.starters": "پیش‌غذا",
+  "menu.cat.sushi": "سوشی",
+  "menu.cat.hot": "غذای گرم",
+  "menu.cat.dessert": "دسر",
+  "menu.cat.drink": "نوشیدنی",
+
+  "item1.name": "ساشیمی مخصوص",
+  "item1.desc": "انواع ماهی تازه با سس سویا واسابی",
+  "item1.price": "۴۵۰,۰۰۰ تومان",
+  "item1.badge": "محبوب",
+
+  "item2.name": "رول کالیفرنیا",
+  "item2.desc": "خرچنگ، آووکادو، خیار با برنج سوشی",
+  "item2.price": "۳۸۰,۰۰۰ تومان",
+
+  "item3.name": "تمپورا میگو",
+  "item3.desc": "میگو سوخاری با سس تند",
+  "item3.price": "۴۲۰,۰۰۰ تومان",
+
+  "item4.name": "سالمون گرینکوز",
+  "item4.desc": "سالمون کبابی با سس مخصوص",
+  "item4.price": "۵۲۰,۰۰۰ تومان",
+
+  "item5.name": "موچی بستنی",
+  "item5.desc": "بستنی وانیلی با پوشش برنجی ژاپنی",
+  "item5.price": "۱۸۰,۰۰۰ تومان",
+
+  "item6.name": "ساکی نوبو",
+  "item6.desc": "ساکی مخصوص با طعم گل‌های بهاری",
+  "item6.price": "۳۲۰,۰۰۰ تومان",
+
+  "item7.name": "edamame",
+  "item7.desc": "لوبیای سبز بخارپز با نمک دریا",
+  "item7.price": "۱۵۰,۰۰۰ تومان",
+
+  "item8.name": "ترکیب ماکی",
+  "item8.desc": "سه نوع ماکی مخصوص نوبو",
+  "item8.price": "۴۸۰,۰۰۰ تومان",
+
+  "item9.name": "استیک واگیو",
+  "item9.desc": "گوشت واگیو درجه یک با کره ترافل",
+  "item9.price": "۱,۲۰۰,۰۰۰ تومان",
+
+  "item10.name": "چای سبز ارل گری",
+  "item10.desc": "چای سبز ژاپنی با عطر بهاره",
+  "item10.price": "۱۲۰,۰۰۰ تومان",
+
+  "item11.name": "چیزکیک ژاپنی",
+  "item11.desc": "چیزکیک خامه‌ای با پودر چای سبز",
+  "item11.price": "۲۲۰,۰۰۰ تومان",
+
+  "gallery1": "فضای داخلی",
+  "gallery2": "بار مرکزی",
+  "gallery3": "تراس",
+  "gallery4": "غذاهای ما",
+  "gallery5": "شب‌های خاص",
+  "gallery6": "محوطه VIP",
+  "gallery7": "هنر آشپزی",
+  "gallery8": "ورودی",
+
+  "common.loading": "در حال بارگذاری...",
+  "common.dir": "rtl"
+}

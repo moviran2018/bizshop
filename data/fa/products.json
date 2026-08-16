@@ -1,0 +1,399 @@
+[
+  {
+    "id": 1,
+    "name": "هدفون بلوتوث بیز",
+    "category": "الکترونیک",
+    "price": 1280000,
+    "oldPrice": 1650000,
+    "discount": 22,
+    "brand": "بیز",
+    "rating": 4.5,
+    "reviews": 87,
+    "stock": 45,
+    "description": "هدفون بلوتوث با کیفیت صدای فوق‌العاده و قابلیت حذف نویز فعال",
+    "features": [
+      "حذف نویز فعال",
+      "باتری 40 ساعته",
+      "بلوتوث 5.3"
+    ],
+    "tags": [
+      "بیز",
+      "هدفون",
+      "بلوتوث"
+    ],
+    "sku": "SKU-1",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/h1/600/600",
+      "https://picsum.photos/seed/h2/600/600"
+    ],
+    "video": "",
+    "model3d": "https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 2,
+    "name": "مچ‌بند هوشمند بیز",
+    "category": "الکترونیک",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "بیز",
+    "rating": 4.2,
+    "reviews": 134,
+    "stock": 78,
+    "description": "مچ‌بند هوشمند با قابلیت مانیتورینگ ضربان قلب",
+    "features": [
+      "ضربان سنج",
+      "گام شمار",
+      "ضد آب IP68"
+    ],
+    "tags": [
+      "بیز",
+      "مچ‌بند",
+      "هوشمند"
+    ],
+    "sku": "SKU-2",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sb1/600/600",
+      "https://picsum.photos/seed/sb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 3,
+    "name": "شارژر بیسیم ۳ کاره",
+    "category": "الکترونیک",
+    "price": 650000,
+    "oldPrice": 780000,
+    "discount": 17,
+    "brand": "بیز",
+    "rating": 4.7,
+    "reviews": 203,
+    "stock": 120,
+    "description": "شارژر بیسیم سه کاره مخصوص گوشی، هدفون و ساعت هوشمند",
+    "features": [
+      "شارژ سریع 15W",
+      "سازگار با Qi",
+      "طراحی جمع و جور"
+    ],
+    "tags": [
+      "بیز",
+      "شارژر",
+      "بیسیم"
+    ],
+    "sku": "SKU-3",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/c1/600/600",
+      "https://picsum.photos/seed/c2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 4,
+    "name": "کیف لپ‌تاپ بیز",
+    "category": "مد و پوشاک",
+    "price": 980000,
+    "oldPrice": 1250000,
+    "discount": 22,
+    "brand": "بیز",
+    "rating": 4.4,
+    "reviews": 56,
+    "stock": 32,
+    "description": "کیف لپ‌تاپ شیک و مقاوم با جیب‌های متعدد",
+    "features": [
+      "ضد آب",
+      "مناسب لپ‌تاپ 15.6 اینچ",
+      "جیب مخفی"
+    ],
+    "tags": [
+      "بیز",
+      "کیف",
+      "لپ‌تاپ"
+    ],
+    "sku": "SKU-4",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/lb1/600/600",
+      "https://picsum.photos/seed/lb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 5,
+    "name": "اسپیکر بلوتوث قابل حمل",
+    "category": "الکترونیک",
+    "price": 750000,
+    "oldPrice": 920000,
+    "discount": 18,
+    "brand": "بیز",
+    "rating": 4.6,
+    "reviews": 189,
+    "stock": 65,
+    "description": "اسپیکر بلوتوث قابل حمل با صدای استریو",
+    "features": [
+      "صدای 360 درجه",
+      "باتری 20 ساعته",
+      "ضد آب IPX7"
+    ],
+    "tags": [
+      "بیز",
+      "اسپیکر",
+      "بلوتوث"
+    ],
+    "sku": "SKU-5",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sp1/600/600",
+      "https://picsum.photos/seed/sp2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 6,
+    "name": "ماوس گیمینگ RGB",
+    "category": "الکترونیک",
+    "price": 520000,
+    "oldPrice": 650000,
+    "discount": 20,
+    "brand": "بیز",
+    "rating": 4.3,
+    "reviews": 245,
+    "stock": 90,
+    "description": "ماوس گیمینگ حرفه‌ایی با نورپردازی RGB",
+    "features": [
+      "RGB 16.8 میلیون رنگ",
+      "سنسور 12000 DPI",
+      "6 دکمه"
+    ],
+    "tags": [
+      "بیز",
+      "ماوس",
+      "گیمینگ"
+    ],
+    "sku": "SKU-6",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/m1/600/600",
+      "https://picsum.photos/seed/m2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 7,
+    "name": "کابل تایپ C سریع",
+    "category": "الکترونیک",
+    "price": 98000,
+    "oldPrice": 135000,
+    "discount": 27,
+    "brand": "بیز",
+    "rating": 4.8,
+    "reviews": 412,
+    "stock": 500,
+    "description": "کابل تایپ C با قابلیت شارژ سریع",
+    "features": [
+      "شارژ 60W",
+      "انتقال 480Mbps",
+      "طول 2 متر"
+    ],
+    "tags": [
+      "بیز",
+      "کابل",
+      "شارژر"
+    ],
+    "sku": "SKU-7",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/uc1/600/600",
+      "https://picsum.photos/seed/uc2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 8,
+    "name": "محافظ صفحه نمایش شیشه‌ای",
+    "category": "الکترونیک",
+    "price": 85000,
+    "oldPrice": 120000,
+    "discount": 29,
+    "brand": "بیز",
+    "rating": 4.1,
+    "reviews": 521,
+    "stock": 1000,
+    "description": "محافظ شیشه‌ای با سختی 9H",
+    "features": [
+      "سختی 9H",
+      "ضد خش",
+      "ضد اثر انگشت"
+    ],
+    "tags": [
+      "بیز",
+      "محافظ",
+      "شیشه"
+    ],
+    "sku": "SKU-8",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/g1/600/600",
+      "https://picsum.photos/seed/g2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 9,
+    "name": "پاوربانک 20000mAh",
+    "category": "الکترونیک",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "بیز",
+    "rating": 4.5,
+    "reviews": 167,
+    "stock": 55,
+    "description": "پاوربانک 20000 میلی‌آمپر با قابلیت شارژ سریع",
+    "features": [
+      "ظرفیت 20000mAh",
+      "شارژ سریع 18W",
+      "دو خروجی"
+    ],
+    "tags": [
+      "بیز",
+      "پاوربانک",
+      "شارژر"
+    ],
+    "sku": "SKU-9",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/pb1/600/600",
+      "https://picsum.photos/seed/pb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 10,
+    "name": "هولدر گوشی ماشین",
+    "category": "الکترونیک",
+    "price": 210000,
+    "oldPrice": 280000,
+    "discount": 25,
+    "brand": "بیز",
+    "rating": 4,
+    "reviews": 312,
+    "stock": 200,
+    "description": "هولدر گوشی مخصوص خودرو",
+    "features": [
+      "نصب آسان",
+      "چرخش 360 درجه",
+      "مناسب همه گوشی‌ها"
+    ],
+    "tags": [
+      "بیز",
+      "هولدر",
+      "ماشین"
+    ],
+    "sku": "SKU-10",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/hd1/600/600",
+      "https://picsum.photos/seed/hd2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 11,
+    "name": "لپ‌تاپ ایسوس ZenBook 14",
+    "category": "لپ‌تاپ",
+    "price": 28500000,
+    "oldPrice": 32500000,
+    "discount": 12,
+    "brand": "ایسوس",
+    "rating": 4.7,
+    "reviews": 89,
+    "stock": 12,
+    "description": "لپ‌تاپ باریک و سبک ایسوس با پردازنده Core i7",
+    "features": [
+      "Core i7-1355U",
+      "16GB RAM",
+      "512GB SSD"
+    ],
+    "tags": [
+      "لپ‌تاپ",
+      "ایسوس",
+      "زنبوک"
+    ],
+    "sku": "SKU-11",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/l1/600/600",
+      "https://picsum.photos/seed/l2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 12,
+    "name": "گوشی سامسونگ Galaxy S24",
+    "category": "موبایل",
+    "price": 38900000,
+    "oldPrice": 42900000,
+    "discount": 9,
+    "brand": "سامسونگ",
+    "rating": 4.8,
+    "reviews": 245,
+    "stock": 8,
+    "description": "گوشی پرچمدار سامسونگ با دوربین 200 مگاپیکسل",
+    "features": [
+      "12GB RAM",
+      "256GB حافظه",
+      "دوربین 200MP"
+    ],
+    "tags": [
+      "موبایل",
+      "سامسونگ",
+      "Galaxy"
+    ],
+    "sku": "SKU-12",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/s24-1/600/600",
+      "https://picsum.photos/seed/s24-2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  }
+]

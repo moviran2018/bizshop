@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="admin.loginTitle">ورود | مدیریت بیزشاپ</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body class="login-page">
+  <div class="toast-container"></div>
+  <div style="position:absolute;top:20px;right:20px;">
+    <div class="lang-dropdown" id="langSwitcher">
+      <button class="lang-dropdown-toggle lang-btn-icon" title="Language" data-i18n-title="nav.language" onclick="this.closest('.lang-dropdown').classList.toggle('open')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </button>
+      <div class="lang-dropdown-menu">
+        <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+        <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+        <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+      </div>
+    </div>
+  </div>
+  <div class="login-card">
+    <div class="login-logo">B</div>
+    <h2 data-i18n="admin.login.title">پنل مدیریت بیزشاپ</h2>
+    <p data-i18n="admin.login.subtitle">برای دسترسی به پنل مدیریت وارد شوید</p>
+    <form id="adminLoginForm">
+      <div class="form-group">
+        <label data-i18n="admin.login.username">نام کاربری</label>
+        <input type="text" id="adminUser" placeholder="admin" value="admin">
+      </div>
+      <div class="form-group">
+        <label data-i18n="admin.login.password">رمز عبور</label>
+        <input type="password" id="adminPass" placeholder="••••••••" value="bizshop123">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="admin.login.btn">ورود به پنل</button>
+    </form>
+    <div class="login-footer">
+      <p data-i18n="admin.login.helper">نام کاربری: admin | رمز: bizshop123</p>
+      <a href="../index.html" style="color:var(--primary);margin-top:10px;display:inline-block;font-weight:600;" data-i18n="admin.login.back">← بازگشت به فروشگاه</a>
+    </div>
+  </div>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/admin.js"></script>
+</html>

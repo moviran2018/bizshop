@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سبد خرید | بیزشاپ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+</head>
+<body>
+
+<div class="toast-container"></div>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <button class="mobile-toggle" aria-label="منو" data-i18n="nav.menu">☰</button>
+      <a href="/" class="logo"><div class="logo-icon">B</div><span data-i18n="site.name">بیزشاپ</span></a>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" data-i18n-placeholder="common.searchPlaceholder" placeholder="جستجوی محصولات...">
+      </div>
+      <div class="header-actions">
+        <div class="lang-dropdown" id="langSwitcher">
+          <button class="lang-dropdown-toggle lang-btn-icon" title="Language" data-i18n-title="nav.language" onclick="this.closest('.lang-dropdown').classList.toggle('open')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </button>
+          <div class="lang-dropdown-menu">
+            <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+            <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+            <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+          </div>
+        </div>
+
+        <button class="header-btn" onclick="window.location.href='cart.html'" title="سبد خرید" data-i18n="nav.cart">🛒<span class="badge cart-count" style="display:none;">0</span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <div class="main-nav-inner">
+      <ul class="nav-list">
+        <li><a href="/" data-i18n="nav.home">🏠 خانه</a></li>
+        <li><a href="products.html" data-i18n="nav.products">🛍 محصولات</a></li>
+        <li><a href="products.html?brand=بیز" data-i18n="nav.bizProducts">⭐ محصولات بیز</a></li>
+        <li><a href="cart.html" class="active" data-i18n="nav.cart">🛒 سبد خرید</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+  <div class="mobile-menu-header">
+    <span class="logo"><div class="logo-icon">B</div> <span data-i18n="site.name">بیزشاپ</span></span>
+    <button class="mobile-menu-close">&times;</button>
+  </div>
+  <ul class="mobile-nav-list">
+    <li><a href="/" data-i18n="nav.home">🏠 خانه</a></li>
+    <li><a href="products.html" data-i18n="nav.products">🛍 محصولات</a></li>
+    <li><a href="cart.html" data-i18n="nav.cart">🛒 سبد خرید</a></li>
+  </ul>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/" data-i18n="nav.home">خانه</a>
+      <span class="separator">›</span>
+      <span data-i18n="cart.breadcrumb">سبد خرید</span>
+    </div>
+
+    <div class="section-title">
+      <h2 data-i18n="cart.sectionTitle">سبد خرید</h2>
+      <p data-i18n="cart.selectedProducts">محصولات انتخابی شما</p>
+      <div class="title-line"></div>
+    </div>
+
+    <div class="cart-page">
+      <div class="cart-items"></div>
+      <div class="cart-summary"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-logo"><div class="logo-icon">B</div> <span data-i18n="site.name">بیزشاپ</span></div>
+        <p data-i18n="site.desc">فروشگاه اینترنتی بیزشاپ.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.quickAccess">دسترسی سریع</h4>
+        <ul>
+          <li><a href="products.html" data-i18n="nav.allProducts">همه محصولات</a></li>
+          <li><a href="products.html?brand=بیز" data-i18n="nav.bizProducts">محصولات بیز</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.customerService">خدمات مشتریان</h4>
+        <ul>
+          <li><a href="#" data-i18n="footer.buyGuide">راهنمای خرید</a></li>
+          <li><a href="#" data-i18n="footer.paymentMethods">روش‌های پرداخت</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contactInfo">تماس</h4>
+        <ul class="footer-contact">
+          <li><span class="contact-icon">📞</span> <a href="tel:09123456789" data-i18n="footer.phone">۰۹۱۲۳۴۵۶۷۸۹</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© تمامی حقوق برای بیزشاپ محفوظ است.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+<button class="chatbot-toggle" id="chatbotToggle">🤖<span class="notification-dot"></span></button>
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chatbot-header">
+    <div class="bot-avatar">🤖</div>
+    <div class="bot-info">
+      <h4 data-i18n="chat.title">دستیار هوشمند بیزشاپ</h4>
+      <span data-i18n="chat.status">آنلاین</span>
+    </div>
+    <button class="close-chat" id="closeChat">&times;</button>
+  </div>
+  <div class="chatbot-messages" id="chatMessages">
+    <div class="chat-message bot" data-i18n="chat.greeting">سلام! 👋 به بیزشاپ خوش آمدید. چطور می‌توانم کمک کنم؟</div>
+  </div>
+  <div class="quick-replies" id="quickReplies"></div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="سوال خود را بپرسید...">
+    <button id="sendMessage">➤</button>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('langchange', () => {
+  document.querySelectorAll('#langSwitcher .lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === I18n.lang);
+  });
+});
+</script>
+</body>
+</html>

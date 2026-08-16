@@ -1,0 +1,22 @@
+{
+  "siteName": "بيز شوب",
+  "description": "متجر بيز شوب الإلكتروني — مصدرك الموثوق لمنتجات بيز",
+  "phone": "+98 912 345 6789",
+  "email": "info@bizshop.ir",
+  "address": "طهران، شارع وليعصر، مجمع بيز التجاري",
+  "workingHours": "٩ صباحاً إلى ٩ مساءً",
+  "shippingCost": 150000,
+  "freeShippingMin": 3000000,
+  "socialMedia": {
+    "instagram": "https://instagram.com/bizshop",
+    "telegram": "https://t.me/bizshop",
+    "whatsapp": "https://wa.me/989123456789",
+    "bale": "https://ble.ir/bizshop_bot"
+  },
+  "theme": {
+    "primaryColor": "#6C5CE7",
+    "secondaryColor": "#FD79A8"
+  },
+  "heroSlider": [],
+  "mobile": {}
+}

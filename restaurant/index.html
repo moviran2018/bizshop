@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="site.name">نوبو تهران</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍣</text></svg>">
+</head>
+<body>
+
+<!-- ═══ Header ═══ -->
+<header>
+  <div class="header-inner">
+    <button class="mobile-toggle" id="mobileToggle">☰</button>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 200 50"><text x="0" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="400" fill="#af945c" font-style="italic">NOBU</text><text x="85" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="300" fill="#f0ece4">تهران</text></svg>
+    </a>
+    <ul class="nav" id="mainNav">
+      <li><a href="index.html" data-i18n="nav.home">خانه</a></li>
+      <li><a href="menu.html" data-i18n="nav.menu">منو</a></li>
+      <li><a href="reservation.html" data-i18n="nav.reservation">رزرو</a></li>
+      <li><a href="gallery.html" data-i18n="nav.gallery">گالری</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">تماس</a></li>
+    </ul>
+    <div class="header-actions">
+      <div class="lang-dropdown" id="langSwitcher">
+        <button class="lang-dropdown-toggle" onclick="this.closest('.lang-dropdown').classList.toggle('open')">🌐</button>
+        <div class="lang-dropdown-menu">
+          <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+          <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+          <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+        </div>
+      </div>
+      <a href="reservation.html" class="btn btn-outline-light btn-sm" data-i18n="hero.book">رزرو میز</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ Hero ═══ -->
+<div class="page-header">
+  <section class="page-section page-section--dark page-section--padding--md ninety-percent-height">
+    <div class="page-section__background">
+      <div class="page-section__overlay" style="opacity:0.4"></div>
+      <div class="img-hero-bg" style="position:absolute;inset:0;animation:heroZoom 20s ease-in-out infinite alternate;"></div>
+    </div>
+    <div class="container container--md">
+      <div class="content-blocks text-center">
+        <div class="content-blocks__block">
+          <div class="hero-subtitle" style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px;" data-i18n="hero.subtitle">تهران</div>
+        </div>
+        <div class="content-blocks__block">
+          <h1 class="display-1 font-weight-light" data-i18n="hero.title">نوبو</h1>
+        </div>
+        <div class="content-blocks__block">
+          <p style="max-width:500px;margin:0 auto;font-size:1.1rem;" data-i18n="hero.desc">سفری به قلب طعم‌های ژاپنی با مدرن‌ترین رویکرد آشپزی</p>
+        </div>
+        <div class="content-blocks__block">
+          <a href="reservation.html" class="btn btn-outline-primary" data-i18n="hero.book">رزرو میز</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-arrow-container">
+      <a href="#about" class="scroll-arrow"></a>
+    </div>
+  </section>
+</div>
+
+<style>
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+</style>
+
+<!-- ═══ About Section ═══ -->
+<section id="about" class="page-section page-section--dark page-section--padding--lg">
+  <div class="container container--lg">
+    <div class="row align-items-center">
+      <div class="d-flex flex-column col-12 mb-4 col-lg-6 order-lg-1">
+        <div class="content-blocks text-center shadow">
+          <div class="content-blocks__block">
+            <div class="img-interior img-placeholder" style="min-height:500px;">🍣</div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column col-12 mb-4 col-lg-6 order-lg-2">
+        <div class="content-blocks text-left">
+          <div class="content-blocks__block">
+            <h2 class="display-4 font-weight-light reveal" data-splitting data-i18n="about.title">درباره نوبو تهران</h2>
+          </div>
+          <div class="content-blocks__block">
+            <div class="pb-2 pb-lg-2"></div>
+          </div>
+          <div class="content-blocks__block">
+            <p class="reveal" data-i18n="about.desc1">رستوران نوبو با الهام از غذاهای اصیل ژاپنی و با استفاده از تازه‌ترین مواد اولیه، تجربه‌ای منحصربه‌فرد از طعم و هنر را به شما ارائه می‌دهد.</p>
+          </div>
+          <div class="content-blocks__block">
+            <p class="reveal" style="transition-delay:0.1s" data-i18n="about.desc2">سرآشپز ما با بهره‌گیری از تکنیک‌های مدرن آشپزی و احترام به سنت‌های ژاپنی، هر بشقاب را به یک اثر هنری تبدیل می‌کند.</p>
+          </div>
+          <div class="content-blocks__block">
+            <a href="menu.html" class="btn btn-link my-1 reveal" style="transition-delay:0.2s" data-i18n="about.signature">— سرآشپز نوبو</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Cuisine Section ═══ -->
+<section class="page-section page-section--dark page-section--padding--sm">
+  <div class="container container--lg">
+    <div class="row align-items-center">
+      <div class="d-flex flex-column col-12 mb-4 col-lg-6 order-lg-2">
+        <div class="content-blocks text-center shadow">
+          <div class="content-blocks__block">
+            <div class="img-ambient img-placeholder" style="min-height:500px;">🍱</div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column col-12 mb-4 col-lg-6 order-lg-1">
+        <div class="content-blocks text-left">
+          <div class="content-blocks__block">
+            <h2 class="display-4 font-weight-light reveal" data-splitting data-i18n="menu.title">منوی ما</h2>
+          </div>
+          <div class="content-blocks__block">
+            <div class="pb-2 pb-lg-2"></div>
+          </div>
+          <div class="content-blocks__block">
+            <p class="reveal">منوی نوبو تلفیقی از غذاهای کلاسیک ژاپنی با نوآوری مدرن است. از تازه‌ترین ساشیمی‌ها تا استیک واگیوی درجه یک، هر dish با دقت و هنر تهیه می‌شود.</p>
+          </div>
+          <div class="content-blocks__block">
+            <p class="reveal" style="transition-delay:0.1s">ما تنها از بهترین مواد اولیه استفاده می‌کنیم و هر فصل منوی خود را با طعم‌های جدید به‌روز می‌کنیم.</p>
+          </div>
+          <div class="content-blocks__block">
+            <a href="menu.html" class="btn btn-link my-1 reveal" style="transition-delay:0.2s" data-i18n="menu.viewAll">مشاهده منوی کامل</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Menu Preview ═══ -->
+<section class="page-section page-section--dark page-section--padding--lg">
+  <div class="container container--lg">
+    <div class="content-blocks text-center" style="margin-bottom:48px;">
+      <div class="content-blocks__block">
+        <h2 class="display-3 font-weight-light reveal" data-i18n="menu.title">منوی ما</h2>
+      </div>
+      <div class="content-blocks__block">
+        <p class="reveal" style="transition-delay:0.1s" data-i18n="menu.desc">گزیده‌ای از محبوب‌ترین dishes ما</p>
+      </div>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-cat="all" data-i18n="nav.menu">همه</button>
+      <button class="menu-tab" data-cat="starters" data-i18n="menu.cat.starters">پیش‌غذا</button>
+      <button class="menu-tab" data-cat="sushi" data-i18n="menu.cat.sushi">سوشی</button>
+      <button class="menu-tab" data-cat="hot" data-i18n="menu.cat.hot">غذای گرم</button>
+      <button class="menu-tab" data-cat="dessert" data-i18n="menu.cat.dessert">دسر</button>
+      <button class="menu-tab" data-cat="drink" data-i18n="menu.cat.drink">نوشیدنی</button>
+    </div>
+    <div class="menu-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ Gallery ═══ -->
+<section class="page-section page-section--dark page-section--padding--sm">
+  <div class="container container--xl">
+    <div class="content-blocks text-center" style="margin-bottom:48px;">
+      <div class="content-blocks__block">
+        <h2 class="display-3 font-weight-light reveal" data-i18n="gallery.title">گالری</h2>
+      </div>
+      <div class="content-blocks__block">
+        <p class="reveal" style="transition-delay:0.1s" data-i18n="gallery.desc">فضای رستوران و dishes ما در یک نگاه</p>
+      </div>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ Testimonials ═══ -->
+<section class="page-section page-section--dark page-section--padding--lg">
+  <div class="container container--md">
+    <div class="content-blocks text-center" style="margin-bottom:48px;">
+      <div class="content-blocks__block">
+        <h2 class="display-3 font-weight-light reveal" data-i18n="testimonial.title">نظرات مهمانان</h2>
+      </div>
+      <div class="content-blocks__block">
+        <p class="reveal" style="transition-delay:0.1s" data-i18n="testimonial.desc">آنچه مهمانان ما درباره تجربه خود می‌گویند</p>
+      </div>
+    </div>
+    <div class="testimonials" id="testimonialContainer"></div>
+    <div class="testimonial-dots" id="testimonialDots"></div>
+  </div>
+</section>
+
+<!-- ═══ Info Strip ═══ -->
+<section class="page-section page-section--dark page-section--padding--sm" style="padding-top:0;padding-bottom:0;">
+  <div class="container container--lg">
+    <div class="info-strip">
+      <div class="info-strip-item">
+        <div class="label" data-i18n="info.hours">ساعت کاری</div>
+        <div class="value" data-i18n="contact.hours">همه‌روزه ۱۲:۰۰ تا ۲۳:۰۰</div>
+      </div>
+      <div class="info-strip-item">
+        <div class="label" data-i18n="info.phone">تلفن</div>
+        <div class="value" data-i18n="contact.phone">۰۲۱-۱۲۳۴۵۶۷۸</div>
+      </div>
+      <div class="info-strip-item">
+        <div class="label" data-i18n="info.address">آدرس</div>
+        <div class="value" data-i18n="contact.address">تهران، الهیه، بلوار فرحزادی</div>
+      </div>
+      <div class="info-strip-item">
+        <div class="label" data-i18n="nav.reservation">رزرو</div>
+        <div class="value"><a href="reservation.html" style="color:var(--gold);text-decoration:none;" data-i18n="hero.book">رزرو آنلاین</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Newsletter ═══ -->
+<section class="page-section page-section--dark page-section--padding--lg">
+  <div class="container container--md">
+    <div class="content-blocks text-center">
+      <div class="content-blocks__block">
+        <h3 class="display-4 font-weight-light reveal">خبرنامه</h3>
+      </div>
+      <div class="content-blocks__block">
+        <p class="reveal" style="transition-delay:0.1s">از آخرین رویدادها و پیشنهادات ویژه ما با خبر شوید</p>
+      </div>
+      <div class="content-blocks__block" style="width:100%;max-width:480px;margin:0 auto;">
+        <form id="newsletterForm" style="display:flex;gap:12px;width:100%;">
+          <input type="email" placeholder="ایمیل خود را وارد کنید" required style="flex:1;padding:12px 18px;background:var(--bg-alt);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:0.9rem;">
+          <button type="submit" class="btn btn-outline-primary" style="white-space:nowrap;">عضویت</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+  <div class="container container--lg">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="index.html" class="footer-logo" style="display:block;">
+          <svg viewBox="0 0 200 50"><text x="0" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="400" fill="#af945c" font-style="italic">NOBU</text><text x="85" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="300" fill="#f0ece4">تهران</text></svg>
+        </a>
+        <p data-i18n="site.desc">تجربه‌ای بی‌نظیر از طعم‌های اصیل ژاپنی در فضایی مدرن و دلنشین</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">📸</a>
+          <a href="#" aria-label="Telegram">✈</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="nav.menu">منو</h4>
+        <ul>
+          <li><a href="menu.html" data-i18n="menu.cat.starters">پیش‌غذا</a></li>
+          <li><a href="menu.html" data-i18n="menu.cat.sushi">سوشی</a></li>
+          <li><a href="menu.html" data-i18n="menu.cat.hot">غذای گرم</a></li>
+          <li><a href="menu.html" data-i18n="menu.cat.dessert">دسر</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="gallery.html" data-i18n="nav.gallery">گالری</a></li>
+          <li><a href="reservation.html" data-i18n="nav.reservation">رزرو</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">تماس</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="contact.title">تماس</h4>
+        <ul>
+          <li><a href="tel:+982112345678" data-i18n="contact.phone">۰۲۱-۱۲۳۴۵۶۷۸</a></li>
+          <li><a href="mailto:info@nobutehran.ir">info@nobutehran.ir</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" data-i18n="footer.rights">© تمامی حقوق برای نوبو تهران محفوظ است.</div>
+  </div>
+</footer>
+
+<!-- ═══ Chatbot ═══ -->
+<button class="chatbot-toggle" id="chatbotToggle">🤖</button>
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chatbot-header">
+    <div class="bot-avatar">🍣</div>
+    <div class="bot-info">
+      <h4 data-i18n="site.name">نوبو تهران</h4>
+      <span>آنلاین</span>
+    </div>
+    <button class="close-chat" id="closeChat">&times;</button>
+  </div>
+  <div class="chatbot-messages" id="chatMessages">
+    <div class="chat-message bot" data-i18n="chat.welcome">سلام! 👋 به نوبو تهران خوش آمدید.</div>
+  </div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="سوال خود را بپرسید...">
+    <button id="sendMessage">➤</button>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

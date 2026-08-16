@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>پنل مدیریت | نوبو</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.admin-wrap { max-width: 1200px; margin: 100px auto 40px; padding: 0 24px; }
+.admin-tabs { display:flex; gap:4px; margin-bottom:24px; }
+.admin-tab { padding:10px 20px; background:var(--bg-card); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; font-size:0.82rem; }
+.admin-tab.active { background:var(--gold); color:#0a0a0a; border-color:var(--gold); }
+.admin-panel { background:var(--bg-card); border:1px solid var(--border); padding:24px; min-height:400px; }
+.admin-table { width:100%; border-collapse:collapse; }
+.admin-table th, .admin-table td { padding:10px 14px; text-align:right; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.admin-table th { color:var(--gold); font-weight:600; letter-spacing:1px; text-transform:uppercase; font-size:0.72rem; }
+.admin-table td { color:var(--text-muted); }
+.admin-status { padding:4px 10px; font-size:0.7rem; font-weight:600; }
+.admin-status.confirmed { color:#4CAF50; }
+.admin-status.cancelled { color:#f44336; }
+.btn-sm { padding:6px 14px; font-size:0.72rem; background:var(--gold); color:#0a0a0a; border:none; cursor:pointer; }
+.btn-sm.danger { background:#f44336; color:#fff; }
+.admin-login { max-width:360px; margin:200px auto; text-align:center; }
+.admin-login input { width:100%; padding:12px; margin-bottom:12px; background:var(--bg); border:1px solid var(--border); color:var(--text); }
+.empty-state { text-align:center; padding:60px 0; color:var(--text-muted); }
+</style>
+</head><body>
+
+<div id="adminLogin" class="admin-login">
+<div style="font-size:3rem;margin-bottom:16px;">🔐</div>
+<h2 style="font-family:var(--font-heading);font-weight:400;margin-bottom:8px;">پنل مدیریت نوبو</h2>
+<p style="color:var(--text-muted);margin-bottom:24px;">نام کاربری و رمز عبور را وارد کنید</p>
+<input type="text" id="adminUser" placeholder="نام کاربری" value="admin">
+<input type="password" id="adminPass" placeholder="رمز عبور">
+<button class="book-btn" style="width:100%;" onclick="login()">ورود</button>
+</div>
+
+<div id="adminPanel" class="admin-wrap" style="display:none;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+<h2 style="font-family:var(--font-heading);font-weight:400;">🍣 پنل مدیریت نوبو</h2>
+<button class="btn-sm danger" onclick="logout()">خروج</button>
+</div>
+<div class="admin-tabs">
+<button class="admin-tab active" onclick="switchTab(this,'reservations')">📋 رزروها</button>
+<button class="admin-tab" onclick="switchTab(this,'settings')">⚙️ تنظیمات</button>
+</div>
+<div class="admin-panel" id="adminContent">
+<div id="reservationsTab"></div>
+<div id="settingsTab" style="display:none;"></div>
+</div>
+</div>
+
+<script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
+<script>
+const ADMIN = {};
+
+function login() {
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  if (u === 'admin' && p === 'nobu123') {
+    localStorage.setItem('nobu_admin', 'true');
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadReservations();
+    loadSettings();
+  } else alert('نام کاربری یا رمز عبور اشتباه است');
+}
+
+function logout() {
+  localStorage.removeItem('nobu_admin');
+  location.reload();
+}
+
+if (localStorage.getItem('nobu_admin') === 'true') {
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+}
+
+function switchTab(el, tab) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('reservationsTab').style.display = tab === 'reservations' ? 'block' : 'none';
+  document.getElementById('settingsTab').style.display = tab === 'settings' ? 'block' : 'none';
+  if (tab === 'reservations') loadReservations();
+}
+
+function loadReservations() {
+  const list = DB.getReservations();
+  const container = document.getElementById('reservationsTab');
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div style="font-size:2rem;margin-bottom:8px;">📋</div><p>هیچ رزروی ثبت نشده است</p></div>';
+    return;
+  }
+  container.innerHTML = `
+    <h3 style="margin-bottom:16px;color:var(--text);">📋 لیست رزروها (${list.length})</h3>
+    <div style="overflow-x:auto;">
+    <table class="admin-table">
+      <tr><th>کد</th><th>نام</th><th>تاریخ</th><th>ساعت</th><th>مهمان</th><th>تلفن</th><th>وضعیت</th><th></th></tr>
+      ${list.sort((a,b)=>b.id-a.id).map(r => `
+        <tr>
+          <td style="color:var(--gold);font-weight:600;font-size:0.75rem;">${r.trackingCode}</td>
+          <td>${r.name}</td>
+          <td>${r.date}</td>
+          <td>${r.time}</td>
+          <td>${r.guests}</td>
+          <td dir="ltr">${r.phone}</td>
+          <td><span class="admin-status ${r.status}">${r.status === 'confirmed' ? 'تأیید شده' : 'لغو شده'}</span></td>
+          <td><button class="btn-sm danger" onclick="cancelReservation(${r.id})">لغو</button></td>
+        </tr>
+      `).join('')}
+    </table></div>`;
+}
+
+function cancelReservation(id) {
+  if (!confirm('آیا از لغو این رزرو مطمئن هستید؟')) return;
+  const list = DB.getReservations();
+  const r = list.find(x => x.id === id);
+  if (r) { r.status = 'cancelled'; DB._sync(); loadReservations(); }
+}
+
+function loadSettings() {
+  const s = DB.getSettings();
+  const container = document.getElementById('settingsTab');
+  container.innerHTML = `
+    <h3 style="margin-bottom:16px;color:var(--text);">⚙️ تنظیمات</h3>
+    <form id="settingsForm" style="max-width:500px;">
+      <div class="form-group"><label>🔐 کد امنیتی زبان</label>
+        <input type="password" id="langPass" value="" placeholder="کد جدید را وارد کنید" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);">
+        <small style="color:var(--text-muted);font-size:0.75rem;">خالی بگذارید = بدون قفل</small>
+      </div>
+      <div class="form-group"><label>زبان‌های مجاز</label>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="langFa" ${(s.enabledLanguages?.fa !== false)?'checked':''}> 🇮🇷 فارسی</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="langEn" ${(s.enabledLanguages?.en !== false)?'checked':''}> 🇬🇧 English</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="langAr" ${(s.enabledLanguages?.ar !== false)?'checked':''}> 🇦🇪 العربية</label>
+        </div>
+      </div>
+      <button type="submit" class="book-btn" style="margin-top:12px;">💾 ذخیره تنظیمات</button>
+    </form>`;
+  document.getElementById('settingsForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const pass = document.getElementById('langPass').value;
+    var settings = DB.getSettings();
+    if (pass) settings.langPassword = btoa(pass);
+    settings.enabledLanguages = {
+      fa: document.getElementById('langFa').checked,
+      en: document.getElementById('langEn').checked,
+      ar: document.getElementById('langAr').checked
+    };
+    DB.saveSettings(settings);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await I18n.init();
+  await DB.init();
+  if (localStorage.getItem('nobu_admin') === 'true') {
+    loadReservations();
+    loadSettings();
+  }
+});
+</script>
+</body></html>

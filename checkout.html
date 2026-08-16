@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسویه حساب | بیزشاپ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💳</text></svg>">
+</head>
+<body>
+
+<div class="toast-container"></div>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo"><div class="logo-icon">B</div><span data-i18n="site.name">بیزشاپ</span></a>
+      <div class="header-actions">
+        <div class="lang-dropdown" id="langSwitcher">
+          <button class="lang-dropdown-toggle lang-btn-icon" title="Language" data-i18n-title="nav.language" onclick="this.closest('.lang-dropdown').classList.toggle('open')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </button>
+          <div class="lang-dropdown-menu">
+            <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+            <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+            <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+          </div>
+        </div>
+        <button class="header-btn" onclick="window.location.href='cart.html'" title="سبد خرید" data-i18n="nav.cart">🛒<span class="badge cart-count" style="display:none;">0</span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/" data-i18n="nav.home">خانه</a>
+      <span class="separator">›</span>
+      <a href="cart.html" data-i18n="nav.cart">سبد خرید</a>
+      <span class="separator">›</span>
+      <span data-i18n="checkout.breadcrumb">تسویه حساب</span>
+    </div>
+
+    <div class="section-title">
+      <h2 data-i18n="checkout.sectionTitle">تسویه حساب</h2>
+      <p data-i18n="checkout.sectionDesc">اطلاعات خود را وارد کنید</p>
+      <div class="title-line"></div>
+    </div>
+
+    <div class="checkout-grid">
+      <div class="checkout-form">
+        <h3 data-i18n="checkout.shippingInfo">اطلاعات ارسال</h3>
+        <div class="form-group">
+          <label data-i18n="checkout.fullName">نام و نام خانوادگی</label>
+          <input type="text" id="custName" data-i18n-placeholder="checkout.fullNamePlaceholder" placeholder="مثال: علی محمدی">
+        </div>
+        <div class="form-group">
+          <label data-i18n="checkout.phoneLabel">شماره تماس</label>
+          <input type="tel" id="custPhone" data-i18n-placeholder="checkout.phonePlaceholder" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+        </div>
+        <div class="form-group">
+          <label data-i18n="checkout.fullAddress">آدرس کامل</label>
+          <textarea id="custAddress" rows="3" data-i18n-placeholder="checkout.addressPlaceholder" placeholder="استان، شهر، خیابان، کوچه، پلاک"></textarea>
+        </div>
+
+        <h3 style="margin-top:30px;" data-i18n="checkout.paymentMethod">روش پرداخت</h3>
+        <div class="payment-methods">
+          <div class="payment-method selected">
+            <div class="pay-icon">🏦</div>
+            <span data-i18n="checkout.onlineGateway">درگاه آنلاین</span>
+          </div>
+          <div class="payment-method">
+            <div class="pay-icon">💵</div>
+            <span data-i18n="checkout.cashOnDelivery">پرداخت در محل</span>
+          </div>
+          <div class="payment-method">
+            <div class="pay-icon">💳</div>
+            <span data-i18n="checkout.cardToCard">کارت به کارت</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" id="submitOrder" style="width:100%;margin-top:20px;" data-i18n="checkout.submitOrder">✅ ثبت سفارش</button>
+      </div>
+
+      <div class="cart-summary" style="position:sticky;top:100px;">
+        <h3 data-i18n="checkout.orderSummary">خلاصه سفارش</h3>
+        <div class="summary-row"><span data-i18n="checkout.itemCount">تعداد کالا</span><span id="checkoutCount">۰</span></div>
+        <div class="summary-row"><span data-i18n="checkout.subtotalLabel">جمع جزء</span><span id="checkoutSubtotal">۰</span></div>
+        <div class="summary-row"><span data-i18n="checkout.shippingCost">هزینه ارسال</span><span id="checkoutShipping">۰</span></div>
+        <div class="summary-row total"><span data-i18n="checkout.payable">قابل پرداخت</span><span id="checkoutTotal">۰</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© تمامی حقوق برای بیزشاپ محفوظ است.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('langchange', () => {
+  document.querySelectorAll('#langSwitcher .lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === I18n.lang);
+  });
+});
+</script>
+</body>
+</html>

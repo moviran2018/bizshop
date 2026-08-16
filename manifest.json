@@ -1,0 +1,15 @@
+{
+  "name": "بیزشاپ - فروشگاه اینترنتی",
+  "short_name": "بیزشاپ",
+  "description": "فروشگاه اینترنتی محصولات بیز و برندهای معتبر",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F6FA",
+  "theme_color": "#6C5CE7",
+  "dir": "rtl",
+  "lang": "fa",
+  "icons": [
+    { "src": "https://picsum.photos/seed/bizshop-icon/192/192", "sizes": "192x192", "type": "image/png" },
+    { "src": "https://picsum.photos/seed/bizshop-icon/512/512", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "siteName": "BizShop",
+  "description": "BizShop Online Store — your trusted source for Biz products",
+  "phone": "+98 912 345 6789",
+  "email": "info@bizshop.ir",
+  "address": "Tehran, Valiasr St, Biz Commercial Complex",
+  "workingHours": "9 AM to 9 PM",
+  "shippingCost": 150000,
+  "freeShippingMin": 3000000,
+  "socialMedia": {
+    "instagram": "https://instagram.com/bizshop",
+    "telegram": "https://t.me/bizshop",
+    "whatsapp": "https://wa.me/989123456789",
+    "bale": "https://ble.ir/bizshop_bot"
+  },
+  "theme": {
+    "primaryColor": "#6C5CE7",
+    "secondaryColor": "#FD79A8"
+  },
+  "heroSlider": [],
+  "mobile": {}
+}

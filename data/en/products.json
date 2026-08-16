@@ -1,0 +1,399 @@
+[
+  {
+    "id": 1,
+    "name": "Biz Bluetooth Headphone",
+    "category": "Electronics",
+    "price": 1280000,
+    "oldPrice": 1650000,
+    "discount": 22,
+    "brand": "Biz",
+    "rating": 4.5,
+    "reviews": 87,
+    "stock": 45,
+    "description": "Premium Bluetooth headphones with active noise cancellation and 40-hour battery life",
+    "features": [
+      "Active Noise Cancellation",
+      "40-hour Battery",
+      "Bluetooth 5.3"
+    ],
+    "tags": [
+      "Biz",
+      "Headphone",
+      "Bluetooth"
+    ],
+    "sku": "SKU-1",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/h1/600/600",
+      "https://picsum.photos/seed/h2/600/600"
+    ],
+    "video": "",
+    "model3d": "https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 2,
+    "name": "Biz Smart Band",
+    "category": "Electronics",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "Biz",
+    "rating": 4.2,
+    "reviews": 134,
+    "stock": 78,
+    "description": "Smart fitness band with heart rate monitoring and IP68 water resistance",
+    "features": [
+      "Heart Rate Monitor",
+      "Step Counter",
+      "IP68 Waterproof"
+    ],
+    "tags": [
+      "Biz",
+      "Band",
+      "Smart"
+    ],
+    "sku": "SKU-2",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sb1/600/600",
+      "https://picsum.photos/seed/sb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 3,
+    "name": "3-in-1 Wireless Charger",
+    "category": "Electronics",
+    "price": 650000,
+    "oldPrice": 780000,
+    "discount": 17,
+    "brand": "Biz",
+    "rating": 4.7,
+    "reviews": 203,
+    "stock": 120,
+    "description": "3-in-1 wireless charger for phone, earbuds, and smartwatch with fast charging",
+    "features": [
+      "15W Fast Charging",
+      "Qi Compatible",
+      "Compact Design"
+    ],
+    "tags": [
+      "Biz",
+      "Charger",
+      "Wireless"
+    ],
+    "sku": "SKU-3",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/c1/600/600",
+      "https://picsum.photos/seed/c2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 4,
+    "name": "Biz Laptop Bag",
+    "category": "Fashion",
+    "price": 980000,
+    "oldPrice": 1250000,
+    "discount": 22,
+    "brand": "Biz",
+    "rating": 4.4,
+    "reviews": 56,
+    "stock": 32,
+    "description": "Stylish and durable laptop bag with multiple compartments and waterproof material",
+    "features": [
+      "Waterproof",
+      "Fits 15.6-inch Laptop",
+      "Hidden Pocket"
+    ],
+    "tags": [
+      "Biz",
+      "Bag",
+      "Laptop"
+    ],
+    "sku": "SKU-4",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/lb1/600/600",
+      "https://picsum.photos/seed/lb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 5,
+    "name": "Portable Bluetooth Speaker",
+    "category": "Electronics",
+    "price": 750000,
+    "oldPrice": 920000,
+    "discount": 18,
+    "brand": "Biz",
+    "rating": 4.6,
+    "reviews": 189,
+    "stock": 65,
+    "description": "Portable Bluetooth speaker with 360° stereo sound and IPX7 water resistance",
+    "features": [
+      "360° Sound",
+      "20-hour Battery",
+      "IPX7 Waterproof"
+    ],
+    "tags": [
+      "Biz",
+      "Speaker",
+      "Bluetooth"
+    ],
+    "sku": "SKU-5",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sp1/600/600",
+      "https://picsum.photos/seed/sp2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 6,
+    "name": "Gaming Mouse RGB",
+    "category": "Electronics",
+    "price": 520000,
+    "oldPrice": 650000,
+    "discount": 20,
+    "brand": "Biz",
+    "rating": 4.3,
+    "reviews": 245,
+    "stock": 90,
+    "description": "Professional gaming mouse with 16.8M RGB lighting and 12000 DPI sensor",
+    "features": [
+      "16.8M RGB",
+      "12000 DPI Sensor",
+      "6 Buttons"
+    ],
+    "tags": [
+      "Biz",
+      "Mouse",
+      "Gaming"
+    ],
+    "sku": "SKU-6",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/m1/600/600",
+      "https://picsum.photos/seed/m2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 7,
+    "name": "Fast USB-C Cable",
+    "category": "Electronics",
+    "price": 98000,
+    "oldPrice": 135000,
+    "discount": 27,
+    "brand": "Biz",
+    "rating": 4.8,
+    "reviews": 412,
+    "stock": 500,
+    "description": "Fast USB-C cable with 60W charging and 480Mbps data transfer",
+    "features": [
+      "60W Charging",
+      "480Mbps Transfer",
+      "2m Length"
+    ],
+    "tags": [
+      "Biz",
+      "Cable",
+      "Charger"
+    ],
+    "sku": "SKU-7",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/uc1/600/600",
+      "https://picsum.photos/seed/uc2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 8,
+    "name": "Tempered Glass Protector",
+    "category": "Electronics",
+    "price": 85000,
+    "oldPrice": 120000,
+    "discount": 29,
+    "brand": "Biz",
+    "rating": 4.1,
+    "reviews": 521,
+    "stock": 1000,
+    "description": "9H hardness tempered glass screen protector with anti-fingerprint coating",
+    "features": [
+      "9H Hardness",
+      "Scratch Resistant",
+      "Anti-fingerprint"
+    ],
+    "tags": [
+      "Biz",
+      "Glass",
+      "Protector"
+    ],
+    "sku": "SKU-8",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/g1/600/600",
+      "https://picsum.photos/seed/g2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 9,
+    "name": "Power Bank 20000mAh",
+    "category": "Electronics",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "Biz",
+    "rating": 4.5,
+    "reviews": 167,
+    "stock": 55,
+    "description": "20000mAh power bank with 18W fast charging and dual output ports",
+    "features": [
+      "20000mAh Capacity",
+      "18W Fast Charging",
+      "Dual Output"
+    ],
+    "tags": [
+      "Biz",
+      "Power Bank",
+      "Charger"
+    ],
+    "sku": "SKU-9",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/pb1/600/600",
+      "https://picsum.photos/seed/pb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 10,
+    "name": "Car Phone Holder",
+    "category": "Electronics",
+    "price": 210000,
+    "oldPrice": 280000,
+    "discount": 25,
+    "brand": "Biz",
+    "rating": 4,
+    "reviews": 312,
+    "stock": 200,
+    "description": "Car phone holder with 360° rotation and easy installation",
+    "features": [
+      "Easy Installation",
+      "360° Rotation",
+      "Fits All Phones"
+    ],
+    "tags": [
+      "Biz",
+      "Holder",
+      "Car"
+    ],
+    "sku": "SKU-10",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/hd1/600/600",
+      "https://picsum.photos/seed/hd2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 11,
+    "name": "Asus ZenBook 14",
+    "category": "Laptop",
+    "price": 28500000,
+    "oldPrice": 32500000,
+    "discount": 12,
+    "brand": "Asus",
+    "rating": 4.7,
+    "reviews": 89,
+    "stock": 12,
+    "description": "Slim and light Asus laptop with Core i7-1355U processor",
+    "features": [
+      "Core i7-1355U",
+      "16GB RAM",
+      "512GB SSD"
+    ],
+    "tags": [
+      "Laptop",
+      "Asus",
+      "ZenBook"
+    ],
+    "sku": "SKU-11",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/l1/600/600",
+      "https://picsum.photos/seed/l2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 12,
+    "name": "Samsung Galaxy S24",
+    "category": "Mobile",
+    "price": 38900000,
+    "oldPrice": 42900000,
+    "discount": 9,
+    "brand": "Samsung",
+    "rating": 4.8,
+    "reviews": 245,
+    "stock": 8,
+    "description": "Samsung flagship phone with 200MP camera and 12GB RAM",
+    "features": [
+      "12GB RAM",
+      "256GB Storage",
+      "200MP Camera"
+    ],
+    "tags": [
+      "Mobile",
+      "Samsung",
+      "Galaxy"
+    ],
+    "sku": "SKU-12",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/s24-1/600/600",
+      "https://picsum.photos/seed/s24-2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  }
+]

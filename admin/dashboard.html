@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="admin.dashboard">داشبورد | مدیریت بیزشاپ</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body class="admin-body">
+
+<div class="toast-container"></div>
+
+<!-- ===== SIDEBAR (Desktop) ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">بیز<span class="logo-accent">شاپ</span></div>
+    <button class="sidebar-close" id="sidebarClose">&times;</button>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label" data-i18n="admin.sidebar.main">اصلی</div>
+    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+      <span class="nav-icon">📊</span>
+      <span class="nav-text" data-i18n="admin.sidebar.dashboard">داشبورد</span>
+    </a>
+    <a href="#products" class="nav-item" data-page="products">
+      <span class="nav-icon">📦</span>
+      <span class="nav-text" data-i18n="admin.sidebar.products">محصولات</span>
+    </a>
+    <a href="#categories" class="nav-item" data-page="categories">
+      <span class="nav-icon">📂</span>
+      <span class="nav-text" data-i18n="admin.sidebar.categories">دسته‌بندی‌ها</span>
+    </a>
+    <a href="#orders" class="nav-item" data-page="orders">
+      <span class="nav-icon">📋</span>
+      <span class="nav-text" data-i18n="admin.sidebar.orders">سفارشات</span>
+      <span class="nav-badge" id="ordersBadge">۰</span>
+    </a>
+    <div class="nav-section-label" data-i18n="admin.sidebar.management">مدیریت</div>
+    <a href="#settings" class="nav-item" data-page="settings">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-text" data-i18n="admin.sidebar.settings">تنظیمات</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../index.html" class="nav-item">
+      <span class="nav-icon">🏪</span>
+      <span class="nav-text" data-i18n="admin.sidebar.store">مشاهده فروشگاه</span>
+    </a>
+    <a href="#" class="nav-item" id="logoutBtn">
+      <span class="nav-icon">🚪</span>
+      <span class="nav-text" data-i18n="admin.sidebar.logout">خروج</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ===== OVERLAY ===== -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== MAIN ===== -->
+<main class="main-content">
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <div class="header-left">
+      <button class="hamburger" id="hamburger" aria-label="منو">
+        <span></span><span></span><span></span>
+      </button>
+      <h2 class="page-title" id="pageTitle">داشبورد</h2>
+    </div>
+    <div class="header-right">
+      <div class="lang-dropdown" id="langSwitcher">
+        <button class="lang-dropdown-toggle lang-btn-icon" title="Language" data-i18n-title="nav.language" onclick="this.closest('.lang-dropdown').classList.toggle('open')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </button>
+        <div class="lang-dropdown-menu">
+          <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+          <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+          <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+        </div>
+      </div>
+      <button class="header-icon-btn" id="notifBtn" aria-label="" data-i18n="admin.header.notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <div class="admin-profile">
+        <img src="https://picsum.photos/seed/admin/40/40" alt="admin" class="profile-avatar">
+        <div class="profile-info">
+          <span class="profile-name" data-i18n="admin.header.profileName">مدیر سیستم</span>
+          <span class="profile-role" data-i18n="admin.header.profileRole">ادمین</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content" id="adminContent"></div>
+
+</main>
+
+<!-- ===== BOTTOM NAV (موبایل) ===== -->
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#dashboard" class="bottom-nav-item active" data-page="dashboard">
+    <span class="bnav-icon">📊</span>
+    <span class="bnav-label" data-i18n="admin.bottomNav.dashboard">داشبورد</span>
+  </a>
+  <a href="#products" class="bottom-nav-item" data-page="products">
+    <span class="bnav-icon">📦</span>
+    <span class="bnav-label" data-i18n="admin.bottomNav.products">محصولات</span>
+  </a>
+  <a href="#orders" class="bottom-nav-item" data-page="orders">
+    <span class="bnav-icon">📋</span>
+    <span class="bnav-label" data-i18n="admin.bottomNav.orders">سفارشات</span>
+    <span class="bnav-badge" id="bnavOrdersBadge">۰</span>
+  </a>
+  <a href="#settings" class="bottom-nav-item" data-page="settings">
+    <span class="bnav-icon">⚙️</span>
+    <span class="bnav-label" data-i18n="admin.bottomNav.settings">تنظیمات</span>
+  </a>
+  <a href="../index.html" class="bottom-nav-item">
+    <span class="bnav-icon">🏪</span>
+    <span class="bnav-label" data-i18n="admin.bottomNav.store">فروشگاه</span>
+  </a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/admin-core.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+[
+  {
+    "id": 1,
+    "name": "سماعات بلوتوث بيز",
+    "category": "إلكترونيات",
+    "price": 1280000,
+    "oldPrice": 1650000,
+    "discount": 22,
+    "brand": "بيز",
+    "rating": 4.5,
+    "reviews": 87,
+    "stock": 45,
+    "description": "سماعات بلوتوث فاخرة مع خاصية إلغاء الضوضاء النشطة وبطارية تدوم 40 ساعة",
+    "features": [
+      "إلغاء الضوضاء النشط",
+      "بطارية 40 ساعة",
+      "بلوتوث 5.3"
+    ],
+    "tags": [
+      "بيز",
+      "سماعات",
+      "بلوتوث"
+    ],
+    "sku": "SKU-1",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/h1/600/600",
+      "https://picsum.photos/seed/h2/600/600"
+    ],
+    "video": "",
+    "model3d": "https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 2,
+    "name": "سوارة ذكية بيز",
+    "category": "إلكترونيات",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "بيز",
+    "rating": 4.2,
+    "reviews": 134,
+    "stock": 78,
+    "description": "سوارة لياقة ذكية مع مراقبة معدل ضربات القلب ومقاومة الماء IP68",
+    "features": [
+      "مراقبة ضربات القلب",
+      "عداد الخطوات",
+      "مقاوم للماء IP68"
+    ],
+    "tags": [
+      "بيز",
+      "سوارة",
+      "ذكية"
+    ],
+    "sku": "SKU-2",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sb1/600/600",
+      "https://picsum.photos/seed/sb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 3,
+    "name": "شاحن لاسلكي 3 في 1",
+    "category": "إلكترونيات",
+    "price": 650000,
+    "oldPrice": 780000,
+    "discount": 17,
+    "brand": "بيز",
+    "rating": 4.7,
+    "reviews": 203,
+    "stock": 120,
+    "description": "شاحن لاسلكي 3 في 1 للهاتف والسماعات والساعة الذكية مع شحن سريع",
+    "features": [
+      "شحن سريع 15W",
+      "متوافق مع Qi",
+      "تصميم مضغوط"
+    ],
+    "tags": [
+      "بيز",
+      "شاحن",
+      "لاسلكي"
+    ],
+    "sku": "SKU-3",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/c1/600/600",
+      "https://picsum.photos/seed/c2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 4,
+    "name": "حقيبة لابتوب بيز",
+    "category": "أزياء",
+    "price": 980000,
+    "oldPrice": 1250000,
+    "discount": 22,
+    "brand": "بيز",
+    "rating": 4.4,
+    "reviews": 56,
+    "stock": 32,
+    "description": "حقيبة لابتوب أنيقة ومتينة مع جيوب متعددة ومادة مقاومة للماء",
+    "features": [
+      "مقاوم للماء",
+      "مناسب للابتوب 15.6 إنش",
+      "جيب مخفي"
+    ],
+    "tags": [
+      "بيز",
+      "حقيبة",
+      "لابتوب"
+    ],
+    "sku": "SKU-4",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/lb1/600/600",
+      "https://picsum.photos/seed/lb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 5,
+    "name": "مكبر صوت بلوتوث محمول",
+    "category": "إلكترونيات",
+    "price": 750000,
+    "oldPrice": 920000,
+    "discount": 18,
+    "brand": "بيز",
+    "rating": 4.6,
+    "reviews": 189,
+    "stock": 65,
+    "description": "مكبر صوت بلوتوث محمول مع صوت استريو 360 درجة ومقاومة الماء IPX7",
+    "features": [
+      "صوت 360 درجة",
+      "بطارية 20 ساعة",
+      "مقاوم للماء IPX7"
+    ],
+    "tags": [
+      "بيز",
+      "مكبر صوت",
+      "بلوتوث"
+    ],
+    "sku": "SKU-5",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/sp1/600/600",
+      "https://picsum.photos/seed/sp2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 6,
+    "name": "فأرة ألعاب RGB",
+    "category": "إلكترونيات",
+    "price": 520000,
+    "oldPrice": 650000,
+    "discount": 20,
+    "brand": "بيز",
+    "rating": 4.3,
+    "reviews": 245,
+    "stock": 90,
+    "description": "فأرة ألعاب احترافية مع إضاءة RGB 16.8 مليون لون ومستشعر 12000 DPI",
+    "features": [
+      "RGB 16.8 مليون لون",
+      "مستشعر 12000 DPI",
+      "6 أزرار"
+    ],
+    "tags": [
+      "بيز",
+      "فأرة",
+      "ألعاب"
+    ],
+    "sku": "SKU-6",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/m1/600/600",
+      "https://picsum.photos/seed/m2/600/600"
+    ],
+    "video": "",
+    "bestseller": true,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 7,
+    "name": "كابل USB-C سريع",
+    "category": "إلكترونيات",
+    "price": 98000,
+    "oldPrice": 135000,
+    "discount": 27,
+    "brand": "بيز",
+    "rating": 4.8,
+    "reviews": 412,
+    "stock": 500,
+    "description": "كابل USB-C سريع بشحن 60W ونقل بيانات 480Mbps",
+    "features": [
+      "شحن 60W",
+      "نقل 480Mbps",
+      "طول 2 متر"
+    ],
+    "tags": [
+      "بيز",
+      "كابل",
+      "شاحن"
+    ],
+    "sku": "SKU-7",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/uc1/600/600",
+      "https://picsum.photos/seed/uc2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 8,
+    "name": "زجاج مقسى حماية للشاشة",
+    "category": "إلكترونيات",
+    "price": 85000,
+    "oldPrice": 120000,
+    "discount": 29,
+    "brand": "بيز",
+    "rating": 4.1,
+    "reviews": 521,
+    "stock": 1000,
+    "description": "زجاج مقسى حماية للشاشة بصلابة 9H وطبقة مضادة لبصمات الأصابع",
+    "features": [
+      "صلابة 9H",
+      "مقاوم للخدش",
+      "مضاد لبصمات الأصابع"
+    ],
+    "tags": [
+      "بيز",
+      "زجاج",
+      "حماية"
+    ],
+    "sku": "SKU-8",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/g1/600/600",
+      "https://picsum.photos/seed/g2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 9,
+    "name": "باور بانك 20000mAh",
+    "category": "إلكترونيات",
+    "price": 890000,
+    "oldPrice": 1100000,
+    "discount": 19,
+    "brand": "بيز",
+    "rating": 4.5,
+    "reviews": 167,
+    "stock": 55,
+    "description": "باور بانك 20000mAh مع شحن سريع 18W ومنفذي إخراج",
+    "features": [
+      "سعة 20000mAh",
+      "شحن سريع 18W",
+      "مخرجان"
+    ],
+    "tags": [
+      "بيز",
+      "باور بانك",
+      "شاحن"
+    ],
+    "sku": "SKU-9",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/pb1/600/600",
+      "https://picsum.photos/seed/pb2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 10,
+    "name": "حامل جوال للسيارة",
+    "category": "إلكترونيات",
+    "price": 210000,
+    "oldPrice": 280000,
+    "discount": 25,
+    "brand": "بيز",
+    "rating": 4,
+    "reviews": 312,
+    "stock": 200,
+    "description": "حامل جوال للسيارة مع دوران 360 درجة وتركيب سهل",
+    "features": [
+      "تركيب سهل",
+      "دوران 360 درجة",
+      "يناسب جميع الجوالات"
+    ],
+    "tags": [
+      "بيز",
+      "حامل",
+      "سيارة"
+    ],
+    "sku": "SKU-10",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/hd1/600/600",
+      "https://picsum.photos/seed/hd2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 11,
+    "name": "لابتوب آسوس ZenBook 14",
+    "category": "لابتوب",
+    "price": 28500000,
+    "oldPrice": 32500000,
+    "discount": 12,
+    "brand": "آسوس",
+    "rating": 4.7,
+    "reviews": 89,
+    "stock": 12,
+    "description": "لابتوب آسوس رفيع وخفيف بمعالج Core i7-1355U",
+    "features": [
+      "Core i7-1355U",
+      "16GB RAM",
+      "512GB SSD"
+    ],
+    "tags": [
+      "لابتوب",
+      "آسوس",
+      "ZenBook"
+    ],
+    "sku": "SKU-11",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/l1/600/600",
+      "https://picsum.photos/seed/l2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  },
+  {
+    "id": 12,
+    "name": "جوال سامسونج Galaxy S24",
+    "category": "جوال",
+    "price": 38900000,
+    "oldPrice": 42900000,
+    "discount": 9,
+    "brand": "سامسونج",
+    "rating": 4.8,
+    "reviews": 245,
+    "stock": 8,
+    "description": "جوال سامسونج الرائد بكاميرا 200 ميجابكسل وذاكرة 12GB",
+    "features": [
+      "12GB RAM",
+      "256GB تخزين",
+      "كاميرا 200MP"
+    ],
+    "tags": [
+      "جوال",
+      "سامسونج",
+      "Galaxy"
+    ],
+    "sku": "SKU-12",
+    "status": "active",
+    "images": [
+      "https://picsum.photos/seed/s24-1/600/600",
+      "https://picsum.photos/seed/s24-2/600/600"
+    ],
+    "video": "",
+    "bestseller": false,
+    "shareImage": true,
+    "createdAt": ""
+  }
+]

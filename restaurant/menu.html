@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title data-i18n="menuPage.title">منوی نوبو</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍣</text></svg>">
+</head><body>
+
+<header><div class="header-inner">
+<button class="mobile-toggle" id="mobileToggle">☰</button>
+<a href="index.html" class="logo">
+  <svg viewBox="0 0 200 50"><text x="0" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="400" fill="#af945c" font-style="italic">NOBU</text><text x="85" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="300" fill="#f0ece4">تهران</text></svg>
+</a>
+<ul class="nav" id="mainNav">
+<li><a href="index.html" data-i18n="nav.home">خانه</a></li>
+<li><a href="menu.html" class="active" data-i18n="nav.menu">منو</a></li>
+<li><a href="reservation.html" data-i18n="nav.reservation">رزرو</a></li>
+<li><a href="gallery.html" data-i18n="nav.gallery">گالری</a></li>
+<li><a href="contact.html" data-i18n="nav.contact">تماس</a></li>
+</ul>
+<div class="header-actions">
+<div class="lang-dropdown" id="langSwitcher">
+<button class="lang-dropdown-toggle" onclick="this.closest('.lang-dropdown').classList.toggle('open')">🌐</button>
+<div class="lang-dropdown-menu">
+<button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+<button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+<button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+</div></div>
+<a href="reservation.html" class="btn btn-outline-light btn-sm" data-i18n="hero.book">رزرو میز</a>
+</div></div>
+</header>
+
+<section class="page-hero">
+<div class="hero-content" style="position:relative;z-index:2;">
+<p style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;" data-i18n="menuPage.title">منوی نوبو</p>
+<h1 data-i18n="menuPage.title">منوی نوبو</h1>
+<p data-i18n="menuPage.desc">منوی کامل با جزئیات دقیق هر dish</p>
+</div>
+</section>
+
+<section class="page-section page-section--dark page-section--padding--lg">
+<div class="container container--lg">
+<div class="menu-tabs">
+<button class="menu-tab active" data-cat="all">همه</button>
+<button class="menu-tab" data-cat="starters" data-i18n="menu.cat.starters">پیش‌غذا</button>
+<button class="menu-tab" data-cat="sushi" data-i18n="menu.cat.sushi">سوشی</button>
+<button class="menu-tab" data-cat="hot" data-i18n="menu.cat.hot">غذای گرم</button>
+<button class="menu-tab" data-cat="dessert" data-i18n="menu.cat.dessert">دسر</button>
+<button class="menu-tab" data-cat="drink" data-i18n="menu.cat.drink">نوشیدنی</button>
+</div>
+<div class="menu-grid"></div>
+</div>
+</section>
+
+<footer><div class="container container--lg">
+<div class="footer-bottom" data-i18n="footer.rights">© تمامی حقوق محفوظ است.</div>
+</div></footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body></html>

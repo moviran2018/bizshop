@@ -1,0 +1,22 @@
+{
+  "siteName": "بیزشاپ",
+  "description": "فروشگاه اینترنتی بیزشاپ — مرجع تخصصی محصولات بیز",
+  "phone": "09123456789",
+  "email": "info@bizshop.ir",
+  "address": "تهران، خیابان ولیعصر، مجتمع تجاری بیز",
+  "workingHours": "۹ صبح تا ۹ شب",
+  "shippingCost": 150000,
+  "freeShippingMin": 3000000,
+  "socialMedia": {
+    "instagram": "https://instagram.com/bizshop",
+    "telegram": "https://t.me/bizshop",
+    "whatsapp": "https://wa.me/989123456789",
+    "bale": "https://ble.ir/bizshop_bot"
+  },
+  "theme": {
+    "primaryColor": "#6C5CE7",
+    "secondaryColor": "#FD79A8"
+  },
+  "heroSlider": [],
+  "mobile": {}
+}

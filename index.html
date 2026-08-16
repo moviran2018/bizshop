@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="site.name">بیزشاپ | فروشگاه اینترنتی محصولات بیز</title>
+  <meta name="description" data-i18n-content="site.titleMeta" content="فروشگاه اینترنتی بیزشاپ - مرجع خرید محصولات بیز و برندهای معتبر">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+  <meta name="theme-color" content="#f97316">
+</head>
+<body>
+
+<div class="toast-container"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-links">
+      <a href="tel:09123456789" id="topbarPhone">📞 ۰۹۱۲۳۴۵۶۷۸۹</a>
+      <a href="mailto:info@bizshop.ir" id="topbarEmail">✉ info@bizshop.ir</a>
+      <div class="lang-dropdown" id="langSwitcher">
+        <button class="lang-dropdown-toggle lang-btn-icon" title="تغییر زبان" data-i18n-title="nav.language" onclick="this.closest('.lang-dropdown').classList.toggle('open')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </button>
+        <div class="lang-dropdown-menu">
+          <button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+          <button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+          <button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+        </div>
+      </div>
+    </div>
+    <div class="top-bar-social" id="topbarSocial">
+          <a href="https://instagram.com/bizshop" target="_blank" title="اینستاگرام" class="social-icon instagram" data-i18n="footer.instagram">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+          <a href="https://t.me/bizshop" target="_blank" title="تلگرام" class="social-icon telegram" data-i18n="footer.telegram">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </a>
+          <a href="https://wa.me/989123456789" target="_blank" title="واتساپ" class="social-icon whatsapp" data-i18n="footer.whatsapp">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <button class="mobile-toggle" aria-label="منو" data-i18n="nav.menu">☰</button>
+      <a href="/" class="logo">
+        <div class="logo-icon">B</div>
+        <span data-i18n="site.name">بیزشاپ</span>
+      </a>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" data-i18n-placeholder="common.searchPlaceholder" placeholder="جستجوی محصولات...">
+      </div>
+      <div class="header-actions">
+
+        <button class="header-btn" onclick="window.location.href='cart.html'" title="سبد خرید" data-i18n-title="nav.cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 14.75l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-1.1 2-2.76 5H8.53l-.13-.27L6.16 6l-.95-2-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+          <span class="badge cart-count" style="display:none;">0</span>
+        </button>
+        <button class="header-btn" onclick="window.location.href='admin/login.html'" title="پنل مدیریت" data-i18n-title="nav.admin">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN NAV -->
+<nav class="main-nav">
+  <div class="container">
+    <div class="main-nav-inner">
+      <ul class="nav-list">
+        <li><a href="/" class="active" data-i18n="nav.home">🏠 خانه</a></li>
+        <li><a href="products.html" data-i18n="nav.products">🛍 محصولات</a></li>
+        <li><a href="products.html?brand=بیز" data-i18n="nav.bizProducts">⭐ محصولات بیز</a></li>
+        <li><a href="products.html?sort=discount" data-i18n="nav.discounts">🔥 تخفیف‌ها</a></li>
+        <li><a href="products.html?category=الکترونیک" data-i18n="nav.electronics">📱 الکترونیک</a></li>
+        <li><a href="products.html?category=مد%20و%20پوشاک" data-i18n="nav.fashion">👕 مد و پوشاک</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+  <div class="mobile-menu-header">
+    <span class="logo"><div class="logo-icon">B</div> <span data-i18n="site.name">بیزشاپ</span></span>
+    <button class="mobile-menu-close">&times;</button>
+  </div>
+  <ul class="mobile-nav-list">
+    <li><a href="/" data-i18n="nav.home">🏠 خانه</a></li>
+    <li><a href="products.html" data-i18n="nav.allProducts">🛍 همه محصولات</a></li>
+    <li><a href="products.html?brand=بیز" data-i18n="nav.bizProducts">⭐ محصولات بیز</a></li>
+    <li><a href="products.html?sort=discount" data-i18n="nav.specialDiscounts">🔥 تخفیف‌های ویژه</a></li>
+    <div class="mobile-nav-divider"></div>
+    <li><a href="products.html?category=الکترونیک" data-i18n="nav.electronics">📱 الکترونیک</a></li>
+    <li><a href="products.html?category=لپ%E2%80%8Cتاپ" data-i18n="nav.laptop">💻 لپ‌تاپ</a></li>
+    <li><a href="products.html?category=موبایل" data-i18n="nav.mobile">📞 موبایل</a></li>
+    <li><a href="products.html?category=مد%20و%20پوشاک" data-i18n="nav.fashion">👕 مد و پوشاک</a></li>
+    <li><a href="products.html?category=خوراکی" data-i18n="nav.food">☕ خوراکی</a></li>
+    <li><a href="products.html?category=کتاب%20و%20محتوا" data-i18n="nav.books">📚 کتاب و محتوا</a></li>
+    <div class="mobile-nav-divider"></div>
+    <li><a href="cart.html" data-i18n="nav.cart">🛒 سبد خرید</a></li>
+    <li><a href="admin/login.html" data-i18n="nav.admin">⚙️ پنل مدیریت</a></li>
+  </ul>
+</div>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-loading" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--gray-500);font-size:1rem;" data-i18n="common.loading">در حال بارگذاری...</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES BAR -->
+<section>
+  <div class="container">
+    <div class="features-bar"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-i18n="section.categories">دسته‌بندی محصولات</h2>
+      <p data-i18n="section.categoriesDesc">از میان دسته‌بندی‌های متنوع ما انتخاب کنید</p>
+      <div class="title-line"></div>
+    </div>
+    <div class="categories-grid"></div>
+  </div>
+</section>
+
+<!-- BANNERS -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="category-banners"></div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-i18n="section.featured">محصولات ویژه</h2>
+      <p data-i18n="section.featuredDesc">پرطرفدارترین محصولات با تخفیف ویژه</p>
+      <div class="title-line"></div>
+    </div>
+    <div class="product-grid featured-products-grid"></div>
+  </div>
+</section>
+
+<!-- NEW PRODUCTS -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-i18n="section.new">جدیدترین محصولات</h2>
+      <p data-i18n="section.newDesc">آخرین محصولات اضافه شده به فروشگاه</p>
+      <div class="title-line"></div>
+    </div>
+    <div class="product-grid new-products-grid"></div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-i18n="section.bestsellers">پرفروش‌ترین‌ها</h2>
+      <p data-i18n="section.bestsellersDesc">محصولاتی که بیشترین فروش را داشته‌اند</p>
+      <div class="title-line"></div>
+    </div>
+    <div class="product-grid bestsellers-grid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-logo" id="footerLogo"><div class="logo-icon">B</div> <span id="footerSiteName" data-i18n="site.name">بیزشاپ</span></div>
+        <p id="footerAboutText" data-i18n="site.desc">فروشگاه اینترنتی بیزشاپ، مرجع تخصصی خرید محصولات بیز و برندهای معتبر با بهترین قیمت و کیفیت. با ضمانت بازگشت کالا و ارسال سریع به سراسر ایران.</p>
+        <div class="footer-social" id="footerSocial">
+<a href="https://instagram.com/bizshop" target="_blank" title="اینستاگرام" class="social-icon instagram" data-i18n="footer.instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+<a href="https://t.me/bizshop" target="_blank" title="تلگرام" class="social-icon telegram" data-i18n="footer.telegram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+<a href="https://wa.me/989123456789" target="_blank" title="واتساپ" class="social-icon whatsapp" data-i18n="footer.whatsapp">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://ble.ir/bizshop_bot" target="_blank" data-i18n-title="footer.bale" title="بله" class="social-icon bale" id="footerBale">🔵</a>
+        </div>
+      </div>
+      <div class="footer-col" id="footerQuickLinks">
+        <h4 id="footerQuickTitle" data-i18n="footer.quickAccess">دسترسی سریع</h4>
+        <ul id="footerQuickList">
+          <li><a href="products.html" data-i18n="nav.allProducts">همه محصولات</a></li>
+          <li><a href="products.html?brand=بیز" data-i18n="nav.bizProducts">محصولات بیز</a></li>
+          <li><a href="products.html?sort=discount" data-i18n="nav.discounts">تخفیف‌ها</a></li>
+          <li><a href="products.html?category=الکترونیک" data-i18n="nav.electronics">الکترونیک</a></li>
+          <li><a href="products.html?category=مد%20و%20پوشاک" data-i18n="nav.fashion">مد و پوشاک</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footerServices">
+        <h4 id="footerServicesTitle" data-i18n="footer.customerService">خدمات مشتریان</h4>
+        <ul id="footerServicesList">
+          <li><a href="#" data-i18n="footer.buyGuide">راهنمای خرید</a></li>
+          <li><a href="#" data-i18n="footer.shippingMethods">روش‌های ارسال</a></li>
+          <li><a href="#" data-i18n="footer.paymentMethods">روش‌های پرداخت</a></li>
+          <li><a href="#" data-i18n="footer.returnGuarantee">ضمانت بازگشت</a></li>
+          <li><a href="#" data-i18n="footer.faq">سوالات متداول</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footerContact">
+        <h4 id="footerContactTitle" data-i18n="footer.contactInfo">اطلاعات تماس</h4>
+        <ul class="footer-contact">
+          <li><span class="contact-icon">📍</span><span id="footerAddress" data-i18n="footer.address"> تهران، خیابان ولیعصر، مجتمع تجاری بیز</span></li>
+          <li><span class="contact-icon">📞</span> <a href="tel:09123456789" id="footerPhone" data-i18n="footer.phone">۰۹۱۲۳۴۵۶۷۸۹</a></li>
+          <li><span class="contact-icon">✉</span> <a href="mailto:info@bizshop.ir" id="footerEmail">info@bizshop.ir</a></li>
+          <li><span class="contact-icon">🕒</span> <span id="footerHours" data-i18n="footer.hours">۹ صبح تا ۹ شب</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" id="footerBottom">
+      <span id="footerCopyright" data-i18n="footer.rights">© تمامی حقوق برای بیزشاپ محفوظ است.</span>
+      <span id="footerCredit" data-i18n="footer.developed">طراحی و توسعه با ❤️ در ایران</span>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" data-i18n-aria="backToTop" aria-label="بازگشت به بالا">↑</button>
+
+<!-- CHATBOT BUTTON -->
+<button class="chatbot-toggle" id="chatbotToggle" data-i18n-aria="aria.chatbot" aria-label="چت بات">
+  🤖
+  <span class="notification-dot"></span>
+</button>
+
+<!-- CHATBOT WINDOW -->
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chatbot-header">
+    <div class="bot-avatar">🤖</div>
+    <div class="bot-info">
+      <h4 data-i18n="chat.title">دستیار هوشمند بیزشاپ</h4>
+      <span data-i18n="chat.status">آنلاین - پاسخگویی سریع</span>
+    </div>
+    <button class="close-chat" id="closeChat">&times;</button>
+  </div>
+  <div class="chatbot-messages" id="chatMessages">
+    <div class="chat-message bot" data-i18n="chat.greeting">سلام! 👋 به بیزشاپ خوش آمدید. چطور می‌توانم کمک کنم؟</div>
+  </div>
+  <div class="quick-replies" id="quickReplies"></div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="سوال خود را بپرسید...">
+    <button id="sendMessage">➤</button>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

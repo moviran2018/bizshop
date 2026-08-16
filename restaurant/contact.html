@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title data-i18n="nav.contact">تماس | نوبو</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍣</text></svg>">
+</head><body>
+
+<header><div class="header-inner">
+<button class="mobile-toggle" id="mobileToggle">☰</button>
+<a href="index.html" class="logo">
+  <svg viewBox="0 0 200 50"><text x="0" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="400" fill="#af945c" font-style="italic">NOBU</text><text x="85" y="35" font-family="Playfair Display, Georgia, serif" font-size="28" font-weight="300" fill="#f0ece4">تهران</text></svg>
+</a>
+<ul class="nav" id="mainNav">
+<li><a href="index.html" data-i18n="nav.home">خانه</a></li>
+<li><a href="menu.html" data-i18n="nav.menu">منو</a></li>
+<li><a href="reservation.html" data-i18n="nav.reservation">رزرو</a></li>
+<li><a href="gallery.html" data-i18n="nav.gallery">گالری</a></li>
+<li><a href="contact.html" class="active" data-i18n="nav.contact">تماس</a></li>
+</ul>
+<div class="header-actions">
+<div class="lang-dropdown" id="langSwitcher">
+<button class="lang-dropdown-toggle" onclick="this.closest('.lang-dropdown').classList.toggle('open')">🌐</button>
+<div class="lang-dropdown-menu">
+<button class="lang-option active" data-lang="fa" onclick="I18n.switch('fa')">🇮🇷 فارسی</button>
+<button class="lang-option" data-lang="en" onclick="I18n.switch('en')">🇬🇧 English</button>
+<button class="lang-option" data-lang="ar" onclick="I18n.switch('ar')">🇦🇪 العربية</button>
+</div></div>
+<a href="reservation.html" class="btn btn-outline-light btn-sm" data-i18n="hero.book">رزرو میز</a>
+</div></div>
+</header>
+
+<section class="page-hero">
+<div class="hero-content" style="position:relative;z-index:2;">
+<p style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;" data-i18n="nav.contact">تماس</p>
+<h1 data-i18n="contact.title">اطلاعات تماس</h1>
+<p>ما خوشحال می‌شویم صدای شما را بشنویم</p>
+</div>
+</section>
+
+<section class="page-section page-section--dark page-section--padding--lg">
+<div class="container container--lg">
+<div class="row align-items-center">
+<div class="col-12 col-lg-6">
+<div class="info-strip" style="grid-template-columns:1fr;border-top:none;border-bottom:none;">
+<div class="info-strip-item" style="border-right:none;border-bottom:1px solid var(--border);text-align:right;padding:24px 0;">
+<div class="label" data-i18n="info.address">آدرس</div>
+<div class="value" data-i18n="contact.address">تهران، الهیه، بلوار فرحزادی</div>
+</div>
+<div class="info-strip-item" style="border-right:none;border-bottom:1px solid var(--border);text-align:right;padding:24px 0;">
+<div class="label" data-i18n="info.phone">تلفن</div>
+<div class="value"><a href="tel:+982112345678" style="color:var(--text);text-decoration:none;" data-i18n="contact.phone">۰۲۱-۱۲۳۴۵۶۷۸</a></div>
+</div>
+<div class="info-strip-item" style="border-right:none;border-bottom:1px solid var(--border);text-align:right;padding:24px 0;">
+<div class="label">ایمیل</div>
+<div class="value"><a href="mailto:info@nobutehran.ir" style="color:var(--text);text-decoration:none;">info@nobutehran.ir</a></div>
+</div>
+<div class="info-strip-item" style="border-right:none;text-align:right;padding:24px 0;">
+<div class="label" data-i18n="info.hours">ساعت کاری</div>
+<div class="value" data-i18n="contact.hours">همه‌روزه ۱۲:۰۰ تا ۲۳:۰۰</div>
+</div>
+</div>
+</div>
+<div class="col-12 col-lg-6">
+<div class="reservation-form" style="padding:0;">
+<h3 style="margin-bottom:24px;">ارسال پیام</h3>
+<form id="contactForm">
+<div class="form-row">
+<div class="form-group"><label data-i18n="reservation.name">نام</label><input type="text" id="contactName" required></div>
+<div class="form-group"><label data-i18n="reservation.email">ایمیل</label><input type="email" id="contactEmail" required></div>
+</div>
+<div class="form-group"><label>موضوع</label><input type="text" id="contactSubject" required></div>
+<div class="form-group"><label>پیام</label><textarea id="contactMessage" rows="4" required></textarea></div>
+<button type="submit" class="btn btn-outline-primary" style="width:100%;padding:14px;">ارسال پیام</button>
+</form>
+<div id="contactSuccess" style="display:none;text-align:center;padding:30px;">
+<div style="font-size:2rem;margin-bottom:8px;">✅</div>
+<h3 style="font-weight:300;">پیام شما با موفقیت ارسال شد</h3>
+<p style="color:var(--text-muted);">در اسرع وقت با شما تماس خواهیم گرفت</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer><div class="container container--lg">
+<div class="footer-bottom" data-i18n="footer.rights">© تمامی حقوق محفوظ است.</div>
+</div></footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.getElementById('contactForm')?.addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('contactSuccess').style.display = 'block';
+});
+</script>
+</body></html>
