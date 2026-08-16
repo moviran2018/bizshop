@@ -72,11 +72,11 @@ ${CONTEXT}`
         const text = reply?.response || "";
 
         return new Response(JSON.stringify({ reply: text }), {
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json; charset=utf-8" }
         });
       } catch (e) {
         return new Response(JSON.stringify({ reply: "⛔ " + (e.message || "خطا در پردازش") }), {
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json; charset=utf-8" }
         });
       }
     }
