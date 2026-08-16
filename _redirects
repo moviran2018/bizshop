@@ -1,6 +1,6 @@
-# Cloudflare Pages redirects
+/admin/dashboard /admin/dashboard.html 301
 /admin /admin/dashboard.html 301
-/checkout /checkout.html 301
 /cart /cart.html 301
+/checkout /checkout.html 301
 /products /products.html 301
 /product /product.html 301
