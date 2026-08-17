@@ -1,6 +1,7 @@
-// Cloudflare Worker — chatbot API for BizShop
-// از هوش مصنوعی رایگان خود Cloudflare استفاده می‌کنه
-// نیازی به کلید API خارجی نیست
+// Cloudflare Worker — BizShop API (chatbot + admin backend + data store)
+// - چت‌بات: از هوش مصنوعی رایگان خود Cloudflare استفاده می‌کنه
+// - مدیریت: API کامل برای پنل ادمین (محصولات، دسته‌ها، سفارش‌ها، تنظیمات، مشتریان)
+// - ذخیره‌سازی: Cloudflare KV (سمت سرور)
 
 const CONTEXT = `
 # اطلاعات فروشگاه بیزشاپ
@@ -34,50 +35,321 @@ const CONTEXT = `
 ### ۱۲. گوشی سامسونگ Galaxy S24 - ۳۸,۹۰۰,۰۰۰ تومان (۹٪ تخفیف) - برند سامسونگ
 `;
 
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization"
+};
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json; charset=utf-8", ...CORS }
+  });
+}
+
+async function readBody(request) {
+  try { return await request.json(); } catch { return {}; }
+}
+
+// ─── KV helpers ───
+function kvKey(lang, col) { return `data:${lang}:${col}`; }
+
+async function readCollection(env, request, lang, col, fallbackPath) {
+  const raw = await env.bizshop_data.get(kvKey(lang, col));
+  if (raw) {
+    try { return JSON.parse(raw); } catch {}
+  }
+  // Fallback: seed from static JSON files
+  try {
+    const url = new URL(request.url);
+    const res = await env.ASSETS.fetch(url.origin + fallbackPath);
+    if (res.ok) {
+      const data = await res.json();
+      await env.bizshop_data.put(kvKey(lang, col), JSON.stringify(data));
+      return data;
+    }
+  } catch {}
+  return col === "products" ? [] : col === "categories" ? [] : col === "orders" ? [] : {};
+}
+
+async function writeCollection(env, lang, col, data) {
+  await env.bizshop_data.put(kvKey(lang, col), JSON.stringify(data));
+}
+
+// ─── Admin auth ───
+function getToken(request) {
+  const h = request.headers.get("Authorization") || "";
+  return h.replace(/^Bearer\s+/i, "").trim();
+}
+
+async function isAdmin(request, env) {
+  const token = getToken(request);
+  if (!token) return false;
+  const stored = await env.bizshop_data.get("admin:token:" + token);
+  if (!stored) return false;
+  try {
+    const { exp } = JSON.parse(stored);
+    if (Date.now() > exp) { await env.bizshop_data.delete("admin:token:" + token); return false; }
+    return true;
+  } catch { return false; }
+}
+
+// ─── Routes ───
+async function handleApi(request, env, url) {
+  const method = request.method;
+  const path = url.pathname;
+
+  // OPTIONS
+  if (method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+
+  // ── Auth: login ──
+  if (path === "/api/auth/login" && method === "POST") {
+    const { password } = await readBody(request);
+    const adminPassword = env.ADMIN_PASSWORD || "bizshop123";
+    if (password !== adminPassword) return json({ error: "invalid_credentials" }, 401);
+    const token = crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "");
+    const exp = Date.now() + 7 * 24 * 3600 * 1000; // 7 days
+    await env.bizshop_data.put("admin:token:" + token, JSON.stringify({ exp }));
+    return json({ token, exp });
+  }
+
+  // ── Auth: verify ──
+  if (path === "/api/auth/check" && method === "GET") {
+    return json({ ok: await isAdmin(request, env) });
+  }
+
+  // ── Public: get all storefront data (products, categories, settings) ──
+  if (path === "/api/data" && method === "GET") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const [products, categories, settings] = await Promise.all([
+      readCollection(env, request, lang, "products", `/data/${lang}/products.json`),
+      readCollection(env, request, lang, "categories", `/data/${lang}/categories.json`),
+      readCollection(env, request, lang, "settings", `/data/${lang}/settings.json`)
+    ]);
+    return json({ products, categories, settings });
+  }
+
+  // ── Public: create order ──
+  if (path === "/api/orders" && method === "POST") {
+    const body = await readBody(request);
+    const lang = body.lang || "fa";
+    const orders = await readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`);
+    const now = new Date();
+    const order = {
+      id: Date.now(),
+      code: "BZ" + Date.now().toString().slice(-6),
+      date: now.toISOString(),
+      status: "pending",
+      ...body,
+      items: body.items || [],
+      customer: body.customer || {}
+    };
+    orders.unshift(order);
+    await writeCollection(env, lang, "orders", orders);
+    return json({ ok: true, order }, 201);
+  }
+
+  // ── Admin required below ──
+  if (!(await isAdmin(request, env))) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  // ── Stats ──
+  if (path === "/api/admin/stats" && method === "GET") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const [products, orders, categories] = await Promise.all([
+      readCollection(env, request, lang, "products", `/data/${lang}/products.json`),
+      readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`),
+      readCollection(env, request, lang, "categories", `/data/${lang}/categories.json`)
+    ]);
+    const active = products.filter(p => p.status !== "deleted");
+    const stats = {
+      totalProducts: active.length,
+      totalOrders: orders.length,
+      pendingOrders: orders.filter(o => o.status === "pending").length,
+      totalSales: orders.reduce((s, o) => s + (o.total || 0), 0),
+      lowStock: active.filter(p => p.stock < 10).length,
+      outOfStock: active.filter(p => p.stock <= 0).length,
+      categories: categories.length,
+      customers: new Set(orders.map(o => (o.customer && (o.customer.phone || o.customer.name)) || o.customer || '')).size,
+      salesByDay: buildSalesByDay(orders)
+    };
+    return json(stats);
+  }
+
+  // ── Products CRUD ──
+  if (path === "/api/admin/products") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const products = await readCollection(env, request, lang, "products", `/data/${lang}/products.json`);
+    if (method === "GET") return json(products);
+    if (method === "POST") {
+      const p = await readBody(request);
+      p.id = Date.now();
+      p.createdAt = p.createdAt || new Date().toISOString();
+      products.unshift(p);
+      await writeCollection(env, lang, "products", products);
+      return json(p, 201);
+    }
+  }
+
+  const productMatch = path.match(/^\/api\/admin\/products\/(\d+)$/);
+  if (productMatch && (method === "PUT" || method === "DELETE")) {
+    const lang = url.searchParams.get("lang") || "fa";
+    const id = parseInt(productMatch[1]);
+    const products = await readCollection(env, request, lang, "products", `/data/${lang}/products.json`);
+    const idx = products.findIndex(p => p.id === id);
+    if (idx === -1) return json({ error: "not_found" }, 404);
+    if (method === "DELETE") {
+      products.splice(idx, 1);
+      await writeCollection(env, lang, "products", products);
+      return json({ ok: true });
+    }
+    const updated = { ...products[idx], ...(await readBody(request)), id };
+    products[idx] = updated;
+    await writeCollection(env, lang, "products", products);
+    return json(updated);
+  }
+
+  // ── Categories CRUD ──
+  if (path === "/api/admin/categories") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const categories = await readCollection(env, request, lang, "categories", `/data/${lang}/categories.json`);
+    if (method === "GET") return json(categories);
+    if (method === "POST") {
+      const c = await readBody(request);
+      c.id = c.id || Date.now();
+      categories.push(c);
+      await writeCollection(env, lang, "categories", categories);
+      return json(c, 201);
+    }
+  }
+
+  const catMatch = path.match(/^\/api\/admin\/categories\/(\d+)$/);
+  if (catMatch && (method === "PUT" || method === "DELETE")) {
+    const lang = url.searchParams.get("lang") || "fa";
+    const id = parseInt(catMatch[1]);
+    const categories = await readCollection(env, request, lang, "categories", `/data/${lang}/categories.json`);
+    const idx = categories.findIndex(c => c.id === id);
+    if (idx === -1) return json({ error: "not_found" }, 404);
+    if (method === "DELETE") {
+      categories.splice(idx, 1);
+      await writeCollection(env, lang, "categories", categories);
+      return json({ ok: true });
+    }
+    categories[idx] = { ...categories[idx], ...(await readBody(request)), id };
+    await writeCollection(env, lang, "categories", categories);
+    return json(categories[idx]);
+  }
+
+  // ── Orders ──
+  if (path === "/api/admin/orders") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const orders = await readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`);
+    if (method === "GET") return json(orders);
+  }
+
+  const orderMatch = path.match(/^\/api\/admin\/orders\/(\d+)\/status$/);
+  if (orderMatch && method === "PUT") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const id = parseInt(orderMatch[1]);
+    const { status } = await readBody(request);
+    const orders = await readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`);
+    const order = orders.find(o => o.id === id);
+    if (!order) return json({ error: "not_found" }, 404);
+    order.status = status;
+    await writeCollection(env, lang, "orders", orders);
+    return json(order);
+  }
+
+  const orderDelMatch = path.match(/^\/api\/admin\/orders\/(\d+)$/);
+  if (orderDelMatch && method === "DELETE") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const id = parseInt(orderDelMatch[1]);
+    const orders = await readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`);
+    await writeCollection(env, lang, "orders", orders.filter(o => o.id !== id));
+    return json({ ok: true });
+  }
+
+  // ── Settings ──
+  if (path === "/api/admin/settings") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const settings = await readCollection(env, request, lang, "settings", `/data/${lang}/settings.json`);
+    if (method === "GET") return json(settings);
+    if (method === "PUT") {
+      const next = { ...settings, ...(await readBody(request)) };
+      await writeCollection(env, lang, "settings", next);
+      return json(next);
+    }
+  }
+
+  // ── Customers (derived from orders) ──
+  if (path === "/api/admin/customers" && method === "GET") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const orders = await readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`);
+    const map = new Map();
+    orders.forEach(o => {
+      const c = o.customer || {};
+      const key = c.phone || c.name || 'unknown';
+      if (!map.has(key)) {
+        map.set(key, { name: c.name || '---', phone: c.phone || '---', address: c.address || '', orders: 0, total: 0, lastOrder: o.date });
+      }
+      const rec = map.get(key);
+      rec.orders += 1;
+      rec.total += (o.total || 0);
+      rec.lastOrder = o.date;
+    });
+    return json(Array.from(map.values()));
+  }
+
+  // ── Export / backup ──
+  if (path === "/api/admin/export" && method === "GET") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const [products, categories, settings, orders] = await Promise.all([
+      readCollection(env, request, lang, "products", `/data/${lang}/products.json`),
+      readCollection(env, request, lang, "categories", `/data/${lang}/categories.json`),
+      readCollection(env, request, lang, "settings", `/data/${lang}/settings.json`),
+      readCollection(env, request, lang, "orders", `/data/${lang}/orders.json`)
+    ]);
+    return json({ exportedAt: new Date().toISOString(), lang, products, categories, settings, orders });
+  }
+
+  // ── Import / restore ──
+  if (path === "/api/admin/import" && method === "POST") {
+    const lang = url.searchParams.get("lang") || "fa";
+    const body = await readBody(request);
+    if (body.products) await writeCollection(env, lang, "products", body.products);
+    if (body.categories) await writeCollection(env, lang, "categories", body.categories);
+    if (body.settings) await writeCollection(env, lang, "settings", body.settings);
+    if (body.orders) await writeCollection(env, lang, "orders", body.orders);
+    return json({ ok: true });
+  }
+
+  return json({ error: "not_found" }, 404);
+}
+
+function buildSalesByDay(orders) {
+  const map = {};
+  orders.forEach(o => {
+    const d = (o.date || "").slice(0, 10);
+    if (!d) return;
+    map[d] = (map[d] || 0) + (o.total || 0);
+  });
+  return Object.entries(map)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .slice(-14)
+    .map(([date, total]) => ({ date, total }));
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type" }
-      });
-    }
-
-    if (request.method === "POST" && url.pathname === "/api/chat") {
-      const { message, history } = await request.json();
-
-      const systemMsg = {
-        role: "system",
-        content: `تو دستیار هوشمند فروشگاه بیزشاپ هستی.
-با استفاده از اطلاعات زیر به سوالات مشتری پاسخ بده.
-فقط از روی اطلاعات داده شده جواب بده.
-اگه جواب در اطلاعات موجود نیست، بگو: "متاسفانه اطلاعات دقیقی ندارم. لطفاً شماره تماس خود را بگذارید تا کارشناسان ما با شما تماس بگیرند."
-پاسخ‌هایت کوتاه، مفید و به زبان فارسی باشد.
-محصولات را با قیمت و تخفیف معرفی کن.
-
-${CONTEXT}`
-      };
-
-      const messages = [systemMsg];
-      if (history) {
-        for (const msg of history) {
-          messages.push({ role: msg.role === "bot" ? "assistant" : "user", content: msg.text });
-        }
-      }
-      messages.push({ role: "user", content: message });
-
+    if (url.pathname.startsWith("/api/")) {
       try {
-        const reply = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fp8-fast", { messages });
-        const text = reply?.response || "";
-
-        return new Response(JSON.stringify({ reply: text }), {
-          headers: { "Content-Type": "application/json; charset=utf-8" }
-        });
+        return await handleApi(request, env, url);
       } catch (e) {
-        return new Response(JSON.stringify({ reply: "⛔ " + (e.message || "خطا در پردازش") }), {
-          headers: { "Content-Type": "application/json; charset=utf-8" }
-        });
+        return json({ error: e.message || "server_error" }, 500);
       }
     }
 

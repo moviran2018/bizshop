@@ -27,22 +27,18 @@
     <p data-i18n="admin.login.subtitle">برای دسترسی به پنل مدیریت وارد شوید</p>
     <form id="adminLoginForm">
       <div class="form-group">
-        <label data-i18n="admin.login.username">نام کاربری</label>
-        <input type="text" id="adminUser" placeholder="admin" value="admin">
-      </div>
-      <div class="form-group">
-        <label data-i18n="admin.login.password">رمز عبور</label>
-        <input type="password" id="adminPass" placeholder="••••••••" value="bizshop123">
+        <label data-i18n="admin.login.password">رمز عبور مدیریت</label>
+        <input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password">
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="admin.login.btn">ورود به پنل</button>
     </form>
     <div class="login-footer">
-      <p data-i18n="admin.login.helper">نام کاربری: admin | رمز: bizshop123</p>
+      <p id="loginHint" data-i18n="admin.login.helper">رمز عبور را از تنظیمات سرور دریافت کنید</p>
       <a href="../index.html" style="color:var(--primary);margin-top:10px;display:inline-block;font-weight:600;" data-i18n="admin.login.back">← بازگشت به فروشگاه</a>
     </div>
   </div>
   <script src="../js/i18n.js"></script>
   <script src="../js/data.js"></script>
-  <script src="../js/main.js"></script>
   <script src="../js/admin.js"></script>
+</body>
 </html>

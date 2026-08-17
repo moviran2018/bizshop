@@ -4,3 +4,7 @@ pages_build_output_dir = "."
 
 [ai]
 binding = "AI"
+
+[[kv_namespaces]]
+binding = "bizshop_data"
+id = "7f609a4b755b45659c5ab62ed2071f09"

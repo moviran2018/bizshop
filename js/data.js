@@ -3,6 +3,11 @@ const DB = {
   _settings: null,
   _orders: [],
   _categories: [],
+  _apiBase: '',
+  _isOnline: true,
+  _adminToken: localStorage.getItem('bizshop_admin_token') || '',
+
+  get API() { return this._apiBase; },
 
   async init() {
     const lang = I18n ? I18n.lang : 'fa';
@@ -11,70 +16,51 @@ const DB = {
   },
 
   async _loadAll(lang) {
-    // Try localStorage first, then fall back to JSON files
-    try {
-      const stored = localStorage.getItem(`bizshop_products_${lang}`);
-      if (stored) {
-        this._products = JSON.parse(stored);
-      } else {
-        const res = await fetch(`/data/${lang}/products.json`);
-        this._products = await res.json();
-      }
-    } catch (e) {
-      this._products = [];
-    }
-
-    try {
-      const stored = localStorage.getItem(`bizshop_categories_${lang}`);
-      if (stored) {
-        this._categories = JSON.parse(stored);
-      } else {
-        const res = await fetch(`/data/${lang}/categories.json`);
-        this._categories = await res.json();
-      }
-    } catch (e) {
-      this._categories = [];
-    }
-
-    try {
-      const stored = localStorage.getItem(`bizshop_settings_${lang}`);
-      if (stored) {
-        this._settings = JSON.parse(stored);
-      } else {
-        const res = await fetch(`/data/${lang}/settings.json`);
-        this._settings = await res.json();
-      }
-    } catch (e) {
-      this._settings = {};
-    }
-
-    try {
-      const stored = localStorage.getItem(`bizshop_orders_${lang}`);
-      if (stored) {
-        this._orders = JSON.parse(stored);
-      } else {
-        const res = await fetch(`/data/${lang}/orders.json`);
-        this._orders = await res.json();
-      }
-    } catch (e) {
-      this._orders = [];
-    }
-
-    // Load shared images if any product uses them
-    const hasShared = this._products.some(p => p.shareImage);
-    if (hasShared) {
-      try {
-        const res = await fetch('/data/shared/images.json');
-        this._sharedImages = await res.json();
-        this._products.forEach(p => {
-          if (p.shareImage && this._sharedImages[p.id]) {
-            p.images = this._sharedImages[p.id];
-          }
-        });
-      } catch (e) {}
-    }
-
+    // Try server API first
+    const serverOk = await this._loadFromServer(lang);
+    if (!serverOk) await this._loadFromStatic(lang);
     this._normalize();
+  },
+
+  async _loadFromServer(lang) {
+    try {
+      const res = await fetch(`/api/data?lang=${lang}`, { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) return false;
+      const data = await res.json();
+      if (!data.products || !data.products.length) return false;
+      this._products = data.products;
+      this._categories = data.categories || [];
+      this._settings = data.settings || {};
+      const ordersRes = await fetch(`/api/admin/orders?lang=${lang}`, { signal: AbortSignal.timeout(8000), headers: { Authorization: 'Bearer ' + this._adminToken } });
+      if (ordersRes.ok) this._orders = await ordersRes.json();
+      this._isOnline = true;
+      return true;
+    } catch (e) {
+      this._isOnline = false;
+      return false;
+    }
+  },
+
+  async _loadFromStatic(lang) {
+    try {
+      const res = await fetch(`/data/${lang}/products.json`);
+      this._products = await res.json();
+    } catch (e) { this._products = []; }
+
+    try {
+      const res = await fetch(`/data/${lang}/categories.json`);
+      this._categories = await res.json();
+    } catch (e) { this._categories = []; }
+
+    try {
+      const res = await fetch(`/data/${lang}/settings.json`);
+      this._settings = await res.json();
+    } catch (e) { this._settings = {}; }
+
+    try {
+      const res = await fetch(`/data/${lang}/orders.json`);
+      this._orders = await res.json();
+    } catch (e) { this._orders = []; }
   },
 
   async switchLanguage(lang) {
@@ -140,20 +126,20 @@ const DB = {
     return this._products.find(p => p.id === id) || null;
   },
 
-  addProduct(product) {
+  async addProduct(product) {
     product.id = Date.now();
     product.sku = product.sku || `SKU-${product.id}`;
     product.status = product.status || 'active';
-    product.createdAt = new Date().toLocaleDateString('fa-IR');
+    product.createdAt = new Date().toISOString();
     const discount = product.discount || 0;
     const price = product.price || 0;
     product.oldPrice = (discount > 0 && price > 0) ? Math.round(price / (1 - discount / 100)) : 0;
-    this._products.push(product);
-    this._syncProducts();
+    this._products.unshift(product);
+    await this._syncProducts();
     return product;
   },
 
-  updateProduct(id, data) {
+  async updateProduct(id, data) {
     const idx = this._products.findIndex(p => p.id === id);
     if (idx >= 0) {
       this._products[idx] = { ...this._products[idx], ...data };
@@ -161,28 +147,42 @@ const DB = {
       const discount = p.discount || 0;
       const price = p.price || 0;
       p.oldPrice = (discount > 0 && price > 0) ? Math.round(price / (1 - discount / 100)) : 0;
-      this._syncProducts();
+      await this._syncProducts();
     }
     return this._products[idx];
   },
 
-  deleteProduct(id, permanent = false) {
-    if (permanent) this._products = this._products.filter(p => p.id !== id);
-    else { const p = this.getProduct(id); if (p) p.status = 'deleted'; }
-    this._syncProducts();
+  async deleteProduct(id, permanent = false) {
+    if (permanent) {
+      this._products = this._products.filter(p => p.id !== id);
+      await this._syncProducts();
+    } else {
+      const p = this.getProduct(id);
+      if (p) { p.status = 'deleted'; await this._syncProducts(); }
+    }
   },
 
-  duplicateProduct(id) {
+  async duplicateProduct(id) {
     const p = this.getProduct(id);
     if (!p) return null;
     const copy = { ...p, id: Date.now(), name: p.name + ' (' + __('common.copy') + ')', sku: `SKU-${Date.now()}`, status: 'inactive' };
-    this._products.push(copy);
-    this._syncProducts();
+    this._products.unshift(copy);
+    await this._syncProducts();
     return copy;
   },
 
-  _syncProducts() {
+  async _syncProducts() {
     const lang = I18n ? I18n.lang : 'fa';
+    if (this._adminToken) {
+      try {
+        await fetch(`/api/admin/products?lang=${lang}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._adminToken },
+          body: JSON.stringify(this._products),
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch (e) {}
+    }
     localStorage.setItem(`bizshop_products_${lang}`, JSON.stringify(this._products));
     UI.toast(__('admin.settings.saved'), 'success');
   },
@@ -203,29 +203,39 @@ const DB = {
     return this._categories.find(c => c.id === id) || null;
   },
 
-  addCategory(data) {
+  async addCategory(data) {
     const id = this._categories.length ? Math.max(...this._categories.map(c => c.id)) + 1 : 1;
     this._categories.push({ id, name: data.name, icon: data.icon || '📁', slug: data.name.replace(/ /g, '-'), count: 0, sort: data.sort || this._categories.length });
-    this._syncCategories();
+    await this._syncCategories();
     return id;
   },
 
-  updateCategory(id, data) {
+  async updateCategory(id, data) {
     const idx = this._categories.findIndex(c => c.id === id);
-    if (idx >= 0) { this._categories[idx] = { ...this._categories[idx], ...data }; this._syncCategories(); }
+    if (idx >= 0) { this._categories[idx] = { ...this._categories[idx], ...data }; await this._syncCategories(); }
   },
 
-  deleteCategory(id) {
+  async deleteCategory(id) {
     const cat = this.getCategory(id);
     if (!cat) return;
     const hasProducts = this._products.some(p => p.category === cat.name && p.status !== 'deleted');
     if (hasProducts) { UI.toast(__('category.hasProducts'), 'error'); return; }
     this._categories = this._categories.filter(c => c.id !== id);
-    this._syncCategories();
+    await this._syncCategories();
   },
 
-  _syncCategories() {
+  async _syncCategories() {
     const lang = I18n ? I18n.lang : 'fa';
+    if (this._adminToken) {
+      try {
+        await fetch(`/api/admin/categories?lang=${lang}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._adminToken },
+          body: JSON.stringify(this._categories),
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch (e) {}
+    }
     localStorage.setItem(`bizshop_categories_${lang}`, JSON.stringify(this._categories));
   },
 
@@ -246,9 +256,19 @@ const DB = {
     if (!s.langPassword) s.langPassword = '';
     return s;
   },
-  saveSettings(s) {
+  async saveSettings(s) {
     this._settings = { ...this._settings, ...s };
     const lang = I18n ? I18n.lang : 'fa';
+    if (this._adminToken) {
+      try {
+        await fetch(`/api/admin/settings?lang=${lang}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._adminToken },
+          body: JSON.stringify(this._settings),
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch (e) {}
+    }
     localStorage.setItem(`bizshop_settings_${lang}`, JSON.stringify(this._settings));
     UI.toast(__('admin.settings.themeSaved'), 'success');
   },
@@ -306,22 +326,130 @@ const DB = {
   },
 
   // ─── Orders ───
-  addOrder(order) {
+  async addOrder(order) {
     const now = new Date();
     const lang = I18n ? I18n.lang : 'fa';
-    const loc = lang === 'en' ? 'en-US' : lang === 'ar' ? 'ar-SA' : 'fa-IR';
-    this._orders.unshift({ id: Date.now(), date: now.toLocaleDateString(loc), ...order, status: 'pending' });
-    const langKey = I18n ? I18n.lang : 'fa';
-    localStorage.setItem(`bizshop_orders_${langKey}`, JSON.stringify(this._orders));
+    const newOrder = { id: Date.now(), code: 'BZ' + Date.now().toString().slice(-6), date: now.toISOString(), ...order, status: 'pending' };
+    this._orders.unshift(newOrder);
+    // Sync to server
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...order, id: newOrder.id, code: newOrder.code, date: newOrder.date, lang }),
+        signal: AbortSignal.timeout(10000)
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.order) Object.assign(newOrder, data.order);
+      }
+    } catch (e) {
+      // Offline: keep in localStorage queue for later sync
+      const queue = JSON.parse(localStorage.getItem('bizshop_order_queue') || '[]');
+      queue.push(newOrder);
+      localStorage.setItem('bizshop_order_queue', JSON.stringify(queue));
+    }
+    localStorage.setItem(`bizshop_orders_${lang}`, JSON.stringify(this._orders));
     return this._orders;
   },
   getOrders() { return this._orders; },
-  updateOrderStatus(orderId, status) {
+  async updateOrderStatus(orderId, status) {
     const order = this._orders.find(o => o.id === orderId);
     if (order) order.status = status;
     const lang = I18n ? I18n.lang : 'fa';
+    if (this._adminToken) {
+      try {
+        await fetch(`/api/admin/orders/${orderId}/status?lang=${lang}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._adminToken },
+          body: JSON.stringify({ status }),
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch (e) {}
+    }
     localStorage.setItem(`bizshop_orders_${lang}`, JSON.stringify(this._orders));
     return this._orders;
+  },
+  async deleteOrder(orderId) {
+    const lang = I18n ? I18n.lang : 'fa';
+    this._orders = this._orders.filter(o => o.id !== orderId);
+    if (this._adminToken) {
+      try {
+        await fetch(`/api/admin/orders/${orderId}?lang=${lang}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + this._adminToken },
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch (e) {}
+    }
+    localStorage.setItem(`bizshop_orders_${lang}`, JSON.stringify(this._orders));
+    return this._orders;
+  },
+
+  // ─── Admin session ───
+  async adminLogin(password) {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+        signal: AbortSignal.timeout(10000)
+      });
+      if (!res.ok) return { ok: false, error: (await res.json()).error };
+      const data = await res.json();
+      this._adminToken = data.token;
+      localStorage.setItem('bizshop_admin_token', data.token);
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: 'network' };
+    }
+  },
+  async adminCheck() {
+    if (!this._adminToken) return false;
+    try {
+      const res = await fetch('/api/auth/check', { headers: { 'Authorization': 'Bearer ' + this._adminToken }, signal: AbortSignal.timeout(8000) });
+      return res.ok && (await res.json()).ok;
+    } catch (e) { return false; }
+  },
+  adminLogout() {
+    this._adminToken = '';
+    localStorage.removeItem('bizshop_admin_token');
+  },
+  async adminGetStats() {
+    const lang = I18n ? I18n.lang : 'fa';
+    try {
+      const res = await fetch(`/api/admin/stats?lang=${lang}`, { headers: { 'Authorization': 'Bearer ' + this._adminToken }, signal: AbortSignal.timeout(10000) });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  },
+  async adminGetCustomers() {
+    const lang = I18n ? I18n.lang : 'fa';
+    try {
+      const res = await fetch(`/api/admin/customers?lang=${lang}`, { headers: { 'Authorization': 'Bearer ' + this._adminToken }, signal: AbortSignal.timeout(10000) });
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (e) { return []; }
+  },
+  async adminExport() {
+    const lang = I18n ? I18n.lang : 'fa';
+    try {
+      const res = await fetch(`/api/admin/export?lang=${lang}`, { headers: { 'Authorization': 'Bearer ' + this._adminToken }, signal: AbortSignal.timeout(10000) });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  },
+  async adminImport(data) {
+    const lang = I18n ? I18n.lang : 'fa';
+    try {
+      const res = await fetch(`/api/admin/import?lang=${lang}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this._adminToken },
+        body: JSON.stringify(data),
+        signal: AbortSignal.timeout(10000)
+      });
+      return res.ok;
+    } catch (e) { return false; }
   },
 
   // ─── Utilities ───

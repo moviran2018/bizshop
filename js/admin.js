@@ -4,13 +4,18 @@ const ADMIN = {
   async init() {
     if (!I18n._loaded) await I18n.init();
     if (!DB._products || !DB._products.length) await DB.init();
-    const isLoggedIn = localStorage.getItem('bizshop_admin') === 'true';
+
+    // Login page
     if (document.getElementById('adminLoginForm')) {
-      document.getElementById('adminLoginForm').addEventListener('submit', e => {
+      document.getElementById('adminLoginForm').addEventListener('submit', async e => {
         e.preventDefault();
-        const u = document.getElementById('adminUser').value;
         const p = document.getElementById('adminPass').value;
-        if (u === 'admin' && p === 'bizshop123') {
+        const btn = e.target.querySelector('button[type="submit"]');
+        if (!p) { UI.toast(__('admin.login.error'), 'error'); return; }
+        btn.disabled = true; btn.textContent = '⏳ ' + __('common.loading');
+        const res = await DB.adminLogin(p);
+        btn.disabled = false; btn.textContent = __('admin.login.btn');
+        if (res.ok) {
           localStorage.setItem('bizshop_admin', 'true');
           window.location.href = 'dashboard.html';
         } else {
@@ -19,7 +24,18 @@ const ADMIN = {
       });
       return;
     }
+
+    // Dashboard — verify session
+    const isLoggedIn = localStorage.getItem('bizshop_admin') === 'true';
     if (!isLoggedIn) { window.location.href = 'login.html'; return; }
+    const valid = await DB.adminCheck();
+    if (!valid) {
+      DB.adminLogout();
+      localStorage.removeItem('bizshop_admin');
+      window.location.href = 'login.html';
+      return;
+    }
+
     this.setupNav();
     this.setupLogout();
     this.navigate(window.location.hash.replace('#', '') || 'dashboard');
@@ -36,14 +52,23 @@ const ADMIN = {
 
   setupLogout() {
     const btn = document.getElementById('logoutBtn');
-    if (btn) btn.addEventListener('click', () => { localStorage.removeItem('bizshop_admin'); window.location.href = 'login.html'; });
+    if (btn) btn.addEventListener('click', () => {
+      DB.adminLogout();
+      localStorage.removeItem('bizshop_admin');
+      window.location.href = 'login.html';
+    });
   },
 
   navigate(page) {
     this.currentPage = page;
     window.location.hash = page;
     document.querySelectorAll('.sidebar-nav a[data-page], .bottom-nav-item[data-page]').forEach(a => a.classList.toggle('active', a.dataset.page === page));
-    const titles = { dashboard: __('admin.page.dashboard'), products: __('admin.page.products'), categories: __('admin.page.categories'), orders: __('admin.page.orders'), settings: __('admin.page.settings') };
+    const titles = {
+      dashboard: __('admin.page.dashboard'), products: __('admin.page.products'),
+      categories: __('admin.page.categories'), orders: __('admin.page.orders'),
+      customers: __('admin.page.customers'), settings: __('admin.page.settings'),
+      backup: __('admin.page.backup')
+    };
     const titleEl = document.getElementById('pageTitle');
     if (titleEl) titleEl.textContent = titles[page] || __('admin.page.dashboard');
     const el = document.getElementById('adminContent');
@@ -52,35 +77,63 @@ const ADMIN = {
   },
 
   // ─── DASHBOARD ───
-  renderDashboard(el) {
-    const s = DB.getStats();
+  async renderDashboard(el) {
+    el.innerHTML = '<div style="text-align:center;padding:60px;">⏳ ' + __('common.loading') + '</div>';
+    const s = await DB.adminGetStats();
+    const localS = DB.getStats();
+    const stats = s || {
+      totalProducts: localS.totalProducts, totalSales: localS.totalSales,
+      totalOrders: localS.totalOrders, pendingOrders: localS.pendingOrders,
+      lowStock: localS.lowStock, categories: localS.categories
+    };
     const recentOrders = DB.getOrders().slice(0, 5);
     const lowStockItems = DB.getProducts({ stock: 'low', status: 'active' }).slice(0, 5);
+
+    const salesData = stats.salesByDay || [];
+    const chartHtml = salesData.length ? `
+      <div class="admin-table-wrap">
+        <div class="admin-toolbar"><h3>📈 ${__('admin.dashboard.salesChart')}</h3></div>
+        <div style="padding:16px;overflow-x:auto;" dir="ltr">
+          <div style="display:flex;align-items:flex-end;gap:6px;height:180px;min-width:${salesData.length * 60}px;">
+            ${(() => {
+              const max = Math.max(...salesData.map(d => d.total), 1);
+              return salesData.map(d => `
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                  <div style="font-size:0.65rem;color:var(--gray-400);white-space:nowrap;">${Math.round(d.total).toLocaleString()}</div>
+                  <div style="width:100%;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:6px 6px 0 0;height:${Math.max((d.total / max) * 150, 6)}px;" title="${d.date}"></div>
+                  <div style="font-size:0.6rem;color:var(--gray-500);">${d.date.slice(5)}</div>
+                </div>`).join('');
+            })()}
+          </div>
+        </div>
+      </div>` : '';
+
     el.innerHTML = `
       <div class="stats-grid">
         <div class="stat-card" style="border-right:4px solid var(--primary);">
           <div class="stat-icon" style="background:rgba(249,115,22,0.12);color:var(--primary);">📦</div>
-          <div class="stat-info"><h4>${s.totalProducts}</h4><p>${__('admin.dashboard.stats.activeProducts')}</p></div>
+          <div class="stat-info"><h4>${stats.totalProducts}</h4><p>${__('admin.dashboard.stats.activeProducts')}</p></div>
         </div>
         <div class="stat-card" style="border-right:4px solid var(--success);">
           <div class="stat-icon" style="background:rgba(34,197,94,0.12);color:var(--success);">💰</div>
-          <div class="stat-info"><h4>${DB.formatPrice(s.totalSales)}</h4><p>${__('admin.dashboard.stats.totalSales')}</p></div>
+          <div class="stat-info"><h4>${DB.formatPrice(stats.totalSales)}</h4><p>${__('admin.dashboard.stats.totalSales')}</p></div>
         </div>
         <div class="stat-card" style="border-right:4px solid var(--warning);">
           <div class="stat-icon" style="background:rgba(245,158,11,0.15);color:#B7950B;">📋</div>
-          <div class="stat-info"><h4>${s.totalOrders}</h4><p>${__('admin.dashboard.stats.orders', { n: s.pendingOrders })}</p></div>
+          <div class="stat-info"><h4>${stats.totalOrders}</h4><p>${__('admin.dashboard.stats.orders', { n: stats.pendingOrders })}</p></div>
         </div>
         <div class="stat-card" style="border-right:4px solid var(--danger);">
           <div class="stat-icon" style="background:rgba(239,68,68,0.12);color:var(--danger);">⚠️</div>
-          <div class="stat-info"><h4>${s.lowStock}</h4><p>${__('admin.dashboard.stats.lowStock')}</p></div>
+          <div class="stat-info"><h4>${stats.lowStock}</h4><p>${__('admin.dashboard.stats.lowStock')}</p></div>
         </div>
       </div>
+      ${chartHtml}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
         <div class="admin-table-wrap">
           <div class="admin-toolbar"><h3>🕐 ${__('admin.dashboard.recentOrders')}</h3><a href="#" onclick="ADMIN.navigate('orders');return false;" style="font-size:0.85rem;color:var(--primary);">${__('common.viewAll')}</a></div>
           <table class="admin-table">
             <thead><tr><th>${__('admin.table.code')}</th><th>${__('admin.table.customer')}</th><th>${__('admin.table.amount')}</th><th>${__('admin.table.status')}</th></tr></thead>
-            <tbody>${recentOrders.length ? recentOrders.map(o => `<tr><td>#${o.id}</td><td>${o.customer?.name || '---'}</td><td>${DB.formatPrice(o.total || 0)}</td><td><span class="badge-status ${o.status}">${o.status === 'pending' ? __('order.pending') : o.status === 'active' || o.status === 'completed' ? __('order.completedFull') : __('order.cancelledFull')}</span></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center;padding:30px;">'+__('admin.dashboard.noOrders')+'</td></tr>'}</tbody>
+            <tbody>${recentOrders.length ? recentOrders.map(o => `<tr><td>${o.code || '#' + o.id}</td><td>${o.customer?.name || '---'}</td><td>${DB.formatPrice(o.total || 0)}</td><td><span class="badge-status ${o.status}">${this.orderStatusLabel(o.status)}</span></td></tr>`).join('') : '<tr><td colspan="4" style="text-align:center;padding:30px;">'+__('admin.dashboard.noOrders')+'</td></tr>'}</tbody>
           </table>
         </div>
         <div class="admin-table-wrap">
@@ -91,6 +144,10 @@ const ADMIN = {
           </table>
         </div>
       </div>`;
+  },
+
+  orderStatusLabel(status) {
+    return status === 'pending' ? __('order.pending') : status === 'active' || status === 'completed' ? __('order.completedFull') : __('order.cancelledFull');
   },
 
   // ─── PRODUCTS ───
@@ -165,8 +222,8 @@ const ADMIN = {
     }
   },
 
-  duplicateProduct(id) {
-    const p = DB.duplicateProduct(id);
+  async duplicateProduct(id) {
+    const p = await DB.duplicateProduct(id);
     if (p) { UI.toast(__('admin.products.duplicated', { name: p.name }), 'success'); this.renderProducts(document.getElementById('adminContent')); }
   },
 
@@ -181,18 +238,18 @@ const ADMIN = {
       </div>`);
   },
 
-  confirmDelete(id) {
-    DB.deleteProduct(id, true);
+  async confirmDelete(id) {
+    await DB.deleteProduct(id, true);
     UI.toast(__('admin.products.deletedPerm'), 'error');
     document.querySelector('.modal-overlay')?.remove();
     this.renderProducts(document.getElementById('adminContent'));
   },
 
-  toggleProductStatus(id) {
+  async toggleProductStatus(id) {
     const p = DB.getProduct(id);
     if (!p) return;
     const newStatus = p.status === 'active' ? 'inactive' : 'active';
-    DB.updateProduct(id, { status: newStatus });
+    await DB.updateProduct(id, { status: newStatus });
     UI.toast(__('admin.products.statusChanged', { status: newStatus === 'active' ? __('common.active') : __('common.inactive') }), 'success');
     document.querySelector('.modal-overlay')?.remove();
     this.renderProducts(document.getElementById('adminContent'));
@@ -299,7 +356,7 @@ const ADMIN = {
     if (pfCur) pfCur.addEventListener('change', updatePricePreview);
     updatePricePreview();
 
-    document.getElementById('productForm').addEventListener('submit', e => {
+    document.getElementById('productForm').addEventListener('submit', async e => {
       e.preventDefault();
       const g = id => document.getElementById(id)?.value || '';
       const features = g('pfFeatures').split('\n').map(s => s.trim()).filter(Boolean);
@@ -322,8 +379,8 @@ const ADMIN = {
         relatedIds: Array.from(document.querySelectorAll('#pfRelatedList input[type="checkbox"]:checked')).map(cb => parseInt(cb.value)).filter(n => !isNaN(n))
       };
 
-      if (isEdit) { DB.updateProduct(id, data); UI.toast(__('admin.productModal.saved'), 'success'); }
-      else { DB.addProduct(data); UI.toast(__('admin.productModal.created'), 'success'); }
+      if (isEdit) { await DB.updateProduct(id, data); UI.toast(__('admin.productModal.saved'), 'success'); }
+      else { await DB.addProduct(data); UI.toast(__('admin.productModal.created'), 'success'); }
       document.querySelector('.modal-overlay')?.remove();
       this.renderProducts(document.getElementById('adminContent'));
     });
@@ -389,12 +446,12 @@ const ADMIN = {
           <button type="button" class="btn btn-outline" onclick="document.querySelector('.modal-overlay')?.remove()">${__('common.cancel')}</button>
         </div>
       </form>`);
-    document.getElementById('catForm').addEventListener('submit', e => {
+    document.getElementById('catForm').addEventListener('submit', async e => {
       e.preventDefault();
       const g = id => document.getElementById(id)?.value || '';
       const data = { name: g('cfName'), icon: g('cfIcon'), sort: parseInt(g('cfSort')) || 0 };
-      if (c) { DB.updateCategory(c.id, data); UI.toast(__('admin.categories.saved'), 'success'); }
-      else { DB.addCategory(data); UI.toast(__('admin.categories.created'), 'success'); }
+      if (c) { await DB.updateCategory(c.id, data); UI.toast(__('admin.categories.saved'), 'success'); }
+      else { await DB.addCategory(data); UI.toast(__('admin.categories.created'), 'success'); }
       document.querySelector('.modal-overlay')?.remove();
       this.renderCategories(document.getElementById('adminContent'));
     });
@@ -412,8 +469,8 @@ const ADMIN = {
       </div>`);
   },
 
-  confirmDeleteCategory(id) {
-    DB.deleteCategory(id);
+  async confirmDeleteCategory(id) {
+    await DB.deleteCategory(id);
     document.querySelector('.modal-overlay')?.remove();
     this.renderCategories(document.getElementById('adminContent'));
   },
@@ -421,19 +478,25 @@ const ADMIN = {
   // ─── ORDERS ───
   renderOrders(el) {
     const orders = DB.getOrders();
+    const pendingCount = orders.filter(o => o.status === 'pending').length;
     el.innerHTML = `
       <div class="admin-table-wrap">
-        <div class="admin-toolbar"><h3>${__('admin.orders.title', { n: orders.length })}</h3></div>
+        <div class="admin-toolbar">
+          <h3>${__('admin.orders.title', { n: orders.length })}</h3>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <span class="badge-status pending">${__('order.pending')}: ${pendingCount}</span>
+            <button class="btn btn-outline btn-sm" onclick="ADMIN.exportOrdersCSV()">⬇ CSV</button>
+          </div>
+        </div>
         <div style="overflow-x:auto;">
           <table class="admin-table">
-            <thead><tr><th>${__('admin.table.code')}</th><th>${__('admin.table.customer')}</th><th>${__('admin.table.phone')}</th><th>${__('admin.table.address')}</th><th>${__('admin.table.date')}</th><th>${__('admin.table.amount')}</th><th>${__('admin.table.status')}</th><th>${__('admin.table.actions')}</th></tr></thead>
+            <thead><tr><th>${__('admin.table.code')}</th><th>${__('admin.table.customer')}</th><th>${__('admin.table.phone')}</th><th>${__('admin.table.date')}</th><th>${__('admin.table.amount')}</th><th>${__('admin.table.status')}</th><th>${__('admin.table.actions')}</th></tr></thead>
             <tbody>${orders.length ? orders.map(o => `
               <tr>
-                <td>#${o.id}</td>
+                <td>${o.code || '#' + o.id}</td>
                 <td>${o.customer?.name || '---'}</td>
                 <td dir="ltr">${o.customer?.phone || '---'}</td>
-                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${o.customer?.address || ''}">${o.customer?.address || '---'}</td>
-                <td>${o.date}</td>
+                <td>${this.formatOrderDate(o.date)}</td>
                 <td>${DB.formatPrice(o.total || 0)}</td>
                 <td>
                   <select onchange="ADMIN.updateOrderStatus(${o.id}, this.value)" style="padding:4px 8px;border:2px solid var(--gray-200);border-radius:6px;font-family:inherit;font-size:0.8rem;">
@@ -442,16 +505,40 @@ const ADMIN = {
                     <option value="inactive" ${o.status === 'inactive' ? 'selected' : ''}>${__('order.cancelledFull')}</option>
                   </select>
                 </td>
-                <td><button class="action-btn edit" onclick="ADMIN.viewOrder(${o.id})">👁</button></td>
-              </tr>`).join('') : '<tr><td colspan="8" style="text-align:center;padding:40px;">'+__('admin.orders.empty')+'</td></tr>'}</tbody>
+                <td>
+                  <div class="action-btns">
+                    <button class="action-btn edit" onclick="ADMIN.viewOrder(${o.id})">👁</button>
+                    <button class="action-btn delete" onclick="ADMIN.deleteOrder(${o.id})">🗑</button>
+                  </div>
+                </td>
+              </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;padding:40px;">'+__('admin.orders.empty')+'</td></tr>'}</tbody>
           </table>
         </div>
       </div>`;
   },
 
-  updateOrderStatus(id, status) {
-    DB.updateOrderStatus(id, status);
+  formatOrderDate(d) {
+    try { return new Date(d).toLocaleString(); } catch { return d || ''; }
+  },
+
+  async updateOrderStatus(id, status) {
+    await DB.updateOrderStatus(id, status);
     UI.toast(__('admin.orders.updated'), 'success');
+  },
+
+  async deleteOrder(id) {
+    UI.modal(__('admin.orders.deleteTitle', { id }), `
+      <p>${__('admin.orders.deleteConfirm', { id })}</p>
+      <div style="display:flex;gap:10px;margin-top:20px;">
+        <button class="btn btn-danger btn-sm" style="flex:1;background:var(--danger);color:white;" onclick="ADMIN.confirmDeleteOrder(${id})">🗑 ${__('common.delete')}</button>
+        <button class="btn btn-outline btn-sm" onclick="document.querySelector('.modal-overlay')?.remove()">${__('common.cancel')}</button>
+      </div>`);
+  },
+
+  async confirmDeleteOrder(id) {
+    await DB.deleteOrder(id);
+    document.querySelector('.modal-overlay')?.remove();
+    this.renderOrders(document.getElementById('adminContent'));
   },
 
   viewOrder(id) {
@@ -459,17 +546,18 @@ const ADMIN = {
     if (!o) return;
     const itemsHtml = (o.items || []).map(item =>
       `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-200);">
-        <span>${item.name || __('product.defaultName')}</span>
-        <span>${item.qty} × ${DB.formatPrice(item.price, item.currency)}</span>
+        <span>${item.name || __('product.defaultName')} <small style="color:var(--gray-500);">× ${item.qty}</small></span>
+        <span>${DB.formatPrice(item.price, item.currency)}</span>
       </div>`).join('') || '<p>'+__('admin.orders.noItems')+'</p>';
 
-    UI.modal(__('admin.orders.viewTitle', { id: o.id }), `
+    UI.modal(__('admin.orders.viewTitle', { id: o.code || o.id }), `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;padding:16px;background:var(--gray-100);border-radius:var(--radius-sm);">
         <div><strong>${__('admin.orders.customer')}</strong><br>${o.customer?.name || '---'}</div>
         <div><strong>${__('admin.orders.phone')}</strong><br>${o.customer?.phone || '---'}</div>
-        <div><strong>${__('admin.orders.date')}</strong><br>${o.date}</div>
-        <div><strong>${__('admin.table.status')}</strong><br><span class="badge-status ${o.status}">${o.status === 'pending' ? __('order.pending') : o.status === 'active' || o.status === 'completed' ? __('order.completedFull') : __('order.cancelledFull')}</span></div>
+        <div><strong>${__('admin.orders.date')}</strong><br>${this.formatOrderDate(o.date)}</div>
+        <div><strong>${__('admin.table.status')}</strong><br><span class="badge-status ${o.status}">${this.orderStatusLabel(o.status)}</span></div>
         <div style="grid-column:1/-1;"><strong>${__('admin.table.address')}:</strong><br>${o.customer?.address || '---'}</div>
+        ${o.paymentMethod ? `<div style="grid-column:1/-1;"><strong>${__('checkout.paymentMethod')}:</strong> ${o.paymentMethod}</div>` : ''}
       </div>
       <h4 style="margin-bottom:10px;">${__('admin.orders.items')}</h4>
       ${itemsHtml}
@@ -477,6 +565,43 @@ const ADMIN = {
         <span>${__('admin.orders.total')}</span>
         <span style="color:var(--primary);">${DB.formatPrice(o.total || 0)}</span>
       </div>`);
+  },
+
+  exportOrdersCSV() {
+    const orders = DB.getOrders();
+    const rows = [['کد', 'مشتری', 'تلفن', 'آدرس', 'تاریخ', 'مبلغ', 'وضعیت']];
+    orders.forEach(o => rows.push([
+      o.code || o.id, o.customer?.name || '', o.customer?.phone || '', o.customer?.address || '', this.formatOrderDate(o.date), o.total || 0, o.status
+    ]));
+    const csv = '\uFEFF' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'orders.csv';
+    a.click();
+  },
+
+  // ─── CUSTOMERS ───
+  async renderCustomers(el) {
+    el.innerHTML = '<div style="text-align:center;padding:60px;">⏳ ' + __('common.loading') + '</div>';
+    const customers = await DB.adminGetCustomers();
+    el.innerHTML = `
+      <div class="admin-table-wrap">
+        <div class="admin-toolbar"><h3>${__('admin.customers.title', { n: customers.length })}</h3></div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead><tr><th>${__('admin.table.customer')}</th><th>${__('admin.table.phone')}</th><th>${__('admin.customers.orders')}</th><th>${__('admin.customers.totalSpent')}</th><th>${__('admin.customers.lastOrder')}</th></tr></thead>
+            <tbody>${customers.length ? customers.map(c => `
+              <tr>
+                <td>${c.name}</td>
+                <td dir="ltr">${c.phone}</td>
+                <td>${c.orders}</td>
+                <td>${DB.formatPrice(c.total)}</td>
+                <td>${this.formatOrderDate(c.lastOrder)}</td>
+              </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;padding:40px;">'+__('admin.customers.empty')+'</td></tr>'}</tbody>
+          </table>
+        </div>
+      </div>`;
   },
 
   // ─── SETTINGS ───
@@ -574,21 +699,21 @@ const ADMIN = {
         <button class="btn btn-secondary btn-sm" onclick="ADMIN.addSliderItem()" id="addSliderBtn" style="margin-top:8px;">${__('admin.slider.add')}</button>
       </div>
       <div id="mobileSettingsWrap" style="margin-top:20px;"></div>`;
-    document.getElementById('settingsForm').addEventListener('submit', e => {
+    document.getElementById('settingsForm').addEventListener('submit', async e => {
       e.preventDefault();
-      DB.saveSettings({ ...DB.getSettings(), siteName: document.getElementById('sSiteName').value, description: document.getElementById('sDescription').value, phone: document.getElementById('sPhone').value, email: document.getElementById('sEmail').value, address: document.getElementById('sAddress').value, shippingCost: parseInt(document.getElementById('sShipping').value) || 0, freeShippingMin: parseInt(document.getElementById('sFreeShipping').value) || 0 });
+      await DB.saveSettings({ ...DB.getSettings(), siteName: document.getElementById('sSiteName').value, description: document.getElementById('sDescription').value, phone: document.getElementById('sPhone').value, email: document.getElementById('sEmail').value, address: document.getElementById('sAddress').value, shippingCost: parseInt(document.getElementById('sShipping').value) || 0, freeShippingMin: parseInt(document.getElementById('sFreeShipping').value) || 0 });
       UI.toast(__('admin.settings.saved'), 'success');
     });
-    document.getElementById('socialForm').addEventListener('submit', e => {
+    document.getElementById('socialForm').addEventListener('submit', async e => {
       e.preventDefault();
-      DB.saveSettings({ ...DB.getSettings(), socialMedia: { instagram: document.getElementById('sInstagram').value, telegram: document.getElementById('sTelegram').value, whatsapp: document.getElementById('sWhatsapp').value, bale: `https://ble.ir/${document.getElementById('sBaleBot').value}` } });
+      await DB.saveSettings({ ...DB.getSettings(), socialMedia: { instagram: document.getElementById('sInstagram').value, telegram: document.getElementById('sTelegram').value, whatsapp: document.getElementById('sWhatsapp').value, bale: `https://ble.ir/${document.getElementById('sBaleBot').value}` } });
       UI.toast(__('admin.settings.saved'), 'success');
     });
-    document.getElementById('themeForm').addEventListener('submit', e => {
+    document.getElementById('themeForm').addEventListener('submit', async e => {
       e.preventDefault();
       const primary = document.getElementById('sPrimaryColor').value;
       const secondary = document.getElementById('sSecondaryColor').value;
-      DB.saveSettings({ ...DB.getSettings(), theme: { primaryColor: primary, secondaryColor: secondary } });
+      await DB.saveSettings({ ...DB.getSettings(), theme: { primaryColor: primary, secondaryColor: secondary } });
       document.documentElement.style.setProperty('--primary', primary);
       document.documentElement.style.setProperty('--secondary', secondary);
       UI.toast(__('admin.settings.themeSaved'), 'success');
@@ -614,13 +739,13 @@ const ADMIN = {
         status.style.color = 'red';
       }
     });
-    document.getElementById('langSaveBtn').addEventListener('click', () => {
+    document.getElementById('langSaveBtn').addEventListener('click', async () => {
       const langs = {
         fa: document.getElementById('langFa').checked,
         en: document.getElementById('langEn').checked,
         ar: document.getElementById('langAr').checked
       };
-      DB.saveSettings({ ...DB.getSettings(), enabledLanguages: langs });
+      await DB.saveSettings({ ...DB.getSettings(), enabledLanguages: langs });
       UI.toast(__('admin.languages.saved'), 'success');
     });
     if (!DB.getSettings().langPassword) {
@@ -785,7 +910,7 @@ const ADMIN = {
         </form>
       </div>`;
 
-    document.getElementById('mobileForm').addEventListener('submit', e => {
+    document.getElementById('mobileForm').addEventListener('submit', async e => {
       e.preventDefault();
       const mobile = {
         hideTopbar: document.getElementById('mHideTopbar').checked,
@@ -793,9 +918,57 @@ const ADMIN = {
         productCols: parseInt(document.getElementById('mProductCols').value) || 2,
         sliderHeight: parseInt(document.getElementById('mSliderHeight').value) || 280
       };
-      DB.saveSettings({ mobile });
+      await DB.saveSettings({ mobile });
       UI.toast(__('admin.mobile.saved'), 'success');
     });
+  },
+
+  // ─── BACKUP / RESTORE ───
+  async renderBackup(el) {
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;">
+        <div class="checkout-form">
+          <h3>💾 ${__('admin.backup.exportTitle')}</h3>
+          <p style="font-size:0.85rem;color:var(--gray-500);margin:8px 0 16px;">${__('admin.backup.exportDesc')}</p>
+          <button class="btn btn-primary" style="width:100%;" onclick="ADMIN.doExport()">⬇ ${__('admin.backup.exportBtn')}</button>
+        </div>
+        <div class="checkout-form">
+          <h3>📥 ${__('admin.backup.importTitle')}</h3>
+          <p style="font-size:0.85rem;color:var(--gray-500);margin:8px 0 16px;">${__('admin.backup.importDesc')}</p>
+          <input type="file" id="backupFileInput" accept=".json" style="margin-bottom:12px;width:100%;padding:10px;border:2px dashed var(--gray-300);border-radius:8px;font-family:inherit;">
+          <button class="btn btn-outline" style="width:100%;" onclick="ADMIN.doImport()">📥 ${__('admin.backup.importBtn')}</button>
+        </div>
+      </div>`;
+  },
+
+  async doExport() {
+    const data = await DB.adminExport();
+    if (!data) { UI.toast(__('admin.backup.exportError'), 'error'); return; }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'bizshop-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    UI.toast(__('admin.backup.exported'), 'success');
+  },
+
+  async doImport() {
+    const file = document.getElementById('backupFileInput')?.files?.[0];
+    if (!file) { UI.toast(__('admin.backup.noFile'), 'error'); return; }
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const ok = await DB.adminImport(data);
+        if (ok) {
+          UI.toast(__('admin.backup.imported'), 'success');
+          setTimeout(() => location.reload(), 1200);
+        } else {
+          UI.toast(__('admin.backup.importError'), 'error');
+        }
+      } catch { UI.toast(__('admin.backup.invalidFile'), 'error'); }
+    };
+    reader.readAsText(file);
   }
 };
 
