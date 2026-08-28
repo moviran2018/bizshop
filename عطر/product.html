@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محصول — LUXÉ PARFUM</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="topbar"><div class="container"><span>ارسال رایگان بالای ۲ میلیون</span><a href="products.html">بازگشت به فروشگاه</a></div></div>
+<header class="header"><div class="container"><div class="header-inner">
+  <a href="index.html" class="logo">LUXÉ<span> PARFUM</span></a>
+  <nav class="nav"><a href="index.html">خانه</a><a href="products.html">فروشگاه</a></nav>
+  <div class="header-actions"><button class="icon-btn" onclick="openCart()">🛒 <span class="badge" id="cartBadge" style="display:none">0</span></button></div>
+</div></div></header>
+
+<div class="container">
+  <div class="breadcrumb"><a href="index.html">خانه</a> / <a href="products.html">فروشگاه</a> / <span id="bcTitle">محصول</span></div>
+  <div id="loading" style="text-align:center;padding:80px;color:var(--gray-500)">در حال بارگذاری...</div>
+  <div id="detailWrap" style="display:none">
+    <div class="detail">
+      <div class="gallery">
+        <div class="main-img" id="mainImg"></div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span id="pCategory" style="background:var(--cream);border:1px solid var(--beige);padding:4px 10px;border-radius:999px;font-size:0.7rem;letter-spacing:0.1em"></span><span id="pGender" style="font-size:0.75rem;color:var(--gray-500)"></span></div>
+        <h1 id="pTitle"></h1>
+        <div class="subtitle" id="pSubtitle"></div>
+        <div style="display:flex;gap:8px;align-items:center;color:var(--gold);font-size:0.85rem">★★★★★ <span style="color:var(--gray-500)">(۱۲۴ نظر)</span></div>
+
+        <div class="price-box">
+          <div style="display:flex;align-items:baseline;gap:10px"><span class="now" id="pPrice"></span><span class="old" id="pOld"></span><span id="pDiscount" style="background:#FFEAEA;color:#C00;padding:3px 8px;border-radius:999px;font-size:0.7rem;display:none"></span></div>
+          <div style="font-size:0.75rem;color:var(--gray-500);margin-top:6px">✓ ارسال رایگان بالای ۱۰۰ دلار &nbsp; • &nbsp; ✓ نمونه هدیه &nbsp; • &nbsp; ✓ پرداخت امن</div>
+        </div>
+
+        <p id="pDesc" style="color:var(--gray-700);line-height:1.9;font-size:0.9rem"></p>
+
+        <div style="display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap">
+          <div class="qty"><button onclick="chgQty(-1)">−</button><input id="qtyInput" value="1" readonly><button onclick="chgQty(1)">+</button></div>
+          <button class="btn btn-dark" onclick="addCurrentToCart()" style="flex:1;justify-content:center">افزودن به سبد — خرید</button>
+        </div>
+
+        <div id="features" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"></div>
+
+        <!-- TABS: محتوا / ویدیو / پادکست / سه‌بعدی -->
+        <div class="tabs">
+          <div class="tab active" data-tab="content" onclick="switchTab('content')">توضیحات</div>
+          <div class="tab" data-tab="video" onclick="switchTab('video')">ویدیو</div>
+          <div class="tab" data-tab="audio" onclick="switchTab('audio')">پادکست</div>
+          <div class="tab" data-tab="model" onclick="switchTab('model')">نمای سه‌بعدی</div>
+          <div class="tab" data-tab="notes" onclick="switchTab('notes')">نت‌ها</div>
+        </div>
+
+        <div id="tab-content" class="tab-content active"></div>
+        <div id="tab-video" class="tab-content"><div class="video-wrap" id="videoWrap"></div></div>
+        <div id="tab-audio" class="tab-content"><div class="audio-player" id="audioWrap"></div></div>
+        <div id="tab-model" class="tab-content"><div class="model-wrap" id="modelWrap"></div><p style="font-size:0.75rem;color:var(--gray-500);margin-top:8px">مدل را با موس بچرخانید، زوم کنید — تجربه سه‌بعدی واقعی شیشه عطر.</p></div>
+        <div id="tab-notes" class="tab-content"><div id="notesWrap" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px"></div></div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-head"><h2>محصولات <em>مرتبط</em></h2><div class="line"></div></div>
+      <div class="grid" id="relatedGrid" style="grid-template-columns:repeat(4,1fr)"></div>
+    </section>
+  </div>
+</div>
+
+<footer class="footer"><div class="container"><div class="footer-bottom"><span>© لوکس پرفیوم</span><span>LUXÉ PARFUM</span></div></div></footer>
+<div class="cart-drawer" id="cartDrawer"><div class="cart-overlay" onclick="closeCart()"></div><div class="cart-panel"><div class="cart-head"><strong>سبد خرید</strong><button onclick="closeCart()" style="background:none;border:none;font-size:1.4rem;cursor:pointer">×</button></div><div class="cart-body" id="cartBody"></div><div class="cart-foot"><div style="display:flex;justify-content:space-between;font-weight:800;margin-bottom:14px"><span>جمع کل</span><span id="cartTotal">۰</span></div><button class="btn btn-dark" style="width:100%;justify-content:center" onclick="checkout()">تسویه حساب</button></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script>
+let current=null;
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
+function chgQty(d){
+  const i=document.getElementById('qtyInput'); let v=parseInt(i.value)+d; if(v<1) v=1; if(v>20) v=20; i.value=v;
+}
+function addCurrentToCart(){
+  const qty=parseInt(document.getElementById('qtyInput').value);
+  Store.addToCart(current, qty); renderCart(); openCart();
+}
+async function init(){
+  const slug=new URLSearchParams(location.search).get('slug');
+  if(!slug){ document.getElementById('loading').textContent='محصول یافت نشد'; return; }
+  current=await Store.getProductBySlug(slug);
+  if(!current){ document.getElementById('loading').textContent='محصول یافت نشد'; return; }
+  document.title=current.title+' — LUXÉ PARFUM';
+  document.getElementById('loading').style.display='none';
+  document.getElementById('detailWrap').style.display='block';
+  document.getElementById('bcTitle').textContent=current.title;
+  document.getElementById('pCategory').textContent=(current.category||'').toUpperCase();
+  document.getElementById('pGender').textContent=current.gender==='man'?'مردانه':current.gender==='woman'?'زنانه':'یونیسکس';
+  document.getElementById('pTitle').textContent=current.title;
+  document.getElementById('pSubtitle').textContent=current.subtitle||'';
+  document.getElementById('pPrice').textContent=formatPrice(current.price);
+  if(current.original_price){ document.getElementById('pOld').textContent=formatPrice(current.original_price); const disc=Math.round((1-current.price/current.original_price)*100); const el=document.getElementById('pDiscount'); el.textContent='%'+disc+' تخفیف'; el.style.display='inline-block'; }
+  document.getElementById('pDesc').textContent=current.description||'';
+  // images
+  const imgs=current.images||[];
+  const main=document.getElementById('mainImg');
+  const thumbs=document.getElementById('thumbs');
+  function showImg(url){ main.innerHTML=`<img src="${url}" alt="${current.title}" style="width:100%;height:100%;object-fit:contain">`; }
+  if(imgs.length) showImg(imgs[0]); else showImg('https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800');
+  thumbs.innerHTML=imgs.map((u,i)=>`<div class="thumb ${i===0?'active':''}" onclick="document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById('mainImg').innerHTML='<img src=&quot;'+u+'&quot; style=&quot;width:100%;height:100%;object-fit:contain&quot;>'"><img src="${u}"></div>`).join('');
+  // features
+  const fWrap=document.getElementById('features');
+  if(current.features) fWrap.innerHTML=current.features.map(f=>`<span style="background:var(--cream);border:1px solid var(--beige);padding:6px 12px;border-radius:999px;font-size:0.75rem">✓ ${f}</span>`).join('');
+  // tabs content
+  document.getElementById('tab-content').innerHTML=current.long_description||'<p style="color:var(--gray-500)">توضیح تکمیلی ثبت نشده.</p>';
+  // video
+  const vw=document.getElementById('videoWrap');
+  if(current.video_url){
+    if(current.video_type==='youtube' || current.video_url.includes('youtube') || current.video_url.includes('youtu.be')){
+      let src=current.video_url; if(src.includes('watch?v=')) src=src.replace('watch?v=','embed/'); if(src.includes('youtu.be/')) src=src.replace('youtu.be/','www.youtube.com/embed/');
+      vw.innerHTML=`<iframe src="${src}" allowfullscreen></iframe>`;
+    } else {
+      vw.innerHTML=`<video src="${current.video_url}" controls style="width:100%;height:100%"></video>`;
+    }
+  } else vw.innerHTML='<p style="color:white;text-align:center;padding:80px">ویدیویی برای این محصول ثبت نشده.</p>';
+  // audio
+  const aw=document.getElementById('audioWrap');
+  if(current.audio_url){
+    aw.innerHTML=`<div style="width:48px;height:48px;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center">🎧</div><div style="flex:1"><div style="font-weight:700;font-size:0.85rem">${current.audio_title||'پادکست معرفی رایحه'}</div><audio controls src="${current.audio_url}" style="width:100%;margin-top:6px"></audio></div>`;
+  } else aw.innerHTML='<p style="color:var(--gray-500)">پادکستی ثبت نشده.</p>';
+  // 3d
+  const mw=document.getElementById('modelWrap');
+  if(current.model_3d_url){
+    mw.innerHTML=`<model-viewer src="${current.model_3d_url}" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="1" style="width:100%;height:100%"></model-viewer>`;
+  } else mw.innerHTML='<p style="text-align:center;padding:120px;color:var(--gray-500)">مدل سه‌بعدی برای این محصول ثبت نشده.<br><span style="font-size:0.75rem">در پنل ادمین لینک .glb را وارد کنید.</span></p>';
+  // notes
+  const nw=document.getElementById('notesWrap');
+  nw.innerHTML=`<div style="background:var(--white);border:1px solid var(--beige);border-radius:10px;padding:14px"><div style="font-size:0.7rem;letter-spacing:0.1em;color:var(--gray-500)">TOP NOTES</div><div style="font-weight:700">${current.notes_top||'ترنج، پرتقال'}</div></div><div style="background:var(--white);border:1px solid var(--beige);border-radius:10px;padding:14px"><div style="font-size:0.7rem;letter-spacing:0.1em;color:var(--gray-500)">HEART NOTES</div><div style="font-weight:700">${current.notes_middle||'رز، یاس'}</div></div><div style="background:var(--white);border:1px solid var(--beige);border-radius:10px;padding:14px"><div style="font-size:0.7rem;letter-spacing:0.1em;color:var(--gray-500)">BASE NOTES</div><div style="font-weight:700">${current.notes_base||'عود، مشک، عنبر'}</div></div>`;
+  // related
+  const all=await Store.getProducts();
+  const related=all.filter(p=>p.category===current.category && p.id!==current.id).slice(0,4);
+  document.getElementById('relatedGrid').innerHTML=related.map(p=>cardHTML(p)).join('');
+  updateCartBadge();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

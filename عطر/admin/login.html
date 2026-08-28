@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود ادمین — LUXÉ</title>
+<link rel="stylesheet" href="../css/admin.css">
+<style>
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0F0F0F;padding:20px}
+.login-card{background:#1A1A1A;border:1px solid #2A2A2A;border-radius:18px;padding:36px;width:400px;max-width:100%}
+</style>
+</head>
+<body class="admin">
+<div class="login-wrap">
+  <div class="login-card">
+    <div style="text-align:center;margin-bottom:24px"><div style="font-family:'Playfair Display',serif;letter-spacing:0.18em;font-weight:800;color:white;font-size:1.3rem">LUXÉ <span style="color:#C9A86A">PARFUM</span></div><div style="color:#888;font-size:0.78rem;margin-top:6px">پنل مدیریت</div></div>
+    <div id="msg" style="display:none;padding:10px;border-radius:8px;margin-bottom:12px;font-size:0.8rem"></div>
+    <label>ایمیل ادمین</label><input id="email" class="admin-input" placeholder="admin@luxeparfum.ir" value="admin@luxeparfum.ir">
+    <label style="margin-top:12px">رمز عبور</label><input id="pass" type="password" class="admin-input" placeholder="••••••••" value="admin123">
+    <button class="btn-gold" style="width:100%;margin-top:18px" onclick="login()">ورود به پنل</button>
+    <p style="color:#666;font-size:0.72rem;text-align:center;margin-top:14px">برای دمو بدون سوپابیس: هر ایمیل/رمزی کار میکند<br>با سوپابیس: اکانت را در Supabase Auth بسازید</p>
+    <div style="text-align:center;margin-top:12px"><a href="../index.html" style="color:#888;font-size:0.78rem">→ بازگشت به سایت</a></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script>
+async function login(){
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('pass').value.trim();
+  const msg=document.getElementById('msg');
+  if(!email||!pass){ msg.style.display='block'; msg.style.background='#2A1A1A'; msg.style.color='#E88'; msg.textContent='ایمیل و رمز را وارد کنید'; return; }
+  // try Supabase Auth if configured
+  if(supabaseClient){
+    const {data,error}=await supabaseClient.auth.signInWithPassword({email,password:pass});
+    if(error){ msg.style.display='block'; msg.style.background='#2A1A1A'; msg.style.color='#E88'; msg.textContent='خطا: '+error.message; return; }
+  }
+  localStorage.setItem('luxe_admin','1');
+  localStorage.setItem('luxe_admin_email',email);
+  location.href='dashboard.html';
+}
+</script>
+</body>
+</html>

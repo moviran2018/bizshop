@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد — LUXÉ PARFUM</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body class="admin">
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">LUXÉ <span>PARFUM</span></div>
+    <a class="side-link active" data-tab="products" onclick="switchAdminTab('products')">📦 محصولات</a>
+    <a class="side-link" data-tab="orders" onclick="switchAdminTab('orders')">🧾 سفارشات</a>
+    <a class="side-link" data-tab="settings" onclick="switchAdminTab('settings')">⚙️ تنظیمات & سوپابیس</a>
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid #1F1F1F">
+      <a class="side-link" href="../index.html">← مشاهده سایت</a>
+      <a class="side-link" onclick="logout()" style="color:#E88;cursor:pointer">خروج</a>
+    </div>
+    <div style="margin-top:20px;background:#1A1A1A;border-radius:10px;padding:12px;font-size:0.75rem;color:#888">
+      <div>وضعیت سوپابیس:</div><div id="sbStatus" style="color:#C9A86A;margin-top:4px">بررسی...</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- PRODUCTS -->
+    <div id="tab-products">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px">
+        <h2 style="color:white;font-size:1.4rem">محصولات <span id="pCount" style="color:#888;font-size:0.9rem"></span></h2>
+        <div style="display:flex;gap:10px">
+          <input id="adminSearch" placeholder="جستجو..." class="admin-input" style="width:200px">
+          <button class="btn-gold" onclick="openProductModal()">+ افزودن محصول</button>
+        </div>
+      </div>
+      <div class="admin-card" style="overflow:auto">
+        <table class="table" id="productsTable">
+          <thead><tr><th>تصویر</th><th>نام</th><th>کالکشن</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div id="tab-orders" style="display:none">
+      <h2 style="color:white;margin-bottom:18px">سفارشات</h2>
+      <div class="admin-card" id="ordersWrap"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="tab-settings" style="display:none">
+      <h2 style="color:white;margin-bottom:18px">تنظیمات & اتصال سوپابیس</h2>
+      <div class="admin-card">
+        <p style="color:#888;font-size:0.82rem;line-height:1.8;margin-bottom:14px">برای اتصال به دیتابیس واقعی، پروژه Supabase بسازید، سپس <code>supabase/schema.sql</code> را در SQL Editor اجرا کنید و کلیدها را اینجا وارد کنید. بدون سوپابیس هم تمام داده‌ها در مرورگر (LocalStorage) ذخیره میشود و سایت کامل کار میکند.</p>
+        <div class="grid2">
+          <div><label>Supabase URL</label><input id="sbUrl" class="admin-input" placeholder="https://xxx.supabase.co"></div>
+          <div><label>Supabase Anon Key</label><input id="sbKey" class="admin-input" placeholder="eyJ..."></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button class="btn-gold" onclick="saveSupabase()">ذخیره و اتصال</button>
+          <button class="btn-ghost" onclick="clearSupabase()">پاک کردن</button>
+          <button class="btn-ghost" onclick="seedDemo()">بازگردانی دیتای نمونه</button>
+        </div>
+        <div style="margin-top:18px;padding:14px;background:#0F0F0F;border-radius:10px;border:1px solid #2A2A2A">
+          <div style="font-size:0.78rem;color:#888">راهنمای دیپلوی روی Cloudflare Pages:</div>
+          <ol style="font-size:0.78rem;color:#888;margin:10px 18px;line-height:1.9">
+            <li>پروژه را به GitHub پوش کنید</li>
+            <li>Cloudflare Dashboard → Pages → Connect to Git → انتخاب ریپو</li>
+            <li>Build settings: Framework preset = None, Build command = (خالی), Output = /</li>
+            <li>Environment variables: VITE_SUPABASE_URL و VITE_SUPABASE_ANON_KEY را اضافه کنید</li>
+            <li>Deploy — سایت با دامنه pages.dev بالا می‌آید + دامنه اختصاصی قابل اتصال</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="productModal" style="display:none;position:fixed;inset:0;z-index:99;overflow:auto;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);padding:24px">
+  <div style="max-width:860px;margin:0 auto;background:#1A1A1A;border:1px solid #2A2A2A;border-radius:16px;overflow:hidden">
+    <div style="padding:18px 20px;border-bottom:1px solid #2A2A2A;display:flex;justify-content:space-between;align-items:center"><strong style="color:white">افزودن / ویرایش محصول</strong><button onclick="closeProductModal()" style="background:none;border:none;color:#888;font-size:1.4rem;cursor:pointer">×</button></div>
+    <form id="productForm" onsubmit="saveProduct(event)" style="padding:20px">
+      <input type="hidden" id="f_id">
+      <div class="grid2">
+        <div><label>نام محصول (انگلیسی) *</label><input id="f_title" class="admin-input" required placeholder="AMBRE SUPRÊME"></div>
+        <div><label>نامک (slug) *</label><input id="f_slug" class="admin-input" required placeholder="ambre-supreme" dir="ltr"></div>
+      </div>
+      <div style="margin-top:12px"><label>زیرعنوان فارسی</label><input id="f_subtitle" class="admin-input" placeholder="گرم و اغواگر"></div>
+      <div class="grid2" style="margin-top:12px">
+        <div><label>کالکشن *</label><select id="f_category" class="admin-input"><option value="signature">Signature</option><option value="floral">Floral</option><option value="woody">Woody</option><option value="fresh">Fresh</option><option value="limited">Limited</option></select></div>
+        <div><label>جنسیت *</label><select id="f_gender" class="admin-input"><option value="man">مردانه</option><option value="woman">زنانه</option><option value="unisex">یونیسکس</option></select></div>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div><label>قیمت (تومان) *</label><input id="f_price" type="number" class="admin-input" required placeholder="4850000"></div>
+        <div><label>قیمت قبلی (برای تخفیف)</label><input id="f_original_price" type="number" class="admin-input" placeholder="5200000"></div>
+      </div>
+      <div style="margin-top:12px"><label>موجودی</label><input id="f_stock" type="number" class="admin-input" placeholder="100"></div>
+
+      <div style="margin-top:16px;padding:14px;background:#0F0F0F;border-radius:10px;border:1px solid #2A2A2A">
+        <label>تصاویر محصول — هر خط یک URL (نامحدود)</label>
+        <textarea id="f_images" class="admin-input" rows="3" placeholder="https://...&#10;https://..." dir="ltr"></textarea>
+        <div style="font-size:0.72rem;color:#666;margin-top:6px">یا فایل آپلود کنید (ذخیره به صورت DataURL برای دمو):</div>
+        <input type="file" id="f_imageFile" accept="image/*" multiple style="margin-top:6px;color:#888">
+        <div id="imgPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+      </div>
+
+      <div style="margin-top:12px"><label>توضیح کوتاه</label><textarea id="f_description" class="admin-input" rows="2" placeholder="ترکیب عنبر و وانیل..."></textarea></div>
+      <div style="margin-top:12px"><label>توضیحات کامل (HTML مجاز)</label><textarea id="f_long_description" class="admin-input" rows="4" placeholder="<p>متن غنی...</p>"></textarea></div>
+
+      <div style="margin-top:16px;padding:14px;background:#0F0F0F;border-radius:10px;border:1px solid #2A2A2A">
+        <div style="font-weight:700;color:white;margin-bottom:10px">محتوای مولتی‌مدیا لندینگ</div>
+        <label>ویدیو (یوتیوب لینک یا MP4 URL)</label><input id="f_video_url" class="admin-input" placeholder="https://www.youtube.com/watch?v=..." dir="ltr">
+        <label style="margin-top:10px">پادکست (MP3 URL)</label><input id="f_audio_url" class="admin-input" placeholder="https://.../podcast.mp3" dir="ltr">
+        <input id="f_audio_title" class="admin-input" placeholder="عنوان پادکست" style="margin-top:8px">
+        <label style="margin-top:10px">مدل سه‌بعدی (.glb / .gltf URL)</label><input id="f_model_3d_url" class="admin-input" placeholder="https://.../model.glb" dir="ltr">
+        <div style="font-size:0.72rem;color:#666;margin-top:6px">برای 3D از سایت <a href="https://modelviewer.dev" target="_blank" style="color:var(--gold)">modelviewer.dev</a> نمونه glb رایگان دانلود کنید و در Supabase Storage آپلود کنید.</div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div><label>نت آغازین (Top)</label><input id="f_notes_top" class="admin-input" placeholder="ترنج، پرتقال"></div>
+        <div><label>نت میانی (Heart)</label><input id="f_notes_middle" class="admin-input" placeholder="رز، یاس"></div>
+      </div>
+      <div style="margin-top:12px"><label>نت پایه (Base)</label><input id="f_notes_base" class="admin-input" placeholder="عود، مشک"></div>
+      <label style="margin-top:12px">ویژگی‌ها (با کاما جدا کنید)</label><input id="f_features" class="admin-input" placeholder="ماندگاری 14 ساعته، پخش بوی قوی">
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px">
+        <label style="display:flex;gap:6px;align-items:center;color:#ccc"><input type="checkbox" id="f_is_featured"> ویژه</label>
+        <label style="display:flex;gap:6px;align-items:center;color:#ccc"><input type="checkbox" id="f_is_new"> جدید</label>
+        <label style="display:flex;gap:6px;align-items:center;color:#ccc"><input type="checkbox" id="f_is_bestseller"> پرفروش</label>
+        <label style="display:flex;gap:6px;align-items:center;color:#ccc"><input type="checkbox" id="f_is_active" checked> فعال</label>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button type="submit" class="btn-gold" style="flex:1">ذخیره محصول</button>
+        <button type="button" class="btn-ghost" onclick="closeProductModal()">انصراف</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/store.js"></script>
+<script src="../js/app.js"></script>
+<script>
+if(!localStorage.getItem('luxe_admin')) location.href='login.html';
+function logout(){ localStorage.removeItem('luxe_admin'); location.href='login.html'; }
+function switchAdminTab(name){
+  document.querySelectorAll('[id^="tab-"]').forEach(el=>el.style.display='none');
+  document.getElementById('tab-'+name).style.display='block';
+  document.querySelectorAll('.side-link[data-tab]').forEach(l=>l.classList.toggle('active', l.dataset.tab===name));
+  if(name==='orders') renderOrders();
+  if(name==='settings') loadSbSettings();
+}
+function loadSbSettings(){
+  document.getElementById('sbUrl').value=localStorage.getItem('SUPABASE_URL')||'';
+  document.getElementById('sbKey').value=localStorage.getItem('SUPABASE_ANON_KEY')||'';
+  const s=document.getElementById('sbStatus');
+  if(supabaseClient) s.textContent='متصل ✓'; else s.textContent='غیرفعال — LocalStorage';
+  s.style.color=supabaseClient?'#2ECC71':'#C9A86A';
+}
+function saveSupabase(){
+  const url=document.getElementById('sbUrl').value.trim();
+  const key=document.getElementById('sbKey').value.trim();
+  if(url) localStorage.setItem('SUPABASE_URL',url); else localStorage.removeItem('SUPABASE_URL');
+  if(key) localStorage.setItem('SUPABASE_ANON_KEY',key); else localStorage.removeItem('SUPABASE_ANON_KEY');
+  alert('ذخیره شد — صفحه رفرش میشود'); location.reload();
+}
+function clearSupabase(){ localStorage.removeItem('SUPABASE_URL'); localStorage.removeItem('SUPABASE_ANON_KEY'); location.reload(); }
+function seedDemo(){ localStorage.removeItem('luxe_products'); location.reload(); }
+
+// Products table
+let allProducts=[];
+async function loadProducts(){
+  allProducts=await Store.getProducts();
+  renderProducts();
+}
+function renderProducts(){
+  const q=(document.getElementById('adminSearch').value||'').toLowerCase();
+  let list=allProducts.filter(p=>!q || (p.title+p.subtitle).toLowerCase().includes(q));
+  document.getElementById('pCount').textContent=`(${list.length})`;
+  const tbody=document.getElementById('productsBody');
+  tbody.innerHTML=list.map(p=>`
+    <tr>
+      <td><img src="${(p.images&&p.images[0])||'https://via.placeholder.com/60'}" style="width:50px;height:50px;object-fit:cover;border-radius:8px"></td>
+      <td><div style="font-weight:700;color:white">${p.title}</div><div style="font-size:0.72rem;color:#888">${p.slug}</div></td>
+      <td><span class="badge-mini gold">${p.category}</span> <span style="font-size:0.72rem;color:#888">${p.gender}</span></td>
+      <td style="color:white">${formatPrice(p.price)}</td>
+      <td>${p.is_active!==false?'✅':'❌'} ${p.is_featured?'⭐':''} ${p.is_new?'🆕':''}</td>
+      <td>
+        <button onclick="editProduct('${p.id}')" style="background:#1A1A1A;border:1px solid #2A2A2A;color:white;padding:6px 10px;border-radius:6px;cursor:pointer">ویرایش</button>
+        <button onclick="delProduct('${p.id}')" style="background:#2A1A1A;border:none;color:#E88;padding:6px 10px;border-radius:6px;cursor:pointer">حذف</button>
+        <a href="../product.html?slug=${p.slug}" target="_blank" style="background:var(--gold);color:white;padding:6px 10px;border-radius:6px">نمایش</a>
+      </td>
+    </tr>`).join('');
+}
+document.getElementById('adminSearch').addEventListener('input', renderProducts);
+
+function openProductModal(p=null){
+  document.getElementById('productForm').reset();
+  document.getElementById('f_id').value='';
+  document.getElementById('f_is_active').checked=true;
+  document.getElementById('imgPreview').innerHTML='';
+  if(p){
+    document.getElementById('f_id').value=p.id;
+    document.getElementById('f_title').value=p.title||'';
+    document.getElementById('f_slug').value=p.slug||'';
+    document.getElementById('f_subtitle').value=p.subtitle||'';
+    document.getElementById('f_category').value=p.category||'signature';
+    document.getElementById('f_gender').value=p.gender||'unisex';
+    document.getElementById('f_price').value=p.price||'';
+    document.getElementById('f_original_price').value=p.original_price||'';
+    document.getElementById('f_stock').value=p.stock||'';
+    document.getElementById('f_images').value=(p.images||[]).join('\n');
+    document.getElementById('f_description').value=p.description||'';
+    document.getElementById('f_long_description').value=p.long_description||'';
+    document.getElementById('f_video_url').value=p.video_url||'';
+    document.getElementById('f_audio_url').value=p.audio_url||'';
+    document.getElementById('f_audio_title').value=p.audio_title||'';
+    document.getElementById('f_model_3d_url').value=p.model_3d_url||'';
+    document.getElementById('f_notes_top').value=p.notes_top||'';
+    document.getElementById('f_notes_middle').value=p.notes_middle||'';
+    document.getElementById('f_notes_base').value=p.notes_base||'';
+    document.getElementById('f_features').value=(p.features||[]).join(', ');
+    document.getElementById('f_is_featured').checked=!!p.is_featured;
+    document.getElementById('f_is_new').checked=!!p.is_new;
+    document.getElementById('f_is_bestseller').checked=!!p.is_bestseller;
+    document.getElementById('f_is_active').checked=p.is_active!==false;
+    previewImages();
+  }
+  document.getElementById('productModal').style.display='block';
+}
+function closeProductModal(){ document.getElementById('productModal').style.display='none'; }
+function editProduct(id){ const p=allProducts.find(x=>x.id===id); if(p) openProductModal(p); }
+async function delProduct(id){ if(!confirm('حذف شود؟')) return; await Store.deleteProduct(id); loadProducts(); }
+async function saveProduct(e){
+  e.preventDefault();
+  const images=document.getElementById('f_images').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const features=document.getElementById('f_features').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const product={
+    id:document.getElementById('f_id').value||undefined,
+    title:document.getElementById('f_title').value.trim(),
+    slug:document.getElementById('f_slug').value.trim().toLowerCase().replace(/\s+/g,'-'),
+    subtitle:document.getElementById('f_subtitle').value.trim(),
+    category:document.getElementById('f_category').value,
+    gender:document.getElementById('f_gender').value,
+    price:parseInt(document.getElementById('f_price').value),
+    original_price:parseInt(document.getElementById('f_original_price').value)||null,
+    stock:parseInt(document.getElementById('f_stock').value)||100,
+    images, description:document.getElementById('f_description').value.trim(),
+    long_description:document.getElementById('f_long_description').value.trim(),
+    video_url:document.getElementById('f_video_url').value.trim(),
+    video_type:'youtube', audio_url:document.getElementById('f_audio_url').value.trim(),
+    audio_title:document.getElementById('f_audio_title').value.trim(),
+    model_3d_url:document.getElementById('f_model_3d_url').value.trim(),
+    notes_top:document.getElementById('f_notes_top').value.trim(),
+    notes_middle:document.getElementById('f_notes_middle').value.trim(),
+    notes_base:document.getElementById('f_notes_base').value.trim(),
+    features, is_featured:document.getElementById('f_is_featured').checked,
+    is_new:document.getElementById('f_is_new').checked,
+    is_bestseller:document.getElementById('f_is_bestseller').checked,
+    is_active:document.getElementById('f_is_active').checked,
+  };
+  await Store.saveProduct(product);
+  closeProductModal(); loadProducts(); alert('ذخیره شد ✓');
+}
+function previewImages(){
+  const urls=document.getElementById('f_images').value.split('\n').filter(Boolean);
+  document.getElementById('imgPreview').innerHTML=urls.map(u=>`<img src="${u}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #2A2A2A">`).join('');
+}
+document.getElementById('f_images').addEventListener('input', previewImages);
+document.getElementById('f_imageFile').addEventListener('change', async (e)=>{
+  const files=[...e.target.files];
+  for(const f of files){
+    const dataUrl=await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(f); });
+    const ta=document.getElementById('f_images');
+    ta.value=(ta.value?ta.value+'\n':'')+dataUrl;
+  }
+  previewImages();
+});
+document.getElementById('f_title').addEventListener('input', e=>{
+  if(!document.getElementById('f_id').value) document.getElementById('f_slug').value=e.target.value.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g,'-').replace(/^-|-$/g,'');
+});
+
+function renderOrders(){
+  const orders=JSON.parse(localStorage.getItem('luxe_orders')||'[]');
+  const wrap=document.getElementById('ordersWrap');
+  if(!orders.length){ wrap.innerHTML='<p style="color:#888">هنوز سفارشی ثبت نشده.</p>'; return; }
+  wrap.innerHTML=orders.map(o=>`<div style="padding:14px;border:1px solid #2A2A2A;border-radius:10px;margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between"><strong>#${o.id}</strong><span style="color:#888;font-size:0.78rem">${new Date(o.date).toLocaleString('fa-IR')}</span></div>
+    <div style="color:#ccc;font-size:0.82rem;margin-top:6px">${o.items.map(i=>i.title+' ×'+i.qty).join(' ، ')}</div>
+    <div style="color:var(--gold);font-weight:800;margin-top:6px">${formatPrice(o.total)}</div>
+  </div>`).join('');
+}
+
+loadProducts(); loadSbSettings();
+</script>
+</body>
+</html>
