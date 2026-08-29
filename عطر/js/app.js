@@ -68,4 +68,28 @@ function checkout(){
   localStorage.setItem('luxe_orders',JSON.stringify(orders));
   localStorage.removeItem('luxe_cart'); updateCartBadge(); renderCart(); toast('سفارش ثبت شد — به زودی تماس میگیریم ✓'); setTimeout(closeCart,900);
 }
-document.addEventListener('DOMContentLoaded', renderHome);
+// 3D lightweight tilt + hero parallax (no heavy lib)
+function init3D(){
+  // card tilt
+  document.addEventListener('mousemove', e=>{
+    const cards=document.querySelectorAll('.card,.col-card');
+    cards.forEach(card=>{
+      const rect=card.getBoundingClientRect();
+      const inView=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;
+      if(!inView){ card.style.transform=''; return; }
+      const x=(e.clientX-rect.left)/rect.width -0.5;
+      const y=(e.clientY-rect.top)/rect.height -0.5;
+      const rx=(-y*8).toFixed(2), ry=(x*10).toFixed(2);
+      card.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+      card.classList.add('tilting');
+    });
+  });
+  document.addEventListener('mouseleave', ()=>document.querySelectorAll('.card,.col-card').forEach(c=>{c.style.transform='';c.classList.remove('tilting')}), true);
+  // hero parallax
+  const heroBg=document.querySelector('.hero-bg');
+  if(heroBg) window.addEventListener('scroll',()=>{
+    const y=scrollY*0.18;
+    heroBg.style.transform=`scale(1.02) translateY(${y}px)`;
+  },{passive:true});
+}
+document.addEventListener('DOMContentLoaded', ()=>{ renderHome().then(init3D); });

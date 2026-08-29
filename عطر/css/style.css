@@ -227,6 +227,12 @@ img{display:block;max-width:100%}
 .cart-item img{width:80px;height:80px;object-fit:cover;border-radius:10px}
 .cart-foot{padding:20px;border-top:1px solid var(--beige);background:var(--white)}
 /* TOAST */
+/* 3D LIGHTWEIGHT */
+.grid{perspective:900px}
+.card{transform-style:preserve-3d;will-change:transform}
+.card.tilting{transition:none}
+.col-card{transform-style:preserve-3d;will-change:transform;transition:transform 0.15s}
+.hero-bg{will-change:transform}
 /* NASTALIQ BOLD UNIQUE */
 .journal-body h3,.why-item h4,.feat h4,.footer h4{font-family:var(--font-nastaliq);font-weight:700;line-height:1.7}
 .detail h1{font-family:var(--font-nastaliq);font-weight:700;line-height:1.7}
