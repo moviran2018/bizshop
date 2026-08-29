@@ -18,8 +18,80 @@ function cardHTML(p){
     </div>
   </a>`;
 }
+let currentSlide=0, sliderTimer=null, progressTimer=null;
+function buildHeroSlider(products){
+  const sliderProducts=products.slice(0,5);
+  if(!sliderProducts.length) return;
+  const slidesEl=document.getElementById('slides');
+  const dotsEl=document.getElementById('sliderDots');
+  if(!slidesEl) return;
+  slidesEl.innerHTML=sliderProducts.map((p,i)=>`
+    <div class="slide ${i===0?'active':''}" data-index="${i}">
+      <img class="slide-bg" src="${(p.images&&p.images[0])||'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1920&q=85&auto=format&fit=crop'}" alt="${p.title}">
+      <span class="slide-badge">${p.is_bestseller?'پرفروش':p.is_new?'جدید':'✦ ویژه'}</span>
+      <div class="slide-inner">
+        <div class="slide-text">
+          <span class="slide-eyebrow en">${(p.category||'LUXE').toUpperCase()} COLLECTION</span>
+          <div class="slide-title"><span class="en-title">${p.title}</span>${p.subtitle||''}</div>
+          <span class="slide-sub">${p.gender==='man'?'مردانه':p.gender==='woman'?'زنانه':'یونیسکس'} • ${p.volume||'100ml'} • ${p.concentration||'Extrait'}</span>
+          <p class="slide-desc">${p.description||''}</p>
+          <div class="slide-price"><span>${formatPrice(p.price)}</span>${p.original_price?`<span class="old">${formatPrice(p.original_price)}</span>`:''}</div>
+          <div class="slide-actions">
+            <a href="product.html?slug=${p.slug}" class="btn btn-gold">مشاهده محصول ←</a>
+            <button class="btn btn-outline">افزودن به سبد</button>
+          </div>
+        </div>
+        <div class="slide-side" style="color:rgba(255,255,255,0.7);font-size:0.72rem;letter-spacing:0.14em;display:none" class="hide-mobile">${p.features?.[0]||'ماندگاری 14 ساعته • پخش بوی قوی'}</div>
+      </div>
+    </div>
+  `).join('');
+  if(dotsEl) dotsEl.innerHTML=sliderProducts.map((_,i)=>`<span class="slider-dot ${i===0?'active':''}" onclick="goToSlide(${i})"></span>`).join('');
+  // fix add to cart button
+  slidesEl.querySelectorAll('.slide').forEach((el,idx)=>{
+    const btn=el.querySelector('.btn-outline');
+    if(btn) btn.onclick=(e)=>{e.preventDefault(); Store.addToCart(sliderProducts[idx],1); renderCart(); openCart();};
+  });
+  startSlider();
+  initSliderTouch();
+}
+function showSlide(idx){
+  const slides=document.querySelectorAll('.slide');
+  const dots=document.querySelectorAll('.slider-dot');
+  if(!slides.length) return;
+  currentSlide=(idx+slides.length)%slides.length;
+  slides.forEach((s,i)=>s.classList.toggle('active', i===currentSlide));
+  dots.forEach((d,i)=>d.classList.toggle('active', i===currentSlide));
+  resetProgress();
+}
+function sliderNext(){ showSlide(currentSlide+1); }
+function sliderPrev(){ showSlide(currentSlide-1); }
+function goToSlide(i){ showSlide(i); }
+function startSlider(){
+  clearInterval(sliderTimer); clearInterval(progressTimer);
+  sliderTimer=setInterval(()=>showSlide(currentSlide+1), 5000);
+  resetProgress();
+}
+function resetProgress(){
+  const bar=document.getElementById('progressBar');
+  if(!bar) return;
+  bar.style.transition='none'; bar.style.width='0';
+  setTimeout(()=>{ bar.style.transition='width 5s linear'; bar.style.width='100%'; }, 30);
+}
+function initSliderTouch(){
+  const el=document.getElementById('heroSlider');
+  if(!el) return;
+  let sx=0;
+  el.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  el.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX - sx;
+    if(Math.abs(dx)>50) dx<0?sliderNext():sliderPrev();
+  },{passive:true});
+  el.addEventListener('mouseenter',()=>{clearInterval(sliderTimer); clearInterval(progressTimer)});
+  el.addEventListener('mouseleave',startSlider);
+}
 async function renderHome(){
   const products=await Store.getProducts();
+  buildHeroSlider(products);
   const featured=products.filter(p=>p.is_featured).slice(0,4);
   const news=products.filter(p=>p.is_new).slice(0,4);
   const fg=document.getElementById('featuredGrid');

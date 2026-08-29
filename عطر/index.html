@@ -45,22 +45,15 @@
 <div id="searchBar" style="display:none;background:var(--white);border-bottom:1px solid var(--beige);padding:16px 0">
   <div class="container"><input id="searchInput" placeholder="جستجوی عطر، کالکشن، رایحه..." style="width:100%;padding:15px 18px;border:1px solid var(--beige);border-radius:999px;font-family:inherit;background:var(--cream-2)"></div>
 </div>
-<!-- HERO Framer exact -->
-<section class="hero">
-  <img class="hero-bg" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1920&q=85&auto=format&fit=crop" alt="Luxe Parfum">
-  <div class="container" style="position:relative;z-index:2">
-    <div class="hero-content">
-      <span class="hero-eyebrow en">AWAKEN EVERY SENSE</span>
-      <h1>FRAGRANCE <em>as art</em></h1>
-      <span class="sub en">A MARK OF DISTINCTION</span>
-      <p>هر قطره داستانی است. لوکس پرفیوم وقار، ظرافت و حضوری امضادار را برای تو می‌آفریند — عمیق، ماندگار و فراموش‌نشدنی. رایحه‌ای که می‌ماند.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="products.html" class="btn btn-gold">کاوش کالکشن ←</a>
-        <a href="#featured" class="btn btn-outline">محصولات ویژه</a>
-      </div>
-    </div>
+<!-- HERO SLIDER - 5 محصولات فول‌عرض -->
+<section class="hero-slider" id="heroSlider">
+  <div class="slides" id="slides">
+    <div style="display:flex;align-items:center;justify-content:center;height:92vh;color:var(--gray-500)">در حال بارگذاری اسلایدر...</div>
   </div>
-  <div class="scroll-hint"><span></span> SCROLL</div>
+  <button class="slider-arrow prev" onclick="sliderPrev()" aria-label="قبلی">‹</button>
+  <button class="slider-arrow next" onclick="sliderNext()" aria-label="بعدی">›</button>
+  <div class="slider-dots" id="sliderDots"></div>
+  <div class="slider-progress"><div class="slider-progress-bar" id="progressBar"></div></div>
 </section>
 <!-- FEATURES -->
 <div class="container">
