@@ -11,26 +11,22 @@
 </head>
 <body>
 <div class="toast" id="toast"></div>
-
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
-    <div style="display:flex;gap:18px">
+    <div style="display:flex;gap:20px">
       <a href="tel:09123456789">📞 ۰۹۱۲۳۴۵۶۷۸۹</a>
       <a href="mailto:hello@luxeparfum.ir">✉ hello@luxeparfum.ir</a>
     </div>
-    <div style="display:flex;gap:14px;align-items:center">
-      <a href="#">پیگیری سفارش</a>
-      <a href="admin/login.html" style="color:var(--gold)">ورود ادمین</a>
+    <div style="display:flex;gap:18px;align-items:center">
+      <a href="products.html">پیگیری سفارش</a>
+      <a href="admin/login.html" style="color:var(--gold);font-weight:700">ورود ادمین ✦</a>
     </div>
   </div>
 </div>
-
-<!-- HEADER -->
 <header class="header" id="header">
   <div class="container">
     <div class="header-inner">
-      <a href="index.html" class="logo">LUXÉ<span> PARFUM</span></a>
+      <a href="index.html" class="logo">LUXÉ <span>PARFUM</span></a>
       <nav class="nav" id="nav">
         <a href="index.html" class="active">خانه</a>
         <a href="products.html">فروشگاه</a>
@@ -39,197 +35,191 @@
         <a href="#journal">مجله</a>
       </nav>
       <div class="header-actions">
-        <button class="icon-btn" onclick="toggleSearch()" title="جستجو">🔍</button>
+        <button class="icon-btn" onclick="toggleSearch()" title="جستجو">⌕</button>
         <button class="icon-btn" onclick="openCart()" title="سبد خرید">🛒 <span class="badge" id="cartBadge" style="display:none">0</span></button>
         <button class="mobile-toggle" onclick="toggleMobile()">☰</button>
       </div>
     </div>
   </div>
 </header>
-<div id="searchBar" style="display:none;background:var(--white);border-bottom:1px solid var(--beige);padding:14px 0">
-  <div class="container"><input id="searchInput" placeholder="جستجوی عطر، کالکشن، رایحه..." style="width:100%;padding:14px 18px;border:1px solid var(--beige);border-radius:999px;font-family:inherit"></div>
+<div id="searchBar" style="display:none;background:var(--white);border-bottom:1px solid var(--beige);padding:16px 0">
+  <div class="container"><input id="searchInput" placeholder="جستجوی عطر، کالکشن، رایحه..." style="width:100%;padding:15px 18px;border:1px solid var(--beige);border-radius:999px;font-family:inherit;background:var(--cream-2)"></div>
 </div>
-
-<!-- HERO -->
+<!-- HERO Framer exact -->
 <section class="hero">
-  <img class="hero-bg" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1600&q=80" alt="Luxe Parfum">
-  <div class="hero-overlay"></div>
+  <img class="hero-bg" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1920&q=85&auto=format&fit=crop" alt="Luxe Parfum">
   <div class="container" style="position:relative;z-index:2">
     <div class="hero-content">
       <span class="hero-eyebrow en">AWAKEN EVERY SENSE</span>
-      <h1>FRAGRANCE<br><em>as art</em></h1>
-      <p>هر قطره داستانی است. لوکس پرفیوم وقار، ظرافت و حضوری امضادار را برای تو می‌آفریند — ماندگار، اصیل، فراموش‌نشدنی.</p>
+      <h1>FRAGRANCE <em>as art</em></h1>
+      <span class="sub en">A MARK OF DISTINCTION</span>
+      <p>هر قطره داستانی است. لوکس پرفیوم وقار، ظرافت و حضوری امضادار را برای تو می‌آفریند — عمیق، ماندگار و فراموش‌نشدنی. رایحه‌ای که می‌ماند.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="products.html" class="btn btn-gold">کاوش کالکشن ←</a>
         <a href="#featured" class="btn btn-outline">محصولات ویژه</a>
       </div>
     </div>
   </div>
+  <div class="scroll-hint"><span></span> SCROLL</div>
 </section>
-
 <!-- FEATURES -->
 <div class="container">
-  <div class="features">
-    <div class="feat"><div class="feat-icon">✓</div><div><h4>ضمانت اصالت</h4><p>100٪ اورجینال</p></div></div>
-    <div class="feat"><div class="feat-icon">🎁</div><div><h4>بسته‌بندی هدیه</h4><p>رایگان و لوکس</p></div></div>
-    <div class="feat"><div class="feat-icon">🚚</div><div><h4>ارسال سریع</h4><p>سراسر ایران</p></div></div>
-    <div class="feat"><div class="feat-icon">✦</div><div><h4>پیشنهاد ویژه</h4><p>برای اعضا</p></div></div>
+  <div class="features reveal">
+    <div class="feat"><div class="feat-icon">✓</div><div><h4>ضمانت اصالت</h4><p>100٪ اورجینال از خانه‌های معتبر</p></div></div>
+    <div class="feat"><div class="feat-icon">🎁</div><div><h4>بسته‌بندی هدیه لوکس</h4><p>رایگان و دست‌ساز</p></div></div>
+    <div class="feat"><div class="feat-icon">🚚</div><div><h4>ارسال سریع و امن</h4><p>سراسر ایران ۲۴–۴۸ ساعته</p></div></div>
+    <div class="feat"><div class="feat-icon">✦</div><div><h4>پیشنهاد اعضای ویژه</h4><p>تخفیف و نمونه هدیه</p></div></div>
   </div>
 </div>
-
 <!-- FEATURED -->
 <section class="section" id="featured">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">FEATURED COLLECTION</span>
       <h2>رایحه‌های <em>برگزیده</em> برای تو</h2>
-      <p>ترکیب‌های دست‌چین اکستریت دِ پرفیوم که با گذر زمان عمق می‌گیرند — امضایی برای هر حال و هوا.</p>
+      <p>ترکیب‌های دست‌چین اکستریت دِ پرفیوم که با گذر زمان عمق می‌گیرند — امضایی برای هر حال و هوا، ماندگار و نجیب.</p>
       <div class="line"></div>
     </div>
-    <div class="grid" id="featuredGrid"></div>
+    <div class="grid reveal" id="featuredGrid"></div>
   </div>
 </section>
-
 <!-- ABOUT -->
 <section class="section" style="padding-top:0" id="about">
   <div class="container">
-    <div class="about">
-      <div class="about-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&q=80" alt="about"></div>
+    <div class="about reveal">
+      <div class="about-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1000&q=85&auto=format&fit=crop" alt="about"></div>
       <div class="about-content">
-        <span class="eyebrow" style="font-size:0.7rem;letter-spacing:0.3em;color:var(--gray-500)">ABOUT LUXÉ PARFUM</span>
+        <span class="eyebrow">ABOUT LUXÉ PARFUM</span>
         <h2>ظرافت در <em>هر قطره</em></h2>
-        <p>لوکس پرفیوم زاده عشق به رایحه و بیان فردی است. ما عطرهای ممتاز جهان را گردآوری کرده‌ایم تا تجربه‌ای فراموش‌نشدنی از رایحه بسازیم — از مواد اولیه کمیاب تا ماندگاری افسانه‌ای.</p>
-        <a href="products.html" class="btn btn-dark">داستان ما</a>
-        <div style="display:flex;gap:30px;margin-top:28px">
-          <div><div style="font-family:var(--font-en);font-size:1.6rem;font-weight:700">+۱۲۰</div><div style="font-size:0.7rem;color:var(--gray-500);letter-spacing:0.1em">رایحه خاص</div></div>
-          <div><div style="font-family:var(--font-en);font-size:1.6rem;font-weight:700">+۵۰K</div><div style="font-size:0.7rem;color:var(--gray-500);letter-spacing:0.1em">مشتری راضی</div></div>
-          <div><div style="font-family:var(--font-en);font-size:1.6rem;font-weight:700">۱۲</div><div style="font-size:0.7rem;color:var(--gray-500);letter-spacing:0.1em">سال تجربه</div></div>
+        <p>لوکس پرفیوم زاده عشق به رایحه و بیان فردی است. ما عطرهای ممتاز جهان را گردآوری کرده‌ایم تا تجربه‌ای فراموش‌نشدنی بسازیم — از کمیاب‌ترین مواد اولیه تا ماندگاری افسانه‌ای و شیشه‌های کریستال دست‌ساز.</p>
+        <a href="products.html" class="btn btn-dark">داستان ما — کشف کنید</a>
+        <div class="stats">
+          <div class="stat"><div class="n">+۱۲۰</div><div class="l">رایحه خاص</div></div>
+          <div class="stat"><div class="n">+۵۰K</div><div class="l">مشتری راضی</div></div>
+          <div class="stat"><div class="n">۱۲</div><div class="l">سال تجربه</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <!-- NEW ARRIVALS -->
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">NEW ARRIVALS</span>
       <h2>تازه‌های <em>کالکشن</em></h2>
       <div class="line"></div>
     </div>
-    <div class="grid" id="newGrid"></div>
-    <div style="text-align:center;margin-top:28px"><a href="products.html?filter=new" class="btn btn-dark">مشاهده همه</a></div>
+    <div class="grid reveal" id="newGrid"></div>
+    <div style="text-align:center;margin-top:30px" class="reveal"><a href="products.html?filter=new" class="btn btn-dark">مشاهده همه تازه‌ها</a></div>
   </div>
 </section>
-
 <!-- WHY -->
-<section class="section" style="background:var(--white);border-top:1px solid var(--beige);border-bottom:1px solid var(--beige)">
+<section class="section" style="background:var(--white);border-top:1px solid rgba(201,168,106,0.16);border-bottom:1px solid rgba(201,168,106,0.16)">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">WHY CHOOSE LUXÉ</span>
       <h2>تجربه‌ای <em>در خور تو</em></h2>
       <div class="line"></div>
     </div>
-    <div class="why">
-      <div class="why-item"><div class="why-icon">✦</div><h4>مواد اولیه ممتاز</h4><p>برگزیده از کمیاب‌ترین مواد معطر جهان</p></div>
-      <div class="why-item"><div class="why-icon">⏳</div><h4>ماندگاری بالا</h4><p>فرمول اختصاصی با پخش بوی تا 14 ساعت</p></div>
-      <div class="why-item"><div class="why-icon">◈</div><h4>سبک‌های متنوع</h4><p>طیف گسترده برای هر شخصیت و موقعیت</p></div>
-      <div class="why-item"><div class="why-icon">♛</div><h4>لوکس متمایز</h4><p>امضای شخصی و حس استایل ارتقا یافته</p></div>
+    <div class="why reveal">
+      <div class="why-item"><div class="why-icon">✦</div><h4>مواد اولیه ممتاز</h4><p>برگزیده از کمیاب‌ترین مواد معطر جهان — رز بلغاری، عود کامبوج، وانیل ماداگاسکار</p></div>
+      <div class="why-item"><div class="why-icon">⏳</div><h4>ماندگاری افسانه‌ای</h4><p>فرمول اختصاصی اکستریت با پخش بوی ۱۲ تا ۱۴ ساعته، از صبح تا نیمه‌شب</p></div>
+      <div class="why-item"><div class="why-icon">◈</div><h4>سبک‌های متنوع</h4><p>سیگنچر، فلورال، وودی، فرش و لیمیتد — برای هر شخصیت و هر موقعیت</p></div>
+      <div class="why-item"><div class="why-icon">♛</div><h4>لوکس متمایز</h4><p>شیشه کریستال، جعبه مخملی و جزئیات طلایی — امضای استایل تو</p></div>
     </div>
   </div>
 </section>
-
 <!-- COLLECTIONS -->
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">OUR COLLECTIONS</span>
       <h2>امضای خود را <em>بیاب</em></h2>
       <p>پنج کالکشن متمایز، هر یک با ناب‌ترین مواد جهان برای برانگیختن احساس و ماندگاری خاطره.</p>
       <div class="line"></div>
     </div>
-    <div class="collections" id="collectionsGrid"></div>
+    <div class="collections reveal" id="collectionsGrid"></div>
   </div>
 </section>
-
 <!-- TESTIMONIALS -->
-<section class="section" style="background:var(--white);border-top:1px solid var(--beige)">
+<section class="section" style="background:var(--white);border-top:1px solid rgba(201,168,106,0.16)">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">LOVED BY COMMUNITY</span>
       <h2>صدای <em>مشتریان</em></h2>
       <div class="line"></div>
     </div>
-    <div class="testis">
-      <div class="testi"><p>«AMBRE SUPRÊME مثل طلای مایع روی پوست است — گرم، حسی و بی‌نهایت شیک.»</p><div class="author">سوفیا ل.</div><div class="role">AMBRE SUPRÊME</div></div>
-      <div class="testi"><p>«BOIS NOBLE عمیق و اصیل است بدون سنگینی. هنر عطرساز در تک تک نت‌ها پیداست.»</p><div class="author">لوکاس م.</div><div class="role">BOIS NOBLE</div></div>
-      <div class="testi"><p>«ÉDITION OR کمیاب به معنای واقعی — باشکوه و فراموش‌نشدنی.»</p><div class="author">آملیا و.</div><div class="role">ÉDITION OR</div></div>
+    <div class="testis reveal">
+      <div class="testi"><p>«AMBRE SUPRÊME مثل طلای مایع روی پوست است — گرم، حسی و بی‌نهایت شیک. هر شب تحسین می‌شوم.»</p><div class="author">سوفیا ل.</div><div class="role">AMBRE SUPRÊME • پرفروش</div></div>
+      <div class="testi"><p>«BOIS NOBLE عمیق و اصیل است بدون سنگینی. هنر عطرساز در تک‌تک نت‌ها پیداست — امضای من شد.»</p><div class="author">لوکاس م.</div><div class="role">BOIS NOBLE • وودی</div></div>
+      <div class="testi"><p>«ÉDITION OR کمیاب به معنای واقعی — باشکوه، به‌یادماندنی و ارزش تک‌تک قطره.»</p><div class="author">آملیا و.</div><div class="role">ÉDITION OR • لیمیتد</div></div>
     </div>
   </div>
 </section>
-
 <!-- INSTAGRAM -->
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">INSTAGRAM GALLERY</span>
       <h2>@luxe.parfum</h2>
       <p>لحظات واقعی، لوکس واقعی. با تگ کردن ما شانس حضور در گالری را داری.</p>
       <div class="line"></div>
     </div>
-    <div class="insta-grid" id="instaGrid"></div>
+    <div class="insta-grid reveal" id="instaGrid"></div>
   </div>
 </section>
-
 <!-- JOURNAL -->
-<section class="section" style="background:var(--white);border-top:1px solid var(--beige)" id="journal">
+<section class="section" style="background:var(--white);border-top:1px solid rgba(201,168,106,0.16)" id="journal">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">JOURNAL</span>
       <h2>آخرین <em>نوشته‌ها</em></h2>
       <div class="line"></div>
     </div>
-    <div class="journal-grid">
-      <div class="journal-card"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600"><div class="journal-body"><span class="date">۱۸ تیر ۱۴۰۳ — Alex</span><h3>جزئیاتی که در خاطر می‌ماند: عطر به مثابه لوکس خاموش</h3><p>چرا یک رایحه خوب فراتر از بوی خوش است...</p></div></div>
-      <div class="journal-card"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=600"><div class="journal-body"><span class="date">۱۵ تیر ۱۴۰۳ — Michael</span><h3>از شفافیت صبح تا عمق شب: یک عطر برای تمام روز</h3><p>تکنیک‌های لایه‌سازی و ماندگاری...</p></div></div>
-      <div class="journal-card"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=600"><div class="journal-body"><span class="date">۱۲ تیر ۱۴۰۳ — Sophia</span><h3>ساخت ردپای امضا: سیلاژی که دیگران به یاد می‌سپارند</h3><p>راز پخش بوی حرفه‌ای‌ها...</p></div></div>
+    <div class="journal-grid reveal">
+      <div class="journal-card"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=700&q=80&auto=format&fit=crop"><div class="journal-body"><span class="date">۱۸ تیر ۱۴۰۳ — Alex • The Ritual</span><h3>جزئیاتی که در خاطر می‌ماند: عطر به مثابه لوکس خاموش</h3><p>چرا یک رایحه خوب فراتر از بوی خوش است — جزئی که دیگران به یاد می‌سپارند.</p></div></div>
+      <div class="journal-card"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=700&q=80&auto=format&fit=crop"><div class="journal-body"><span class="date">۱۵ تیر ۱۴۰۳ — Michael • The Ritual</span><h3>از شفافیت صبح تا عمق شب: یک عطر برای تمام روز</h3><p>تکنیک‌های لایه‌سازی و ماندگاری از طلوع تا غروب — یک امضا، تمام روز.</p></div></div>
+      <div class="journal-card"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=700&q=80&auto=format&fit=crop"><div class="journal-body"><span class="date">۱۲ تیر ۱۴۰۳ — Sophia • The Ritual</span><h3>ساخت ردپای امضا: سیلاژی که دیگران به یاد می‌سپارند</h3><p>راز پخش بوی حرفه‌ای‌ها و ساختن سیلاژی که در راهرو می‌ماند.</p></div></div>
     </div>
+    <div style="text-align:center;margin-top:26px"><a href="products.html" class="btn btn-dark">مشاهده مجله</a></div>
   </div>
 </section>
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div>
         <div class="footer-logo">LUXÉ PARFUM</div>
-        <p>ما عطر را فراتر از رایحه می‌دانیم — بیان هویت، خاطره و وقار. هر شیشه تجلیل از هنر، طبیعت و احساس است.</p>
+        <p>ما عطر را فراتر از رایحه می‌دانیم — بیان هویت، خاطره و وقار. هر شیشه تجلیل از هنر، طبیعت و احساس است. با عشق در ایران.</p>
+        <div style="display:flex;gap:10px;margin-top:16px"><a href="#" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center">◎</a><a href="#" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center">▶</a><a href="#" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center">✦</a></div>
       </div>
-      <div><h4>دسترسی سریع</h4><a href="products.html">همه محصولات</a><a href="products.html?collection=signature">سیگنچر</a><a href="products.html?collection=limited">لیمیتد</a><a href="#about">درباره ما</a></div>
-      <div><h4>خدمات</h4><a href="#">راهنمای خرید</a><a href="#">ارسال و پرداخت</a><a href="#">ضمانت بازگشت</a><a href="#">سوالات متداول</a></div>
-      <div><h4>تماس</h4><p>تهران، ولیعصر<br>۰۹۱۲۳۴۵۶۷۸۹<br>hello@luxeparfum.ir</p></div>
+      <div><h4>دسترسی سریع</h4><a href="products.html">همه محصولات</a><a href="products.html?collection=signature">سیگنچر</a><a href="products.html?collection=woody">وودی</a><a href="products.html?collection=limited">لیمیتد</a><a href="#about">درباره ما</a></div>
+      <div><h4>خدمات مشتریان</h4><a href="#">راهنمای خرید</a><a href="#">ارسال و پرداخت</a><a href="#">ضمانت بازگشت ۷ روزه</a><a href="#">سوالات متداول</a><a href="#">تماس با ما</a></div>
+      <div><h4>تماس</h4><p>تهران، خیابان ولیعصر، برج لوکس<br>۰۹۱۲۳۴۵۶۷۸۹<br>hello@luxeparfum.ir<br>شنبه تا پنجشنبه ۹ تا ۲۱</p></div>
     </div>
-    <div class="footer-bottom"><span>© ۱۴۰۳ لوکس پرفیوم — تمامی حقوق محفوظ است.</span><span>طراحی با ✦ در ایران</span></div>
+    <div class="footer-bottom"><span>© ۱۴۰۳ لوکس پرفیوم — تمامی حقوق محفوظ است.</span><span>طراحی با ✦ در ایران — الهام از Framer LUXÉ</span></div>
   </div>
 </footer>
-
-<!-- CART DRAWER -->
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-overlay" onclick="closeCart()"></div>
   <div class="cart-panel">
-    <div class="cart-head"><strong>سبد خرید</strong><button onclick="closeCart()" style="background:none;border:none;font-size:1.4rem;cursor:pointer">×</button></div>
+    <div class="cart-head"><strong style="letter-spacing:0.06em">سبد خرید</strong><button onclick="closeCart()" style="background:none;border:none;font-size:1.5rem;cursor:pointer">×</button></div>
     <div class="cart-body" id="cartBody"></div>
     <div class="cart-foot">
       <div style="display:flex;justify-content:space-between;font-weight:800;margin-bottom:14px"><span>جمع کل</span><span id="cartTotal">۰ تومان</span></div>
-      <button class="btn btn-dark" style="width:100%;justify-content:center" onclick="checkout()">تسویه حساب</button>
+      <button class="btn btn-dark" style="width:100%;justify-content:center" onclick="checkout()">تسویه حساب →</button>
     </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
 <script src="js/store.js"></script>
 <script src="js/app.js"></script>
+<script>
+// header scroll + reveal
+window.addEventListener('scroll',()=>document.getElementById('header')?.classList.toggle('scrolled', scrollY>20));
+const obs=new IntersectionObserver(ents=>ents.forEach(e=>{if(e.isIntersecting) e.target.classList.add('in')}),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
