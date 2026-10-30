@@ -1,0 +1,23 @@
+{
+  "files.exclude": {
+    "**/.wrangler": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/.git": true,
+    "**/.wrangler": true
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "html.format.wrapLineLength": 0,
+  "files.associations": {
+    "_worker.js": "javascript",
+    "_redirects": "plaintext",
+    "_server.js": "javascript",
+    "*.toml": "ini"
+  }
+}

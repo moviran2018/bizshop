@@ -1,0 +1,24 @@
+# Paths excluded from `wrangler pages deploy .` (pages_build_output_dir = ".")
+# These are development-only and must never be uploaded as public assets.
+
+.git
+.gitignore
+.agents
+.vscode
+.wrangler
+.dev.vars
+.env
+.env.example
+
+# Documentation / tooling artifacts
+PROJECT_MAP.md
+SETUP.md
+skills-lock.json
+_products_debug.json
+
+# Local dev server
+_server.js
+start-server.bat
+server.log
+server.err
+*.log
