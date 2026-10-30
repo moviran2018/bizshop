@@ -1,5 +1,0 @@
-name = "luxe-parfum"
-type = "javascript"
-compatibility_date = "2024-01-01"
-# Cloudflare Pages - no need for workers, static deploy
-# اگر خواستی Worker جدا بسازی، این فایل را فعال کن
